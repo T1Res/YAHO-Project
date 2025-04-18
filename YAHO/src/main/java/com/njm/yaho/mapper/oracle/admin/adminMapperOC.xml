@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njm.yaho.mapper.oracle.admin.adminMapperOC">
+	<insert id="insertAnime" parameterType="com.njm.yaho.domain.oracle.admin.AnimeOCDTO">
+	    INSERT INTO TBL_ANIME (
+	        ANIME_ID,
+	        ANIME_DESC,
+	        START_DATE,
+	        TOTAL_EPISODE,
+	        CURRENT_EPISODE,
+	        ANIME_SCORE,
+	        AGE_RATING
+	    ) VALUES (
+	        #{ANIME_ID},
+	        #{ANIME_DESC},
+	        #{START_DATE},
+	        #{TOTAL_EPISODE},
+	        #{CURRENT_EPISODE},
+	        #{ANIME_SCORE},
+	        #{AGE_RATING}
+	    )
+	</insert>
+	
+     <update id="updateAnimeInfo">
+	    UPDATE TBL_ANIME
+	    SET
+	      ANIME_DESC = #{ANIMEDESC},
+	      START_DATE = #{STARTDATE},
+	      TOTAL_EPISODE = #{TOTALEPISODE},
+	      CURRENT_EPISODE = #{CURRENTEPISODE},
+	      ANIME_SCORE = #{ANIMESCORE},
+	      AGE_RATING = #{AGERATING}
+	    WHERE ANIME_ID = #{ANIMEID}
+	 </update>
+</mapper>
