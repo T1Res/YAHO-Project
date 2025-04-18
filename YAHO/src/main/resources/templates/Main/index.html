@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YAHO</title>
+    <link rel="stylesheet" href="CSS/AnimeMain.css">
+    <link rel="stylesheet" href="CSS/info.css">
+	<link rel="stylesheet" href="CSS/footer.css">
+    
+<!-- 기본 favicon -->
+<link rel="icon" href="IMG/favicon/favicon.ico" type="image/x-icon">
+
+<!-- 확장 favicon -->
+<link rel="shortcut icon" href="IMG/favicon/favicon.ico" type="image/x-icon">
+
+<!-- PNG favicon -->
+<link rel="icon" href="IMG/favicon/android-chrome-512x512.png" type="image/png">
+ 
+ <!-- 아이콘 -->
+<script src="https://kit.fontawesome.com/071aa8f784.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	
+    <div class="nav">
+        <img src="/IMG/logo_test1.png">
+        <div class="navitem" onclick="location.href='/Main'">홈</div>
+        <div class="navitem" onclick="location.href='/List'">전체 애니</div>
+        <div class="navitem" onclick="location.href='/Schedule/animeSchedule'">방영중 애니</div>
+        <div class="navitem">자유게시판</div>
+        <div class="navitem" onclick="location.href='/Admin/insert'">관리자</div>
+    </div>
+    
+    <br><br>
+    
+    <div class="title" style="background-color: black;">
+        <img src="" alt="">
+	</div>
+	
+	<hr class="custom-hr"><br>
+
+	<!-- carousel 시작 -->
+	<div class="carousel_main">
+		<div class="carousel_wrapper">
+			<div class="carousel_slide">
+				<img src="IMG/TEST/test01.webp" />
+			</div>
+			<div class="carousel_slide">
+				<img src="IMG/TEST/test02.webp" />
+			</div>
+			<div class="carousel_slide">
+				<img src="IMG/TEST/test03.webp" />
+			</div>
+			<div class="carousel_slide">
+				<img src="IMG/TEST/test04.webp" />
+			</div>
+			<div class="carousel_slide">
+				<img src="IMG/TEST/test05.webp" />
+			</div>
+			<div class="carousel_slide">
+				<img src="IMG/TEST/test06.webp" />
+			</div>
+			<div class="carousel_slide">
+				<img src="IMG/TEST/test07.webp" />
+			</div>
+			<div class="carousel_slide">
+				<img src="IMG/TEST/test08.webp" />
+			</div>
+		</div>
+		
+		<div class="carousel_button_container">
+			<button type="button" class="carousel_prev">
+				<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"
+					fill="currentColor" class="bi bi-chevron-double-left"
+					viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+						d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                <path fill-rule="evenodd"
+						d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+            </svg>
+			</button>
+			<button type="button" class="carousel_next">
+				<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"
+					fill="currentColor" class="bi bi-chevron-double-right"
+					viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+						d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
+                <path fill-rule="evenodd"
+						d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+			</button>
+		</div>
+		<div class="carousel_pagination">
+			<div class="carousel_circle"></div>
+			<div class="carousel_circle"></div>
+			<div class="carousel_circle"></div>
+			<div class="carousel_circle"></div>
+			<div class="carousel_circle"></div>
+			<div class="carousel_circle"></div>
+			<div class="carousel_circle"></div>
+			<div class="carousel_circle"></div>
+		</div>
+	</div>
+	<!-- carousel 끝 -->
+
+	<hr class="custom-hr"><br>
+	
+	<h2 style="color:#ffffff;"> &nbsp; - 오늘의 애니</h2>
+	<div class="swiper-container">
+		<div class="swiper-wrapper" >
+			<div class="swiper-slide" 
+				th:each="anime : ${animeList}"
+				th:data-anime-id="${anime.animeId}"
+     			onclick="openModalDetail(this)">
+     			
+				<!-- camelCase로 THUMBNAIL_GARO_URL을 아래와 같이 설정해놨음 -->
+				<img th:src="${anime.thumnailGaroUrl}" alt="이미지1">
+				<div class="slide-title" th:text = "${anime.title}"></div>
+			</div>
+		</div>
+		<!-- 좌우 화살표 -->
+		<div class="swiper-button-prev"></div>
+		<div class="swiper-button-next"></div>
+	</div>
+
+	<hr class="custom-hr"><br>
+	
+	<!-- 유튜브 -->
+	<h2 style="color:#ffffff;"> &nbsp; - YouTube</h2>
+	<div class="swiper-container-youtube">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide">
+				<iframe width="400" height="315"
+					src="https://www.youtube.com/embed/9FCX_7tCcrk?si=1ulvnLTJXmSAwlgW"
+					title="YouTube video player" frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			</div>
+			
+			<div class="swiper-slide">
+				<iframe width="400" height="315"
+					src="https://www.youtube.com/embed/GjfSwJlq4rk?si=f9fk3v_gPepNK2ca"
+					title="YouTube video player" frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			</div>
+			
+			<div class="swiper-slide">
+				<iframe width="400" height="315"
+					src="https://www.youtube.com/embed/BGlQakaaJDs?si=F9D4zQm0PJ-uHCa1"
+					title="YouTube video player" frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			</div>
+			
+			<div class="swiper-slide">
+				<iframe width="400" height="315"
+					src="https://www.youtube.com/embed/w1J9aH9DhrY?si=cP41P8iSmbmiioR-"
+					title="YouTube video player" frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			</div>
+			
+			<div class="swiper-slide">
+				<iframe width="400" height="315"
+					src="https://www.youtube.com/embed/ptc0YXw9ZOo?si=DhFn1kfVL9nlSlRr" 
+					title="YouTube video player" frameborder="0" 
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			</div>
+			
+			<div class="swiper-slide">
+				<iframe width="400" height="315"
+					src="https://www.youtube.com/embed/VYFsjzOmJhk?si=5pkyNXQ0yBM61KjG" 
+					title="YouTube video player" frameborder="0" 
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			</div>
+		</div>
+		
+		<!-- 좌우 화살표 -->
+		<div class="swiper-button-prev"></div>
+		<div class="swiper-button-next"></div>
+	</div>
+	
+	<hr class="custom-hr"><br>
+
+	<div class="core">
+		<div class="core_title">추천 애니</div>
+		<div class="core_cont">
+			<img src="/static/img/java.png" alt=""> 
+			<img src="static/img/python.png" alt=""> 
+			<img src="static/img/c.png" alt=""> 
+			<img src="static/img/html.png" alt=""> 
+			<img src="static/img/css.png" alt=""> 
+			<img src="static/img/js.png" alt="">
+		</div>
+		
+		<div class="core_title">뭘넣을까</div>
+		<div class="core_cont" style="margin-bottom: 0; padding-bottom: 80px;">
+			<img id="umc" src="static/img/umc.png" alt="">
+			<div id="umc_activity" class="activity">
+				<li>UMC 3rd Spring 부원</li>
+				<li>UMC 아이디어톤 5개 중 3개 수상</li>
+				<li>UMC 4th 운영진 Server 파트장</li>
+			</div>
+			
+			<img id="demoday" src="static/img/demoday.png" alt="">
+			<div id="demoday_activity" class="activity">
+				<li>UMC DemoDay 최우수상</li>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 모달 -->
+	<div id="animeModal" class="modal">
+		<div class="modal_content">
+			<span class="close" onclick="modal_close()">&times;</span>
+			<div class="modal_div">
+
+				<div class="modal_img">
+					<img id="modal_img" src="" alt="이미지">
+				</div>
+				
+				<!-- 애니 상세 정보 -->
+				<div class="anime-info-container">
+					<div class="ani-content">
+						<section class="ani-section">
+							<div class="ani-row">
+								<h2>애니제목</h2>
+								<p id="anime_id"></p>
+							</div>
+							
+							<div class="ani-row">
+								<h2>방영일</h2>
+								<p id="start_date"></p>
+							</div>
+							
+							<div class="ani-row">
+								<h2>방영차수</h2>
+								<p id="total_episode"></p>
+							</div>
+							
+							<div class="ani-row">
+								<h2>제작사</h2>
+								<p id="studio"><a href="#" id="studio_link">제작사1</a></p>
+							</div>
+							
+							<div class="ani-row">
+								<h2>상영등급</h2>
+								<p id="age_rating"></p>
+							</div>
+							
+							<div class="ani-summary">
+								<h2>애니 줄거리</h2>
+								<p id="anime_desc">어느 시골의 중학교에서, 어떤 남녀가 영원한 우정을 맹세했다. 하나의 꿈을 향해 운명 공동체가 된 두
+									사람, 특별한 진전 없이 어느덧 2년이라는 세월이 지났다. 아직도 첫사랑을 해보지 못한 인싸 여고생 이누즈카
+									히마리와, 꽃을 사랑하는 초식 남고생 나츠메 유우는 고등학교 2학년이 되어서도 변함없이 둘만의 원예부에서 평화롭게
+									친구로 지내고 있었다. 그러나, 유우가 과거 첫사랑 상대와 재회하면서 돌연 두 사람의 톱니바퀴가 맞물리기
+									시작하는데...</p>
+								<span id="summaryButton" class="toggle-btn">더보기</span>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Swiper JS -->
+	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>  
+</body>
+<script>
+	function openModalDetail(el) {
+		const animeId = el.getAttribute("data-anime-id");
+		const userId = "aa1111"; // 로그인 중인 유저 ID, 현재 아직 기능이 없으므로 임시로 aa1111로 설정
+		
+		console.log("애니 ID:", animeId);
+		
+		// 1. 상세 정보 로딩
+		fetch(`/anime/detail?animeId=${animeId}`)
+			.then(res => res.json())
+			.then(data => {
+				document.getElementById("anime_id").innerText = data.animeId;
+				document.getElementById("start_date").innerText = data.startDate;
+		      	document.getElementById("total_episode").innerText = data.totalEpisode;
+		      	document.getElementById("studio").innerText = data.studio;
+		      	document.getElementById("studio_link").href = data.studioLink;
+		      	document.getElementById("age_rating").innerText = data.ageRating;
+		      	document.getElementById("anime_desc").innerText = data.animeDesc;
+		});
+
+		// 모달 열기
+		document.getElementById("animeModal").style.display = "block";
+	}
+
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        var swiper = new Swiper(".swiper-container", {
+            slidesPerView: 4, // 한 번에 보이는 슬라이드 개수
+            spaceBetween: 20, // 이미지 간격
+            loop: false, // 무한 루프 여부
+            grabCursor: true, // 마우스 커서를 손모양으로 변경
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+                1024: { slidesPerView: 4 },
+                768: { slidesPerView: 3 },
+                480: { slidesPerView: 2 },
+            },
+        });
+
+    	// 이미지 클릭 시 특정 페이지로 이동
+    	document.querySelectorAll(".swiper-slide").forEach((slide, index) => {
+			slide.addEventListener("click", () => {
+				//window.location.href = `https:example.com/page${index + 1}`;
+			});
+		});
+    });
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        const maxLength = 15; // 최대 글자 수 (원하는 값으로 변경)
+
+        document.querySelectorAll(".slide-title").forEach(titleElement => {
+            let fullTitle = titleElement.textContent.trim(); // 원래 제목 가져오기
+            
+            if (fullTitle.length > maxLength) {
+                titleElement.setAttribute("data-title", fullTitle); // data-title에 원제목 저장
+                titleElement.textContent = fullTitle.substring(0, maxLength) + "..."; // 축약 후 표시
+            }
+        });
+    });
+  
+ 	// 모달 닫기 함수
+    function modal_close() {
+        document.getElementById("animeModal").style.display = "none";
+    }
+
+    // 모달 바깥 영역 클릭 시 닫기 기능 추가
+    window.onclick = function(event) {
+        let modal = document.getElementById("animeModal");
+        if (event.target === modal) {  // 모달 바깥 클릭 시
+            modal_close();  // 모달 닫기 실행
+        }
+    };
+
+    // nav 스크롤 시 반투명화
+    window.addEventListener("scroll", function () {
+        let nav = document.querySelector(".nav");
+        let scrollY = window.scrollY;
+
+        // 투명도 범위 계산 (0.9 ~ 0.3 사이)
+        let baseOpacity = Math.max(0.9, 0.9 - scrollY / 300);
+
+        // 위쪽은 진하고, 아래쪽은 투명해지는 그라데이션 생성
+        nav.style.background = `linear-gradient(to bottom, rgba(20, 20, 20, ${baseOpacity}) 0%, rgba(20, 20, 20, 0) 100%)`;
+    });
+
+
+    // 유튜브 캐러셀 자동 이동
+    const swiper = new Swiper('.swiper-container-youtube', {
+        loop: true, // 무한 반복
+        autoplay: {
+            delay: 3000, // 3초마다 자동 이동
+            disableOnInteraction: false, // 사용자가 터치해도 자동 재생 유지
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        slidesPerView: 4, // 한 번에 4개의 슬라이드 보이게
+        spaceBetween: 10, // 슬라이드 간 간격
+        speed: 1000, // 애니메이션 속도 (1초)
+        loopedSlides: 4, // 루프 시 자연스럽게 연결되도록 설정
+        autoplay: {
+            delay: 3000, // 3초마다 자동 슬라이드
+            disableOnInteraction: false, // 사용자가 터치해도 자동 재생 유지
+        },
+        slidesPerGroup: 1, // 한 번에 하나의 슬라이드만 이동
+    });
+</script>
+
+<!-- 캐러셀 -->
+<script>
+const CSswiper = document.querySelector('.carousel_wrapper');
+const prevButtons = document.querySelectorAll('.carousel_prev');
+const nextButtons = document.querySelectorAll('.carousel_next');
+const bullets = document.querySelectorAll('.carousel_circle');
+const totalSlides = 7;
+let currentSlide = 0;
+
+function showSlide(slideIndex) {
+	CSswiper.style.transform = `translateX(-${slideIndex * 1300}px)`;
+    currentSlide = slideIndex;
+
+    bullets.forEach((bullet, index) => {
+        if (index === currentSlide) {
+            bullet.classList.add('active');
+        } else {
+            bullet.classList.remove('active');
+        }
+    });
+}
+
+prevButtons.forEach((prevButton) => {
+    prevButton.addEventListener('click', () => {
+    	if (currentSlide === 0) {
+            showSlide(totalSlides); // 첫 번째 슬라이드에서 왼쪽 누르면 마지막으로 이동
+        } else {
+            showSlide(currentSlide - 1);
+        }
+    });
+});
+
+nextButtons.forEach((nextButton) => {
+    nextButton.addEventListener('click', () => {
+    	if (currentSlide === totalSlides) {
+            showSlide(0); // 마지막 슬라이드에서 오른쪽 누르면 처음으로 이동
+        } else {
+            showSlide(currentSlide + 1);
+        }
+    });
+});
+
+bullets.forEach((bullet, index) => {
+    bullet.addEventListener('click', () => {
+        showSlide(index);
+    });
+});
+
+showSlide(0);
+</script>
+</html>

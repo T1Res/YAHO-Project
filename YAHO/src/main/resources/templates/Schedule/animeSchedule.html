@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>애니메이션 방영 시간표</title>
+<link rel="stylesheet" href="/CSS/AnimeSchedule.css">
+<link rel="stylesheet" href="/CSS/AnimeMain.css">
+
+<!-- 기본 favicon -->
+<link rel="icon" href="IMG/favicon/favicon.ico" type="image/x-icon">
+
+<!-- 확장 favicon -->
+<link rel="shortcut icon" href="IMG/favicon/favicon.ico" type="image/x-icon">
+
+<!-- PNG favicon -->
+<link rel="icon" href="IMG/favicon/android-chrome-512x512.png" type="image/png">
+ 
+</head>
+<body>
+	<div class="nav">
+        <img src="/IMG/logo_test1.png">
+        <div class="navitem" onclick="location.href='/Main'">홈</div>
+        <div class="navitem" onclick="location.href='/List'">전체 애니</div>
+        <div class="navitem" onclick="location.href='/Schedule/animeSchedule'">방영중 애니</div>
+        <div class="navitem">자유게시판</div>
+        <div class="navitem" onclick="location.href='/Admin/insert'">관리자</div>
+    </div>
+    <br><br>
+    
+	<h1 class = "title-bar">애니메이션 방영 시간표</h1>
+	
+	<!-- 상단 고정 요일 바 -->
+	<div class="day-title-bar">
+		<div th:each="day : ${daysOfWeek}" class="day-title-cell"
+			th:text="${day}">월요일</div>
+	</div>
+
+	<div class="schedule-container">
+		<!-- 요일별 반복 -->
+		<div th:each="day : ${daysOfWeek}" class="day-column">
+			<div th:each="anime : ${animeByDay[day.trim()]}" 
+				class="anime-card"
+				th:data-title="${anime.TITLE}" th:data-rating="${anime.SCORE}"
+     			th:data-image1="${anime.THUMNAIL_GARO_URL}" th:data-image2="${anime.THUMNAIL_SERO_URL}">
+     			
+				<img th:src="${anime.THUMNAIL_SERO_URL}" alt="애니메이션 이미지">
+				<div class="anime-title" th:text="${anime.TITLE}">제목</div>
+				<div class="anime-rating" th:text="'⭐ ' + ${anime.SCORE}">⭐평점</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 모달 -->
+	<div id="animeModal" class="modal">
+		<div class="modal_content">
+			<span class="close" onclick="modal_close()">&times;</span>
+			<div class="modal_div">
+			
+				<div class="modal_img">
+					<img id="modal_img" src="" alt="이미지">
+				</div>
+				
+				<div class="modal_title" id="modal_title"></div>
+				
+				<div class="modal_desc">
+					<div class="desc_inf" id="modal_desc"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script>
+    // 페이지 새로고침
+	function refreshPage() {
+		window.location.reload();
+	}
+	
+    // 애니메이션 제목 축약
+	document.addEventListener("DOMContentLoaded", function () {
+        const maxLength = 10; // 최대 글자 수 (원하는 값으로 변경)
+
+        document.querySelectorAll(".anime-title").forEach(titleElement => {
+            let fullTitle = titleElement.textContent.trim(); // 원래 제목 가져오기
+            
+            if (fullTitle.length > maxLength) {
+                titleElement.setAttribute("data-title", fullTitle); // data-title에 원제목 저장
+                titleElement.textContent = fullTitle.substring(0, maxLength) + "..."; // 축약 후 표시
+            }
+        });
+    });
+    
+    
+    
+	// 클릭 이벤트 추가
+	document.querySelectorAll(".anime-card").forEach(card => {
+        card.addEventListener("click", function () {
+            const title = card.getAttribute("data-title");
+            const rating = card.getAttribute("data-rating");
+            const image1 = card.getAttribute("data-image1");
+            const image2 = card.getAttribute("data-image2");
+            let desc = "이것은 스크롤 테스트를 위한 텍스트입니다.\n\n\n\n\n\n\n\n\n\n";
+        	desc += "여기에 더 많은 줄바꿈을 추가합니다.\n\n\n\n\n\n\n\n\n\n";
+        	desc += "이제 모달 창에서 스크롤이 잘 되는지 확인해 보세요!";
+            
+            // 모달 요소에 값 넣기
+            document.querySelector("#modal_title").textContent = title;
+            //document.querySelector("#modal-rating").textContent = "⭐ " + rating;
+            document.querySelector("#modal_img").src = image1; // 이미지2(가로) 사용
+			document.querySelector("#modal_desc").innerText = desc;
+            
+            // 모달 열기
+            document.querySelector("#animeModal").style.display = "block";
+            
+         	// 모달 내부 스크롤 초기화
+            document.querySelector(".modal_content").scrollTop = 0;
+        });
+    });
+  
+ 	// 모달 닫기 함수
+    function modal_close() {
+        document.getElementById("animeModal").style.display = "none";
+    }
+
+    // 모달 바깥 영역 클릭 시 닫기 기능 추가
+    window.onclick = function(event) {
+        let modal = document.getElementById("animeModal");
+        if (event.target === modal) {  // 모달 바깥 클릭 시
+            modal_close();  // 모달 닫기 실행
+        }
+    };
+</script>
+</html>
