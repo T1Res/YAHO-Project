@@ -8,9 +8,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface adminMapperOC {
-    void insertAnime(AnimeOCDTO anime);
+//    void insertInfo(AnimeOCDTO anime); 
+	
+	void insertAnimeOC(AnimeOCDTO anime);
     
-    void insertInfo(AnimeOCDTO anime); 
-    
-    void updateAnimeInfo(AnimeOCDTO animeInfo);
+	List<AnimeOCDTO> getoclist(); // 제목 목록 불러오기
 }

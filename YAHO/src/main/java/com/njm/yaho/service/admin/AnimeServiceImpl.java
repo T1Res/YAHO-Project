@@ -23,52 +23,30 @@ public class AnimeServiceImpl implements AnimeService {
 
     @Override
     public void insertAnimeMS(AnimeMSDTO anime) {
-    	ms.insertAnime(anime);
+    	ms.insertAnimeMS(anime);
     }
     
     @Override
     public void insertAnimeOC(AnimeOCDTO anime) {
-    	oc.insertAnime(anime);
+    	oc.insertAnimeOC(anime);
     }
     
     @Override
-    public List<AnimeMSDTO> getAllAnimes() {
-    	return ms.getAllAnimes();
+    public void insertFullAnime(AnimeMSDTO animeMS, AnimeOCDTO animeOC) {
+        ms.insertAnimeMS(animeMS);
+        animeOC.setANIME_ID(animeMS.getANIME_ID());
+        oc.insertAnimeOC(animeOC);
     }
-
+    
     @Override
-    public void updateAnimeAndInfo(int animeId, String title, MultipartFile garoImage, MultipartFile seroImage,
-                                   List<String> weekdays, double score, String tags,
-                                   String animeDesc, String startDate, int totalEpisode, int currentEpisode,
-                                   double animeScore, String ageRating) {
-
-        // DB에 넘길 DTO 만들기
-        AnimeMSDTO anime = new AnimeMSDTO();
-        anime.setANIME_ID(animeId);
-        anime.setTITLE(title);
-        anime.setSCORE(score);
-        anime.setTAGS(tags);
-        anime.setWEEKDAY(String.join(",", weekdays));
-
-        if (garoImage != null && !garoImage.isEmpty()) {
-            anime.setTHUMNAIL_GARO_URL(garoImage.getOriginalFilename());
-            // 파일 저장 로직 추가하면 됨
-        }
-        if (seroImage != null && !seroImage.isEmpty()) {
-            anime.setTHUMNAIL_SERO_URL(seroImage.getOriginalFilename());
-        }
-
-        AnimeOCDTO animeInfo = new AnimeOCDTO();
-        animeInfo.setANIME_ID(animeId);
-        animeInfo.setANIME_DESC(animeDesc);
-        animeInfo.setSTART_DATE(startDate);
-        animeInfo.setTOTAL_EPISODE(totalEpisode);
-        animeInfo.setCURRENT_EPISODE(currentEpisode);
-        animeInfo.setANIME_SCORE(animeScore);
-        animeInfo.setAGE_RATING(ageRating);
-
-        // Mapper 호출
-        ms.updateAnime(anime);
-        oc.updateAnimeInfo(animeInfo);
+    public List<AnimeMSDTO> getmslist() {
+    	return ms.getmslist();
     }
+    
+    @Override
+    public List<AnimeOCDTO> getoclist() {
+    	return oc.getoclist();
+    }
+    
+   
 }

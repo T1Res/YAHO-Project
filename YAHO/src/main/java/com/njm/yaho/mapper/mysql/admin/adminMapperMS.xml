@@ -1,39 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.njm.yaho.mapper.mysql.admin.adminMapperMS">
-	<insert id="insertAnime" parameterType="com.njm.yaho.domain.mysql.admin.AnimeMSDTO">
-	    INSERT INTO TBL_ANIME (
-	        TITLE,
-	        THUMNAIL_GARO_URL,
-	        THUMNAIL_SERO_URL,
-	        WEEKDAY,
-	        SCORE,
-	        TAGS
-	    ) VALUES (
-	        #{TITLE},
-	        #{THUMNAIL_GARO_URL},
-	        #{THUMNAIL_SERO_URL},
-	        #{WEEKDAY},
-	        #{SCORE},
-	        #{TAGS}
-	    )
+	
+	<insert id="insertAnimeMS" parameterType="com.njm.yaho.domain.mysql.admin.AnimeMSDTO" useGeneratedKeys="true" keyProperty="ANIME_ID">
+    INSERT INTO TBL_ANIME (TITLE, THUMNAIL_GARO_URL, THUMNAIL_SERO_URL, WEEKDAY, SCORE, TAGS)
+    VALUES (#{TITLE}, #{THUMNAIL_GARO_URL}, #{THUMNAIL_SERO_URL}, #{WEEKDAY}, #{SCORE}, #{TAGS})
 	</insert>
 	
-	 <select id="getAllAnimes" resultType="com.njm.yaho.domain.mysql.admin.AnimeMSDTO">
-        SELECT ANIME_ID, TITLE FROM TBL_ANIME ORDER BY TITLE
+	<select id="getmslist" resultType="com.njm.yaho.domain.mysql.admin.AnimeMSDTO">
+        SELECT ANIME_ID, TITLE, THUMNAIL_GARO_URL, THUMNAIL_SERO_URL, WEEKDAY, SCORE, TAGS 
+        FROM TBL_ANIME ORDER BY ANIME_ID
     </select>
-
-	<update id="updateAnime">
-	    UPDATE TBL_ANIME
-	    SET
-	      TITLE = #{TITLE},
-	      THUMBNAIL_GARO_URL = #{THUMBNAILGAROURL},
-	      THUMBNAIL_SERO_URL = #{THUMBNAILSEROURL},
-	      WEEKDAY = #{WEEKDAY},
-	      SCORE = #{SCORE},
-	      TAGS = #{TAGS}
-	    WHERE ANIME_ID = #{ANIMEID}
-	  </update>
 	
 	 
 </mapper>
