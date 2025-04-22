@@ -9,6 +9,9 @@ public interface MainService {
 	// 오늘 방영중 애니 목록 가져오기
 	public List<MainMSDTO> getTodayAnimeList();
 	
-	// 특정 애니 정보 가져오기
-	public MainOCDTO getAnimeInfo(int animeId);
+	// 특정 애니 요약 정보 가져오기
+	public MainMSDTO getAnimeBaseInfo(int animeId);
+	
+	// 특정 애니 상세 정보 가져오기
+	public MainOCDTO getAnimeDetailInfo(int animeId);
 }

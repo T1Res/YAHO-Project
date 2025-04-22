@@ -1,6 +1,7 @@
 package com.njm.yaho.mapper.oracle.user;
 
 import org.apache.ibatis.annotations.Mapper;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.njm.yaho.domain.oracle.user.UserDTO;
@@ -24,4 +25,4 @@ public interface UserMapper {
 	// 프로필보기
 	public UserDTO UserProfile(String USER_ID);
 	public String saveProfileImage(MultipartFile file);
-}
+
