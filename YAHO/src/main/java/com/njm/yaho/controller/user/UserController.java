@@ -1,8 +1,6 @@
 package com.njm.yaho.controller.user;
 
 import org.slf4j.Logger;
-
-
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,17 +15,39 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.njm.yaho.domain.oracle.user.UserDTO;
 import com.njm.yaho.service.user.UserService;
 import com.njm.yaho.util.PassUtil;
+import com.njm.yaho.domain.oracle.user.UserOCDTO;
+import com.njm.yaho.mapper.oracle.user.UserMapperOC;
+import com.njm.yaho.service.user.UserService;
+import com.njm.yaho.service.util.CaptchaService;
+import com.njm.yaho.service.util.MailService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Controller
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
 @RequiredArgsConstructor // 자동주입-오토와이드 안써도됨
 public class UserController {
 	// 로거 출력
 	private static final Logger log = LoggerFactory.getLogger("UserController.class");
 
 	private final UserService service;
+  
+  @Autowired
+	private UserService userService;
+	
+	@Autowired
+	private UserMapperOC userMapperOC;
+	
+	@Autowired
+	private MailService mailService;
+	
+	@Autowired
+	private CaptchaService captchaService;
 
 	// 회원가입
 	@GetMapping("User/User_Insert")
@@ -212,5 +232,38 @@ public class UserController {
 	public String UserLogout(HttpSession session) {
 	    session.invalidate(); // 세션 전체 삭제
 	    return "redirect:/";  // 메인으로
+  }
+  
+  @GetMapping("/User/find-id/send")
+	public ResponseEntity<String> sendUserIdToEmail(@RequestParam String email) {
+	    UserOCDTO user = userMapperOC.findByEmail(email);
+	    if (user == null) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("존재하지 않는 이메일입니다.");
+	    }
+
+	    // 이메일 전송
+	    mailService.sendUserIdEmail(email, user.getUserId());
+
+	    return ResponseEntity.ok("아이디 전송 완료");
+	}
+
+	@PostMapping("/User/find-pw/reset")
+	public ResponseEntity<String> resetPassword(@RequestParam String userId,
+	                                             @RequestParam String email,
+	                                             @RequestParam("captcha") String captchaToken) {
+	    // ✅ 1. reCAPTCHA 검증
+	    if (!captchaService.verifyCaptcha(captchaToken)) {
+	        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("reCAPTCHA 인증 실패");
+	    }
+
+	    try {
+	        boolean result = userService.resetPassword(userId, email);
+	        if (!result) {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("일치하는 회원 정보가 없습니다.");
+	        }
+	        return ResponseEntity.ok("임시 비밀번호 전송 완료");
+	    } catch (IllegalStateException | IllegalArgumentException e) {
+	        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(e.getMessage());
+	    }
 	}
 }

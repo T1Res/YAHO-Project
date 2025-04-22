@@ -30,10 +30,19 @@ public class MainController {
         return "Main/index";
     }
 	
-	@GetMapping("/anime/detail")
+	// 요약정보 전송
+	@GetMapping("/anime/baseInfo")
 	@ResponseBody
-	public MainOCDTO getAnimeInfo(int animeId) {
-        MainOCDTO dto = service.getAnimeInfo(animeId);
+	public MainMSDTO getAnimeBaseInfo(int animeId) {
+		MainMSDTO dto = service.getAnimeBaseInfo(animeId);
+        return dto;
+	}
+	
+	// 상세정보 전송
+	@GetMapping("/anime/detailInfo")
+	@ResponseBody
+	public MainOCDTO getAnimeDetailInfo(int animeId) {
+        MainOCDTO dto = service.getAnimeDetailInfo(animeId);
         return dto;
 	}
 }
