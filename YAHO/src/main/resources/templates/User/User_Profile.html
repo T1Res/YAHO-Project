@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>프로필</title>
+</head>
+<body>
+
+  <!-- 프로필 표시용 테이블 -->
+  <table align="center" border="0" width="600" cellpadding="5" cellspacing="0">
+    <tr><th colspan="2"><h2>프로필</h2></th></tr>
+
+    <!-- 프로필 사진 -->
+    <tr>
+      <td><img th:src="${dto.USER_PROFILE_IMG}"></td>
+    </tr>
+
+    <!-- 이름 -->
+    <tr>
+      <td>이름</td>
+      <td th:text="${dto.USER_NICKNAME}"></td>
+    </tr>
+
+    <!-- ID -->
+    <tr>
+      <td>ID</td>
+      <td th:text="${dto.USER_ID}"></td>
+    </tr>
+
+    <!-- 성별 -->
+    <tr>
+      <td>성별</td>
+      <td th:text="${dto.USER_GENDER == 1 ? '남자' : (dto.USER_GENDER == 2 ? '여자' : '미지정')}"></td>
+    </tr>
+
+    <!-- 이메일 -->
+    <tr>
+      <td>이메일</td>
+      <td th:text="${dto.USER_EMAIL}"></td>
+    </tr>
+
+    <!-- 한줄소개 -->
+    <tr>
+      <td>한줄소개</td>
+      <td th:text="${dto.USER_BIO}"></td>
+    </tr>
+
+    <!-- 버튼 -->
+    <tr>
+      <td colspan="2" align="center">
+        <button type="button" onclick="openPasswordModal()">회원탈퇴</button>
+        <button type="button" onclick="history.back()">돌아가기</button>
+      </td>
+    </tr>
+  </table>
+
+  <!-- 탈퇴 확인 모달 -->
+  <div id="passwordModal" style="display: none; position: fixed; background: rgba(0,0,0,0.5); top: 0; left: 0; right: 0; bottom: 0;">
+    <div style="background: white; width: 300px; margin: 100px auto; padding: 20px; text-align: center;">
+      <h3>비밀번호 확인</h3>
+      <form method="post" th:action="@{/User/User_Delete}">
+        <input type="password" name="password" placeholder="비밀번호 입력" required style="width: 80%; padding: 5px;"><br><br>
+        <button type="submit">탈퇴</button>
+        <button type="button" onclick="closePasswordModal()">취소</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openPasswordModal() {
+      document.getElementById("passwordModal").style.display = "block";
+    }
+    function closePasswordModal() {
+      document.getElementById("passwordModal").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+	function send(){
+		if(user.USER_ID.value==""){
+			alert("id을 입력하");
+			user.USER_ID.focus();
+			return;
+		}
+		if(user.USER_PASSWORD.value==""){
+			alert("비번을 입력하");
+			user.USER_PASSWORD.focus();
+			return;
+		}
+		user.submit();
+	}
+</script>
+<body>
+	<form name="user" method="post" th:action="@{/User/User_Login}">
+		<table width="583" border="0" cellspacing="0" cellpadding="0"
+			height="265">
+			<tr valign=bottom>
+				<td width="21"><img src="/img/h_bl02.gif" width="18"
+					height="16"></td>
+				<td width="55" nowrap>아 이 디</td>
+				<td width="175">: <input type=text name="USER_ID" size=16
+					maxlength=16 STYLE="WIDTH: 155" placeholder="아이디를 입력하세요">
+				</td>
+				<td width="79"></td>
+			</tr>
+			<tr valign=bottom>
+				<td><img src="/img/h_bl02.gif" width="18" height="16"></td>
+				<td nowrap>비밀번호</td>
+				<td>: <input type=password name="USER_PASSWORD" id="password" size=14
+					maxlength=12 STYLE="WIDTH: 155" placeholder="비밀번호를 입력하세요">
+				</td>
+				<td><img src="/img/login.gif" border=0 align=absmiddle
+					onClick="send()"></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>
