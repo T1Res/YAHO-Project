@@ -3,7 +3,7 @@ package com.njm.yaho.domain.oracle.user;
 import java.util.Date;
 
 @lombok.Data
-public class UserDTO {
+public class UserOCDTO {
 	private String userId;
     private String userPassword;
     private String userNickname;

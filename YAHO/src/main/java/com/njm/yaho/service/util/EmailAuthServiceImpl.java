@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.njm.yaho.domain.oracle.util.EmailAuthDTO;
-import com.njm.yaho.mapper.oracle.user.UserMapper;
-import com.njm.yaho.mapper.oracle.util.EmailAuthMapper;
+import com.njm.yaho.domain.oracle.util.EmailAuthOCDTO;
+import com.njm.yaho.mapper.oracle.user.UserMapperOC;
+import com.njm.yaho.mapper.oracle.util.EmailAuthMapperOC;
 import com.njm.yaho.util.AuthCodeGenerator;
 
 import jakarta.servlet.http.HttpSession;
@@ -15,13 +15,13 @@ import jakarta.servlet.http.HttpSession;
 @Service
 public class EmailAuthServiceImpl implements EmailAuthService {
 	@Autowired
-    private EmailAuthMapper emailAuthMapper;
+    private EmailAuthMapperOC emailAuthMapper;
 
     @Autowired
     private MailService mailService;
     
     @Autowired
-    private UserMapper userMapper;
+    private UserMapperOC userMapper;
     
     @Override
 	public boolean emailExistsInUser(String email) {
@@ -30,7 +30,7 @@ public class EmailAuthServiceImpl implements EmailAuthService {
     
     @Override
     public void sendAuthCode(String email) {
-        EmailAuthDTO existing = emailAuthMapper.findByEmail(email);
+        EmailAuthOCDTO existing = emailAuthMapper.findByEmail(email);
 
         if (existing != null && existing.getTryCount() >= 5) {
             throw new IllegalStateException("너무 많은 시도를 했습니다.");
@@ -40,7 +40,7 @@ public class EmailAuthServiceImpl implements EmailAuthService {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expire = now.plusMinutes(10);
 
-        EmailAuthDTO dto = new EmailAuthDTO();
+        EmailAuthOCDTO dto = new EmailAuthOCDTO();
         dto.setEmail(email);
         dto.setAuthCode(code);
         dto.setExpireTime(expire);
@@ -57,7 +57,7 @@ public class EmailAuthServiceImpl implements EmailAuthService {
 
 	@Override
 	public boolean verifyCode(String email, String inputCode, HttpSession session) {
-		EmailAuthDTO dto = emailAuthMapper.findByEmailAndCode(email, inputCode);
+		EmailAuthOCDTO dto = emailAuthMapper.findByEmailAndCode(email, inputCode);
 
 	    if (dto == null) {
 	        throw new IllegalArgumentException("인증코드가 일치하지 않습니다.");

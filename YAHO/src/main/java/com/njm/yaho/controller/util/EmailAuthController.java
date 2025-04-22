@@ -70,6 +70,4 @@ public class EmailAuthController {
     	emailAuthService.deleteByEmail(email);  // 또는 서비스 통해 삭제
         return ResponseEntity.ok("인증 정보가 만료되어 삭제되었습니다.");
     }
-
-
 }
