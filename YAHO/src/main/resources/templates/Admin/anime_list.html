@@ -35,12 +35,12 @@
             <div class="tag-section">
                 <div class="tag-list">
                     <!-- 등록 버튼 --><br>
-                    <a href="#" class="tag-btn" id="open-modal" style="width: 100%; text-align: center; margin-bottom: 10px;">애니메이션 등록</a>
+                    <a href="#" class="tag-btn" id="open-insert" style="width: 100%; text-align: center; margin-bottom: 10px;">애니메이션 등록</a>
 
                     <!-- ✅ 통합 모달 -->
                     <div id="combinedModal" class="modal">
                         <div class="modal-content">
-                            <span class="close-modal">&times;</span>
+                            <span class="close-insert">&times;</span>
                             <form action="/Admin/insert_full" method="post" enctype="multipart/form-data">
                                 <!-- 기본 정보 -->
                                 <h4>기본 정보</h4>
@@ -131,9 +131,9 @@
 			<!-- 애니 제목 카드 리스트 끝 -->
 			
 			<!-- 수정 모달 시작 -->
-			<div id="editModal" class="modal" style="display: none;">
+			<div id="open-modify" class="modal" style="display: none;">
 			    <div class="modal-content">
-			        <span class="close-modal2">&times;</span>
+			        <span class="close-modify">&times;</span>
 			        <h2>수정</h2>
 			        <form id="editForm" method="post" action="/anime/update">
 			            <input type="hidden" name="id" id="animeId">
@@ -201,13 +201,13 @@
 <!-- 등록 모달 스크립트 시작 -->
 <script>
     // 모달 열기
-    document.getElementById("open-modal").onclick = function (e) {
+    document.getElementById("open-insert").onclick = function (e) {
         e.preventDefault();
         document.getElementById("combinedModal").style.display = "block";
     };
 
     // 모달 닫기
-    document.querySelector(".close-modal").onclick = function () {
+    document.querySelector(".close-insert").onclick = function () {
         document.getElementById("combinedModal").style.display = "none";
     };
 
@@ -230,8 +230,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const cards = document.querySelectorAll('.anime-title-card');
-        const modal = document.getElementById('editModal');
-        const closeButton = document.querySelector('.close-modal2');
+        const modal = document.getElementById('open-modify');
+        const closeButton = document.querySelector('.close-modify');
         const titleInput = document.getElementById('animeTitle');
         const idInput = document.getElementById('animeId');
 

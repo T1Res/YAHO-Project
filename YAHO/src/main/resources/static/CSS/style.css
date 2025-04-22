@@ -355,7 +355,7 @@
   border-radius: 10px;
 }
 
-.close-modal {
+.close-insert {
   color: #aaa;
   float: right;
   font-size: 28px;
@@ -364,7 +364,7 @@
 }
 
 
-.close-modal2 {
+.close-modify {
   color: #aaa;
   float: right;
   font-size: 28px;

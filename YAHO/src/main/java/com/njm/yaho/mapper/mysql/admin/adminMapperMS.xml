@@ -9,7 +9,7 @@
 	
 	<select id="getmslist" resultType="com.njm.yaho.domain.mysql.admin.AnimeMSDTO">
         SELECT ANIME_ID, TITLE, THUMNAIL_GARO_URL, THUMNAIL_SERO_URL, WEEKDAY, SCORE, TAGS 
-        FROM TBL_ANIME ORDER BY ANIME_ID
+        FROM TBL_ANIME ORDER BY TITLE
     </select>
 	
 	 

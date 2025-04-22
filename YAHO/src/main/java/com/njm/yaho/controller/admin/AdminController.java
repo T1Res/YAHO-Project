@@ -96,10 +96,7 @@ public class AdminController {
     @GetMapping("/list")
     public String animeList(Model model) {
         List<AnimeMSDTO> mslist = animeService.getmslist();
-        List<AnimeOCDTO> oclist = animeService.getoclist();
-        System.out.println("OC List: " + oclist);
         model.addAttribute("mslist", mslist);
-        model.addAttribute("oclist", oclist);
         return "Admin/anime_list.html"; // templates/animeList.html
     }
     
