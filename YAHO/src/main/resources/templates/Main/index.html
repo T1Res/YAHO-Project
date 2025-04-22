@@ -34,6 +34,21 @@
         <div class="navitem" onclick="location.href='/Schedule/animeSchedule'">방영중 애니</div>
         <div class="navitem">자유게시판</div>
         <div class="navitem" onclick="location.href='/Admin/insert'">관리자</div>
+        <div class="navitem" th:if="${session.USER_ID == null}">
+   			<a th:href="@{/User/User_Login}">로그인</a>
+		</div>
+        <div class="navitem" th:if="${session.USER_ID == null}">
+   			<a th:href="@{/User/User_EmailCheck}">회원가입</a>
+		</div>
+        <div class="navitem" th:if="${session.USER_ID != null}">
+   			<a th:href="@{/User/User_Modify}">회원정보 수정</a>
+		</div>
+		<div class="navitem" th:if="${session.USER_ID != null}">
+   			<a th:href="@{/User/User_Logout}">로그아웃</a>
+		</div>
+		<div class="navitem" th:if="${session.USER_ID != null}">
+   			<a th:href="@{/User/User_Profile}">프로필보기</a>
+		</div>
     </div>
     
     <br><br>

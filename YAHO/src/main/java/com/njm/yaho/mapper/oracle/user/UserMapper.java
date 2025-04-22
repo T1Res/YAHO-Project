@@ -1,16 +1,14 @@
-package com.njm.yaho.service.user;
+package com.njm.yaho.mapper.oracle.user;
 
-import org.springframework.stereotype.Service;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.njm.yaho.domain.oracle.user.UserDTO;
 
-@Service
-public interface UserService {
-	
-	
-	//로그인
-	public UserDTO UserLogin(String USER_ID,String USER_PASSWORD);
+@Mapper
+public interface UserMapper {
+	// 로그인
+	public UserDTO UserLogin(String USER_ID, String USER_PASSWORD);
 	// 회원가입
 	public int UserInsert(UserDTO dto);
 	// 중복검사
@@ -23,10 +21,7 @@ public interface UserService {
 	public void UserModify(UserDTO dto);
 	// 회원탈퇴
 	public void UserDelete(String USER_ID);
-	// 프로필
+	// 프로필보기
 	public UserDTO UserProfile(String USER_ID);
 	public String saveProfileImage(MultipartFile file);
-  
-  // 비밀번호 리셋 서비스
-  boolean resetPassword(String userId, String email);
 }
