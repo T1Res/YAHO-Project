@@ -1,16 +1,16 @@
 package com.njm.yaho.domain.oracle.user;
 
-import java.util.Date;
+import lombok.Data;
 
-@lombok.Data
+@Data
 public class UserDTO {
-	private String userId;
-    private String userPassword;
-    private String userNickname;
-    private String userEmail;
-    private String userBio;
-    private String userProfileImg;
-    private Date userCreatedDate;
-    private int userPermission;
-    private int userGender;
-}
+	private String USER_ID;
+	private String USER_PASSWORD;
+	private String USER_NICKNAME;
+	private String USER_EMAIL;
+	private String USER_BIO;
+	private String USER_PROFILE_IMG;
+	private int USER_GENDER;
+	private String USER_CREATED_DATE;
+	private int USER_PERMISSION;
+
