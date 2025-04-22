@@ -193,24 +193,24 @@
 	<div class="core">
 		<div class="core_title">추천 애니</div>
 		<div class="core_cont">
-			<img src="/static/img/java.png" alt=""> 
-			<img src="static/img/python.png" alt=""> 
-			<img src="static/img/c.png" alt=""> 
-			<img src="static/img/html.png" alt=""> 
-			<img src="static/img/css.png" alt=""> 
-			<img src="static/img/js.png" alt="">
+			<img src="" alt=""> 
+			<img src="" alt=""> 
+			<img src="" alt=""> 
+			<img src="" alt=""> 
+			<img src="" alt=""> 
+			<img src="" alt="">
 		</div>
 		
 		<div class="core_title">뭘넣을까</div>
 		<div class="core_cont" style="margin-bottom: 0; padding-bottom: 80px;">
-			<img id="umc" src="static/img/umc.png" alt="">
+			<img id="umc" src="" alt="">
 			<div id="umc_activity" class="activity">
 				<li>UMC 3rd Spring 부원</li>
 				<li>UMC 아이디어톤 5개 중 3개 수상</li>
 				<li>UMC 4th 운영진 Server 파트장</li>
 			</div>
 			
-			<img id="demoday" src="static/img/demoday.png" alt="">
+			<img id="demoday" src="" alt="">
 			<div id="demoday_activity" class="activity">
 				<li>UMC DemoDay 최우수상</li>
 			</div>
@@ -233,7 +233,7 @@
 						<section class="ani-section">
 							<div class="ani-row">
 								<h2>애니제목</h2>
-								<p id="anime_id"></p>
+								<p id="anime_title"></p>
 							</div>
 							
 							<div class="ani-row">
@@ -278,18 +278,42 @@
 		
 		console.log("애니 ID:", animeId);
 		
-		// 1. 상세 정보 로딩
-		fetch(`/anime/detail?animeId=${animeId}`)
-			.then(res => res.json())
-			.then(data => {
-				document.getElementById("anime_id").innerText = data.animeId;
-				document.getElementById("start_date").innerText = data.startDate;
-		      	document.getElementById("total_episode").innerText = data.totalEpisode;
-		      	document.getElementById("studio").innerText = data.studio;
-		      	document.getElementById("studio_link").href = data.studioLink;
-		      	document.getElementById("age_rating").innerText = data.ageRating;
-		      	document.getElementById("anime_desc").innerText = data.animeDesc;
-		});
+		// 기본 정보 로딩
+		fetch(`Main/anime/baseInfo?animeId=${animeId}`)
+		    .then(res => res.json())
+		    .then(data => {
+	            console.log("기본 정보:", data);
+		        const titleEl = document.getElementById("anime_title");
+		        const animeGaroImgEl = document.getElementById("modal_img");
+		
+		        if (titleEl) titleEl.innerText = data.title || "제목 없음";
+		        if (animeGaroImgEl) animeGaroImgEl.setAttribute("src", data.thumnailGaroUrl || "IMG/default.png");
+		    });
+		
+		// 상세 정보 로딩
+		fetch(`Main/anime/detailInfo?animeId=${animeId}`)
+		    .then(res => res.json())
+		    .then(data => {
+		        const startDateEl = document.getElementById("start_date");
+		        const totalEpEl = document.getElementById("total_episode");
+		        const studioEl = document.getElementById("studio");
+		        const studioLinkEl = document.getElementById("studio_link");
+		        const ratingEl = document.getElementById("age_rating");
+		        const descEl = document.getElementById("anime_desc");
+		
+		        if (startDateEl) startDateEl.innerText = data.startDate.substring(0, 10) || "정보가 없습니다.";
+		        if (totalEpEl) totalEpEl.innerText = data.totalEpisode || "정보가 없습니다.";
+		        
+		        if (studioLinkEl) {
+		        	studioLinkEl.setAttribute("href", data.studioLink);
+		        	studioLinkEl.setAttribute("target", "_blank"); // 새 창 열기
+		        	studioLinkEl.innerText = data.studio || "제작사 정보 없음";
+		        }
+		        
+		        if (ratingEl) ratingEl.innerText = data.ageRating || "미정";
+		        if (descEl) descEl.innerHTML = (data.animeDesc || "설명이 없습니다.").replace(/\n/g, "<br>");
+		    });
+
 
 		// 모달 열기
 		document.getElementById("animeModal").style.display = "block";
@@ -336,8 +360,26 @@
   
  	// 모달 닫기 함수
     function modal_close() {
-        document.getElementById("animeModal").style.display = "none";
-    }
+	    // 모달 내부 스크롤 먼저 초기화
+	    const modalContent = document.querySelector('.modal_content');
+	    if (modalContent) {
+	        modalContent.scrollTop = 0;
+	    }
+	
+	    // 모달 숨기기
+	    document.getElementById("animeModal").style.display = "none";
+	
+	    // 줄거리 더보기 초기화
+	    const summaryText = document.querySelector('.ani-summary p');
+	    const summaryButton = document.getElementById('summaryButton');
+	    if (summaryText.classList.contains('expanded')) {
+	        summaryText.classList.remove('expanded');
+	        summaryButton.textContent = '더보기';
+	    }
+	}
+
+
+
 
     // 모달 바깥 영역 클릭 시 닫기 기능 추가
     window.onclick = function(event) {
@@ -432,5 +474,20 @@ bullets.forEach((bullet, index) => {
 });
 
 showSlide(0);
+</script>
+
+<script>
+//모달 내부 줄거리 확장 버튼
+  const summaryText = document.querySelector('.ani-summary p');
+  const summaryButton = document.getElementById('summaryButton');
+
+  summaryButton.addEventListener('click', () => {
+    summaryText.classList.toggle('expanded');
+    if (summaryText.classList.contains('expanded')) {
+      summaryButton.textContent = '접기';
+    } else {
+      summaryButton.textContent = '더보기';
+    }
+  });
 </script>
 </html>
