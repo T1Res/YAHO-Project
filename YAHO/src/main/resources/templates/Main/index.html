@@ -360,8 +360,26 @@
   
  	// 모달 닫기 함수
     function modal_close() {
-        document.getElementById("animeModal").style.display = "none";
-    }
+	    // 모달 내부 스크롤 먼저 초기화
+	    const modalContent = document.querySelector('.modal_content');
+	    if (modalContent) {
+	        modalContent.scrollTop = 0;
+	    }
+	
+	    // 모달 숨기기
+	    document.getElementById("animeModal").style.display = "none";
+	
+	    // 줄거리 더보기 초기화
+	    const summaryText = document.querySelector('.ani-summary p');
+	    const summaryButton = document.getElementById('summaryButton');
+	    if (summaryText.classList.contains('expanded')) {
+	        summaryText.classList.remove('expanded');
+	        summaryButton.textContent = '더보기';
+	    }
+	}
+
+
+
 
     // 모달 바깥 영역 클릭 시 닫기 기능 추가
     window.onclick = function(event) {
