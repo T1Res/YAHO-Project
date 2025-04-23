@@ -133,99 +133,101 @@
 								<form th:action="@{/Schedule/deleteRate}" method="post">
 									<!-- 삭제버튼 -->
 									<input type="hidden" name="USER_ID" th:value="${Aldto.USER_ID}" />
-									<input type="hidden" name="ANIME_ID"th:value="${Aldto.ANIME_ID}" />
+									<input type="hidden" name="ANIME_ID"
+										th:value="${Aldto.ANIME_ID}" />
 									<button type="submit">삭제</button>
 								</form>
 								<hr style="margin-top: 20px;" />
 							</div>
 
+
+
+							<!-- 기존 form 태그 제거 -->
+							<!-- 히든 -->
+							<input type="hidden" id="userId" name="USER_ID"
+								th:value="${USER_ID}" /> <input type="hidden" id="animeId"
+								name="ANIME_ID" value="999" />
 							
-								
-								<!-- 기존 form 태그 제거 -->
-								<!-- 히든 -->
-								<input type="hidden" id="userId" name="USER_ID" th:value="${USER_ID}" />
-								<input type="hidden" id="animeId" name="ANIME_ID" value="999" />
-
-								<!-- radio, textarea는 그대로 유지 -->
-								<!-- ⭐ 별점 입력 영역 -->
-									<div class="rating">
-										<label class="rating__label rating__label--half"
-											for="starhalf"> <input type="radio" id="starhalf"
-											class="rating__input" name="SCORE_SCORE" value=0.5 /> <span
-											class="star-icon"></span>
-										</label> <label class="rating__label rating__label--full" for="star1">
-											<input type="radio" id="star1" class="rating__input"
-											name="SCORE_SCORE" value=1.0 /> <span class="star-icon"></span>
-										</label> <label class="rating__label rating__label--half"
-											for="star1half"> <input type="radio" id="star1half"
-											class="rating__input" name="SCORE_SCORE" value=1.5 /> <span
-											class="star-icon"></span>
-										</label> <label class="rating__label rating__label--full" for="star2">
-											<input type="radio" id="star2" class="rating__input"
-											name="SCORE_SCORE" value=2.0 /> <span class="star-icon"></span>
-										</label> <label class="rating__label rating__label--half"
-											for="star2half"> <input type="radio" id="star2half"
-											class="rating__input" name="SCORE_SCORE" value=2.5 /> <span
-											class="star-icon"></span>
-										</label> <label class="rating__label rating__label--full" for="star3">
-											<input type="radio" id="star3" class="rating__input"
-											name="SCORE_SCORE" value=3.0 /> <span class="star-icon"></span>
-										</label> <label class="rating__label rating__label--half"
-											for="star3half"> <input type="radio" id="star3half"
-											class="rating__input" name="SCORE_SCORE" value=3.5 checked />
-											<span class="star-icon"></span>
-										</label> <label class="rating__label rating__label--full" for="star4">
-											<input type="radio" id="star4" class="rating__input"
-											name="SCORE_SCORE" value=4.0 /> <span class="star-icon"></span>
-										</label> <label class="rating__label rating__label--half"
-											for="star4half"> <input type="radio" id="star4half"
-											class="rating__input" name="SCORE_SCORE" value=4.5 /> <span
-											class="star-icon"></span>
-										</label> <label class="rating__label rating__label--full" for="star5">
-											<input type="radio" id="star5" class="rating__input"
-											name="SCORE_SCORE" value=5.0 /> <span class="star-icon"></span>
-										</label>
-									</div>
-									<br>
-								<!-- 📝 댓글 입력창 -->
-									<div style="margin-top: 20px;">
-										<textarea name="SCORE_CONTENT" rows="4" cols="50"
-											placeholder="댓글을 입력해주세요"></textarea>
-									</div>
-								<!-- 등록(Ajax테스트) 버튼 -->
-								<button type="button" onclick="submitRate()">등록</button>
-					
+							<div class="rating-container-row"></div>
+							
+							<!-- radio, textarea는 그대로 유지 -->
+							<!-- ⭐ 별점 입력 영역 -->
+							<div class="rating">
+								<label class="rating__label rating__label--half" for="starhalf">
+									<input type="radio" id="starhalf" class="rating__input"
+									name="SCORE_SCORE" value=0.5 /> <span class="star-icon"></span>
+								</label> <label class="rating__label rating__label--full" for="star1">
+									<input type="radio" id="star1" class="rating__input"
+									name="SCORE_SCORE" value=1.0 /> <span class="star-icon"></span>
+								</label> <label class="rating__label rating__label--half"
+									for="star1half"> <input type="radio" id="star1half"
+									class="rating__input" name="SCORE_SCORE" value=1.5 /> <span
+									class="star-icon"></span>
+								</label> <label class="rating__label rating__label--full" for="star2">
+									<input type="radio" id="star2" class="rating__input"
+									name="SCORE_SCORE" value=2.0 /> <span class="star-icon"></span>
+								</label> <label class="rating__label rating__label--half"
+									for="star2half"> <input type="radio" id="star2half"
+									class="rating__input" name="SCORE_SCORE" value=2.5 /> <span
+									class="star-icon"></span>
+								</label> <label class="rating__label rating__label--full" for="star3">
+									<input type="radio" id="star3" class="rating__input"
+									name="SCORE_SCORE" value=3.0 /> <span class="star-icon"></span>
+								</label> <label class="rating__label rating__label--half"
+									for="star3half"> <input type="radio" id="star3half"
+									class="rating__input" name="SCORE_SCORE" value=3.5 checked />
+									<span class="star-icon"></span>
+								</label> <label class="rating__label rating__label--full" for="star4">
+									<input type="radio" id="star4" class="rating__input"
+									name="SCORE_SCORE" value=4.0 /> <span class="star-icon"></span>
+								</label> <label class="rating__label rating__label--half"
+									for="star4half"> <input type="radio" id="star4half"
+									class="rating__input" name="SCORE_SCORE" value=4.5 /> <span
+									class="star-icon"></span>
+								</label> <label class="rating__label rating__label--full" for="star5">
+									<input type="radio" id="star5" class="rating__input"
+									name="SCORE_SCORE" value=5.0 /> <span class="star-icon"></span>
+								</label>
 							</div>
-						</div>
-
-						<!-- 통계 -->
-
-						<div class="rating-box2">
-							<h1 style="text-align: center;">통계</h1>
-
-							<!-- 좌우 정렬 레이아웃 -->
-							<div class="stats-row">
-								<!-- 왼쪽: 평점 텍스트 -->
-								<div class="grade-section">
-									&ensp;<span style="font-size: 40px;" th:text="${grade}"></span>
-									<br> <br> <span class="grade-badge"
-										th:text="${gradeMark}"></span>
-								</div>
-
-								<!-- 오른쪽: 차트 삽입 -->
-								<div class="chart-section">
-									<div th:replace="~{/Info/testChart2 :: chartFragment}"></div>
-								</div>
-								
-								<!-- 성별 도넛 분포도 -->
-								<div class="chart-section">
-									<div th:replace="~{/Info/genderChart :: chartFragment}"></div>
-								</div>
+							<br>
+							<!-- 📝 댓글 입력창 -->
+							<div style="margin-top: 20px;">
+								<textarea name="SCORE_CONTENT" rows="4" cols="50"
+									placeholder="댓글을 입력해주세요"></textarea>
 							</div>
-						</div>
+							<!-- 등록(Ajax테스트) 버튼 -->
+							<button type="button" onclick="submitRate()">등록</button>
 
+						</div>
 					</div>
-				
+
+					<!-- 통계 -->
+
+					<div class="rating-box2">
+
+						<div class="stats-row">
+
+							<!-- 평점 숫자 -->
+							<div class="grade-section">
+								<span style="font-size: 30px;"th:text=${grade}></span><br> <span
+									class="grade-badge" th:text="${gradeMark}"></span>
+							</div>
+
+							<!-- 막대 그래프 -->
+							<div class="chart-section">
+								<canvas id="myChart"></canvas>
+							</div>
+
+							<!-- 도넛 차트 -->
+							<div class="chart-section donut-section">
+								<canvas id="genderChart"></canvas>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
 				<!-- 평점 게시판 목록 -->
 
 				<div class="wrap">
@@ -290,7 +292,7 @@
 							<div style="margin-top: 4px;">
 								<span th:text="${dto.SCORE_CONTENT}">댓글</span>
 							</div>
-					</div>
+						</div>
 						<form th:action="@{/Schedule//updateRate}" method="post">
 							<input type="text" name="USER_ID" th:value="${dto.USER_ID}" /> <input
 								type="hidden" name="ANIME_ID" th:value="${dto.ANIME_ID}" />
@@ -308,11 +310,11 @@
 	<!-- 등록 Ajax -->
 	<script src="/JS/submitTest.js"></script>
 	<!-- 도넛 -->
-	<script src="/JS/genderChart.js"></script>	
+	<script src="/JS/genderChart.js"></script>
 	<!-- 별점 기능 -->
 	<script src="/JS/Rating.js"></script>
 	<!-- 통계 -->
-	
+
 	<script th:inline="javascript">
     /*<![CDATA[*/
         let voteLabels = /*[[${scoreList}]]*/ [];
@@ -322,7 +324,9 @@
 
 	<script>
     const ctx2 = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx2, {
+
+    // ✅ 전역에 등록
+    window.myChart = new Chart(ctx2, {
         type: 'bar',
         data: {
             labels: voteLabels,
@@ -330,27 +334,24 @@
                 label: '평점 분포',
                 data: voteCounts,
                 backgroundColor: [
-                	 'rgba(255, 99, 132, 0.6)',   // 0~1
-                     'rgba(54, 162, 235, 0.6)',   // 1~2
-                     'rgba(255, 206, 86, 0.6)',   // 2~3
-                     'rgba(75, 192, 192, 0.6)',   // 3~4
-                     'rgba(153, 102, 255, 0.6)'   // 4~5
-                	],
+                    'rgba(255, 99, 132, 0.6)',   // 0~1
+                    'rgba(54, 162, 235, 0.6)',   // 1~2
+                    'rgba(255, 206, 86, 0.6)',   // 2~3
+                    'rgba(75, 192, 192, 0.6)',   // 3~4
+                    'rgba(153, 102, 255, 0.6)'   // 4~5
+                ],
                 borderColor: [
-                	'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
                     'rgba(75, 192, 192, 1)',
                     'rgba(153, 102, 255, 1)'
-                    ],
+                ],
                 borderWidth: 1,
-               
-             // ✅ 막대 두께 조절 옵션
                 barPercentage: 0.5,
                 categoryPercentage: 0.5
             }]
         },
-        //막대 크기 관한 옵션
         options: {
             responsive: true,
             maintainAspectRatio: false,
@@ -358,11 +359,10 @@
                 y: {
                     beginAtZero: true
                 }
-                
             }
         }
     });
-    </script>
+</script>
 	<!-- 도넛 함수 -->
 	<script th:inline="javascript">
 /*<![CDATA[*/

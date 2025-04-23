@@ -85,55 +85,53 @@ function refreshAll(animeId, userId) {
 
 function updateBarChart(scoreList, countList) {
 	const chartCanvas = document.getElementById('myChart');
-	   if (!chartCanvas) {
-	       console.warn("⚠️ myChart 캔버스를 찾을 수 없습니다.");
-	       return;
+	    if (!chartCanvas) return;
+
+    const ctx2 = chartCanvas.getContext('2d');
+
+	// ⚠️ 반드시 전역 차트 인스턴스를 사용해야 destroy 가능
+	   if (window.myChart && typeof window.myChart.destroy === 'function') {
+	       window.myChart.destroy();
 	   }
+	   // ✅ 크기 명시 (canvas 스타일 초기화 방지)
+	      chartCanvas.width = 300;
+	      chartCanvas.height = 200;
 
-	    const ctx2 = chartCanvas.getContext('2d');
-
-    // ✅ 차트가 존재하면 업데이트, 없으면 새로 생성
-	// 존재하는 경우에만 update 호출
-	   if (window.myChart && typeof window.myChart.update === 'function') {
-	       window.myChart.data.labels = scoreList;
-	       window.myChart.data.datasets[0].data = countList;
-	       window.myChart.update();
-    } else {
-        // 새로 생성
-		console.log("📌 myChart가 없어 새로 생성합니다.");
-        window.myChart = new Chart(ctx2, {
-            type: 'bar',
-            data: {
-                labels: scoreList,
-                datasets: [{
-                    label: '평점 분포',
-                    data: countList,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.6)',
-                        'rgba(54, 162, 235, 0.6)',
-                        'rgba(255, 206, 86, 0.6)',
-                        'rgba(75, 192, 192, 0.6)',
-                        'rgba(153, 102, 255, 0.6)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)'
-                    ],
-                    borderWidth: 1,
-                    barPercentage: 0.5,
-                    categoryPercentage: 0.5
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: { beginAtZero: true }
+    // 새 차트 생성
+    window.myChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: scoreList,
+            datasets: [{
+                label: '평점 분포',
+                data: countList,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1,
+                barPercentage: 0.5,
+                categoryPercentage: 0.5
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
-    }
+        }
+    });
 }
