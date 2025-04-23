@@ -282,7 +282,43 @@
 			</div>
 		</div>
 	</div>
-	
+	    <!-- 오디오 재생 태그 -->
+    <audio id="audioPlayer" hidden autoplay muted></audio>
+
+    <script th:inline="javascript">
+       
+		let playAudio = /*[[${playAudio}]]*/ false;
+		console.log("playAudio 플래그 값:", playAudio); 
+
+        if (playAudio) {
+            const mp3Files = [
+                "[[@{/ljj/audio/yahojhr.mp3}]]",
+                "[[@{/ljj/audio/yahoasy.mp3}]]",
+                "[[@{/ljj/audio/yahokrw.mp3}]]",
+                "[[@{/ljj/audio/yahosgm.mp3}]]",
+                "[[@{/ljj/audio/yaholjj.mp3}]]"
+            ];
+
+            function getRandomMP3() {
+                const randomIndex = Math.floor(Math.random() * mp3Files.length);
+                return mp3Files[randomIndex];
+            }
+
+            window.addEventListener("load", function () {
+                const audioElement = document.getElementById("audioPlayer");
+                console.log("audioElement 존재 여부:", audioElement);
+                if (audioElement) {
+                    audioElement.src = getRandomMP3();
+                    audioElement.muted = false;
+                    audioElement.play().then(() => {
+                        console.log("🎵 재생 성공");
+                    }).catch(error => {
+                        console.log("❌ 재생 실패:", error);
+                    });
+                }
+            });
+        }
+    </script>
 	<!-- Swiper JS -->
 	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>  
 </body>

@@ -20,6 +20,7 @@
 	}
 </script>
 <body>
+	
 	<form name="user" method="post" th:action="@{/User/User_Login}">
 		<table width="583" border="0" cellspacing="0" cellpadding="0"
 			height="265">
@@ -96,6 +97,16 @@
 
 		<button onclick="closeFindPwModal()" style="float: right;">닫기</button>
 	</div>
+	<!-- ❗ 로그인 실패 모달창 -->
+<div id="errorModal" class="modal" style="display:none; position:fixed; top:30%; left:50%; transform:translate(-50%, -50%);
+	background-color:white; border:1px solid #ccc; padding:20px; z-index:1000; box-shadow:0 0 10px rgba(0,0,0,0.2); width:300px;">
+	
+	<p id="errorModalMessage" style="color:red; font-weight:bold; margin-bottom:20px;" th:text="${error}">에러 메시지</p>
+	
+	<div style="text-align:center;">
+		<button onclick="closeErrorModal()">확인</button>
+	</div>
+</div>
 </body>
 
 <!-- ID 찾기 -->
@@ -257,4 +268,19 @@ let findPwDelayRemaining = 0;
 		}
 
 </script>
+<script th:inline="javascript">
+/*<![CDATA[*/
+const errorMessage = /*[[${error}]]*/ '';
+if (errorMessage && errorMessage.trim().length > 0) {
+	document.getElementById("errorModal").style.display = "block";
+	document.getElementById("modalOverlay").style.display = "block";
+}
+
+function closeErrorModal() {
+	document.getElementById("errorModal").style.display = "none";
+	document.getElementById("modalOverlay").style.display = "none";
+}
+/*]]>*/
+</script>
+
 </html>
