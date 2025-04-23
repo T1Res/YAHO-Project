@@ -75,12 +75,14 @@
 						<div class="rating-box">
 							<h1>평점 게시판</h1>
 							<!-- 회원이 벌써 작성한 내용이 존재한다면 값 받아와서 평점 수정-->
-							<div th:if="${!#strings.isEmpty(Aluser_ID)}">
+							<div id="rateFormArea">
+								<div th:if="${!#strings.isEmpty(Aluser_ID)}">
 
-								<form th:action="@{/Schedule/updateRatePro}" method="post">
+
 									<input type="text" name="USER_ID" th:value="${Aldto.USER_ID}" />
-									<input type="hidden" name="ANIME_ID"
-										th:value="${Aldto.ANIME_ID}" />
+									<input type="hidden" name="ANIME_ID"th:value="${Aldto.ANIME_ID}" />
+									<!-- 수정폼 전체를 감싸는 영역에만 id 부여 -->
+
 									<!-- ⭐ 별점 입력 영역 -->
 									<div class="rating">
 										<label class="rating__label rating__label--half"
@@ -128,25 +130,28 @@
 									</div>
 
 									<!-- 수정버튼 -->
-									<button type="submit">수정</button>
-								</form>
-								<form th:action="@{/Schedule/deleteRate}" method="post">
-									<!-- 삭제버튼 -->
-									<input type="hidden" name="USER_ID" th:value="${Aldto.USER_ID}" />
-									<input type="hidden" name="ANIME_ID"
-										th:value="${Aldto.ANIME_ID}" />
-									<button type="submit">삭제</button>
-								</form>
-								<hr style="margin-top: 20px;" />
+
+									<button type="button" onclick="updateRate()">수정</button>
+
+									<form th:action="@{/Schedule/deleteRate}" method="post">
+										<!-- 삭제버튼 -->
+										<input type="hidden" name="USER_ID"
+											th:value="${Aldto.USER_ID}" /> <input type="hidden"
+											name="ANIME_ID" th:value="${Aldto.ANIME_ID}" />
+										<button type="submit">삭제</button>
+									</form>
+									<hr style="margin-top: 20px;" />
+								</div>
 							</div>
-
-
-
-							<!-- 기존 form 태그 제거 -->
 							<!-- 히든 -->
 							<input type="hidden" id="userId" name="USER_ID"
 								th:value="${USER_ID}" /> <input type="hidden" id="animeId"
 								name="ANIME_ID" value="999" />
+								
+							<div id="registerFormArea">
+							<div th:if="${#strings.isEmpty(Aluser_ID)}">
+							<!-- 기존 form 태그 제거 -->
+							
 
 							<div class="rating-container-row"></div>
 
@@ -199,7 +204,8 @@
 							<button type="button" onclick="submitRate()">등록</button>
 
 						</div>
-
+						</div>
+</div>
 
 						<!-- 통계 -->
 
@@ -228,6 +234,7 @@
 
 					</div>
 				</div>
+				
 				<!-- 평점 게시판 목록 -->
 
 				<div class="wrap">
@@ -309,6 +316,8 @@
 	<script src="/JS/chart.umd.js"></script>
 	<!-- 등록 Ajax -->
 	<script src="/JS/submitTest.js"></script>
+	<!-- 수정 Ajax -->
+	<script src="/JS/updateTest.js"></script>
 	<!-- 도넛 -->
 	<script src="/JS/genderChart.js"></script>
 	<!-- 별점 기능 -->

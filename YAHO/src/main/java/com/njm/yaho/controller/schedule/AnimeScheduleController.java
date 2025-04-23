@@ -276,4 +276,29 @@ public class AnimeScheduleController {
 
 	    return map;
 	}
+	// ✅ AnimeScheduleController.java 내에 추가
+	@PostMapping("/ajaxUpdate")
+	@ResponseBody
+	public Map<String, Object> ajaxUpdate(@RequestBody RatingDTO dto) {
+	    log.info("[AJAX 수정] USER_ID: {}", dto.getUSER_ID());
+	    log.info("[AJAX 수정] ANIME_ID: {}", dto.getANIME_ID());
+	    log.info("[AJAX 수정] SCORE: {}", dto.getSCORE_SCORE());
+	    log.info("[AJAX 수정] CONTENT: {}", dto.getSCORE_CONTENT());
+
+	    int row = Rateservice.updateRate(dto);
+	    Map<String, Object> result = new HashMap<>();
+	    result.put("success", row > 0);
+	    result.put("message", row > 0 ? "수정 완료" : "수정 실패");
+	    return result;
+	}
+	//Ajax 삭제
+	@PostMapping("/ajaxDelete")
+	@ResponseBody
+	public Map<String, Object> ajaxDelete(@RequestBody RatingDTO dto) {
+	    int result = Rateservice.deleteRate(dto.getANIME_ID(), dto.getUSER_ID());
+	    
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("success", result > 0);  // 🔥 삭제 성공 여부를 boolean으로 변환
+	    return map;
+	}
 }

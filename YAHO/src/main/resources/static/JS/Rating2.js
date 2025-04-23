@@ -62,7 +62,7 @@ function prevAll() {
     let radioSiblings = [],
         prevSibling = radio.parentElement.previousElementSibling;
 
-    while (prevSibling) {	
+    while (prevSibling) {
         radioSiblings.push(prevSibling);
         prevSibling = prevSibling.previousElementSibling;
     }
