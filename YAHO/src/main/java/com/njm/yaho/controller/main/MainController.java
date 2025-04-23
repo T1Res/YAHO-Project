@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,13 +21,15 @@ public class MainController {
 	private MainService service;
 	
 	@GetMapping("")
-	public String main(Model model) {
+	public String main(Model model,@ModelAttribute("playAudio") Object flashAudio) {
 		List<MainMSDTO> animeList = service.getTodayAnimeList();
 		int animeCount = animeList.size();
 		
 		model.addAttribute("animeCount", animeCount);
 		model.addAttribute("animeList", animeList);
-		
+		if (flashAudio != null) {
+	        model.addAttribute("playAudio", true);
+	    }
         return "Main/index";
     }
 	
