@@ -1,5 +1,13 @@
-const ctx2 = document.getElementById('genderChart');
-  new Chart(ctx2, {
+function drawGenderChart(maleRatio, femaleRatio) {
+  const ctx = document.getElementById('genderChart').getContext('2d');
+
+  // 기존 차트가 있으면 제거
+  if (window.genderChartInstance) {
+    window.genderChartInstance.destroy();
+  }
+
+  // 새 차트 생성
+  window.genderChartInstance = new Chart(ctx, {
     type: 'doughnut',
     data: {
       labels: ['남성', '여성'],
@@ -32,7 +40,7 @@ const ctx2 = document.getElementById('genderChart');
         },
         tooltip: {
           callbacks: {
-            label: function(context) {
+            label: function (context) {
               return `${context.label}: ${context.raw}%`;
             }
           }
@@ -40,3 +48,11 @@ const ctx2 = document.getElementById('genderChart');
       }
     }
   });
+}
+window.addEventListener("DOMContentLoaded", () => {
+  if (typeof drawGenderChart === 'function') {
+    drawGenderChart(maleRatio, femaleRatio);
+  }
+});
+// ✅ 전역으로 함수 노출
+window.drawGenderChart = drawGenderChart;

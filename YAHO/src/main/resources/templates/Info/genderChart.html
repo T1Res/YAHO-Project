@@ -16,7 +16,7 @@
 
 <div th:fragment="chartFragment">
 <!-- 성별 도넛 -->
-	<div style="width: 100%; max-width: 300px; margin: 40px auto;">
+	<div style="width: 100%; max-width: 250px; margin: 40px auto;">
   		<canvas id="genderChart" ></canvas>
 	</div>
 </div>
@@ -25,6 +25,11 @@
   const maleRatio = /*[[${maleRatio}]]*/ 50;
   const femaleRatio = /*[[${femaleRatio}]]*/ 50;
 /*]]>*/
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    drawGenderChart(maleRatio, femaleRatio);
+  });
 </script>
  <script src="/JS/chart.umd.js"></script>
   <script src="/JS/genderChart.js"></script>

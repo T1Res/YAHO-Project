@@ -25,4 +25,4 @@ public interface UserMapper {
 	// 프로필보기
 	public UserDTO UserProfile(String USER_ID);
 	public String saveProfileImage(MultipartFile file);
-
+}
