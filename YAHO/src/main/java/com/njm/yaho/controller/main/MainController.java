@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,20 +21,31 @@ public class MainController {
 	private MainService service;
 	
 	@GetMapping("")
-	public String main(Model model) {
+	public String main(Model model,@ModelAttribute("playAudio") Object flashAudio) {
 		List<MainMSDTO> animeList = service.getTodayAnimeList();
 		int animeCount = animeList.size();
 		
 		model.addAttribute("animeCount", animeCount);
 		model.addAttribute("animeList", animeList);
-		
+		if (flashAudio != null) {
+	        model.addAttribute("playAudio", true);
+	    }
         return "Main/index";
     }
 	
-	@GetMapping("/anime/detail")
+	// 요약정보 전송
+	@GetMapping("/anime/baseInfo")
 	@ResponseBody
-	public MainOCDTO getAnimeInfo(int animeId) {
-        MainOCDTO dto = service.getAnimeInfo(animeId);
+	public MainMSDTO getAnimeBaseInfo(int animeId) {
+		MainMSDTO dto = service.getAnimeBaseInfo(animeId);
+        return dto;
+	}
+	
+	// 상세정보 전송
+	@GetMapping("/anime/detailInfo")
+	@ResponseBody
+	public MainOCDTO getAnimeDetailInfo(int animeId) {
+        MainOCDTO dto = service.getAnimeDetailInfo(animeId);
         return dto;
 	}
 }
