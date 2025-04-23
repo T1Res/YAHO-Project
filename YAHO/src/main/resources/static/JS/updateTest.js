@@ -64,4 +64,5 @@ function handleStarClick(el) {
     console.log("별점 선택됨:", el.value);
     // 필요한 경우 여기에 별 아이콘 색상 변경 등 효과 추가
 }
+
 window.updateRate = updateRate;

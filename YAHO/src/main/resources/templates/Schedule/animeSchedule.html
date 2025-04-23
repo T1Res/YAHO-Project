@@ -133,13 +133,12 @@
 
 									<button type="button" onclick="updateRate()">수정</button>
 
-									<form th:action="@{/Schedule/deleteRate}" method="post">
+									
 										<!-- 삭제버튼 -->
-										<input type="hidden" name="USER_ID"
-											th:value="${Aldto.USER_ID}" /> <input type="hidden"
-											name="ANIME_ID" th:value="${Aldto.ANIME_ID}" />
-										<button type="submit">삭제</button>
-									</form>
+										<input type="hidden" name="USER_ID"th:value="${Aldto.USER_ID}" /> 
+										<input type="hidden"name="ANIME_ID" th:value="${Aldto.ANIME_ID}" />
+										<button type="button" onclick="deleteRate()">삭제</button>
+									
 									<hr style="margin-top: 20px;" />
 								</div>
 							</div>

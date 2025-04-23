@@ -28,7 +28,7 @@ function submitRate() {
         if (data.success) {
             alert('등록 완료!');
             refreshAll(animeId, userId);
-			// ✅ 등록 폼 영역 날ㄹ기
+			// ✅ 등록 폼 영역 날리기
 						const registerForm = document.getElementById("registerFormArea");
 						if (registerForm) {
 						    console.log("등록폼 날림");
@@ -137,6 +137,7 @@ function buildEditForm(userId, animeId, score, content) {
         <input type="hidden" name="USER_ID" value="${userId}">
         <input type="hidden" name="ANIME_ID" value="${animeId}">
         <div class="rating">${generateStars(score)}</div>
+		<br>
         <textarea name="SCORE_CONTENT" rows="4" cols="50">${content}</textarea>
 		<br>
         <button type="submit">수정</button>
@@ -227,7 +228,7 @@ function deleteRate() {
 			`;
 
 			registerForm.style.display = 'block';
-			applyRatingEventListeners(); // 별점 이벤트 다시 연결
+			
             
 
             refreshAll(animeId, userId);
