@@ -32,7 +32,7 @@
         <div class="navitem" onclick="location.href='/Main'">홈</div>
         <div class="navitem" onclick="location.href='/List'">전체 애니</div>
         <div class="navitem" onclick="location.href='/Schedule/animeSchedule'">방영중 애니</div>
-        <div class="navitem">자유게시판</div>
+        
         <div class="navitem" onclick="location.href='/Admin/insert'">관리자</div>
         <div class="navitem" th:if="${session.USER_ID == null}">
    			<a th:href="@{/User/User_Login}">로그인</a>
