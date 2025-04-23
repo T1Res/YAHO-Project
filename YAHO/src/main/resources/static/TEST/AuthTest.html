@@ -46,7 +46,7 @@
     	  }
 
     	  // ✅ 중복 이메일 체크
-    	  fetch(`/auth/check-duplicate?email=${encodeURIComponent(email)}`)
+    	  fetch(`/Auth/check-duplicate?email=${encodeURIComponent(email)}`)
     	    .then(res => {
     	      if (!res.ok) throw res;
     	      return res.text();
@@ -54,7 +54,7 @@
     	    .then(() => {
     	      // ✅ 중복이 아니므로 인증코드 전송 진행
     	      // 기존 sendAuthCode 내부의 Ajax 요청 이어서 작성
-    	      fetch("/auth/send", {
+    	      fetch("/Auth/send", {
     	        method: "POST",
     	        headers: { "Content-Type": "application/x-www-form-urlencoded" },
     	        body: `email=${encodeURIComponent(email)}`
@@ -101,7 +101,7 @@
     	    return;
     	  }
 
-    	  fetch("/auth/verify", {
+    	  fetch("/Auth/verify", {
     	    method: "POST",
     	    headers: {
     	      "Content-Type": "application/x-www-form-urlencoded"
@@ -118,7 +118,7 @@
 			
 			  // ✅ 0.1초 지연 후 페이지 이동 (이탈 경고 방지용)
 			  setTimeout(() => {
-			    window.location.href = "/Main";
+				  window.location.href = "/User/User_InsertForm?USER_EMAIL=" + email;
 			  }, 100);
 			})
 
@@ -150,7 +150,7 @@
           alert("인증 시간이 만료되었습니다. 다시 인증을 수행해주세요.");
 
           const email = document.getElementById("emailInput").value;
-          fetch(`/auth/expire?email=${encodeURIComponent(email)}`, { method: "DELETE" });
+          fetch(`/Auth/expire?email=${encodeURIComponent(email)}`, { method: "DELETE" });
 
           resetToInitialState();
         }
@@ -186,7 +186,7 @@
         // ✅ 서버에 인증 정보 삭제 요청
         const email = document.getElementById("emailInput").value;
         if (email) {
-          navigator.sendBeacon("/auth/expire", new URLSearchParams({ email }));
+          navigator.sendBeacon("/Auth/expire", new URLSearchParams({ email }));
         }
 
         // ✅ preventUnload false로 설정해 이후 이벤트 막지 않음
@@ -203,12 +203,9 @@
     	  const email = document.getElementById("emailInput").value;
     	  if (email) {
     	    const data = new URLSearchParams({ email });
-    	    navigator.sendBeacon("/auth/expire", data);
+    	    navigator.sendBeacon("/Auth/expire", data);
     	  }
     });
-
-
-
 </script>
 </body>
 </html>

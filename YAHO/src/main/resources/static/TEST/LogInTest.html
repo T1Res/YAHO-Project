@@ -128,7 +128,7 @@ let findIdDelayRemaining = 0;
 	    return;
 	  }
 
-	  fetch(`/User/find-id/send?email=${encodeURIComponent(email)}`)
+	  fetch(`/Auth/find-id/send?email=${encodeURIComponent(email)}`)
 	    .then(res => {
 	      if (!res.ok) throw res;
 	      return res.text();
@@ -206,7 +206,7 @@ let findPwDelayRemaining = 0;
 	    return;
 	  }
 
-	  fetch("/User/find-pw/reset", {
+	  fetch("/Auth/find-pw/reset", {
 	    method: "POST",
 	    headers: { "Content-Type": "application/x-www-form-urlencoded" },
 	    body: `userId=${encodeURIComponent(userId)}&email=${encodeURIComponent(email)}&captcha=${captchaResponse}`
