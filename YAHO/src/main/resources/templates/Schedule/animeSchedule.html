@@ -23,7 +23,7 @@
         <div class="navitem" onclick="location.href='/Main'">홈</div>
         <div class="navitem" onclick="location.href='/List'">전체 애니</div>
         <div class="navitem" onclick="location.href='/Schedule/animeSchedule'">방영중 애니</div>
-        <div class="navitem">자유게시판</div>
+        
         <div class="navitem" onclick="location.href='/Admin/insert'">관리자</div>
     </div>
     <br><br>
@@ -41,6 +41,7 @@
 		<div th:each="day : ${daysOfWeek}" class="day-column">
 			<div th:each="anime : ${animeByDay[day.trim()]}" 
 				class="anime-card"
+				th:data-id="${anime.ANIME_ID}"
 				th:data-title="${anime.TITLE}" th:data-rating="${anime.SCORE}"
      			th:data-image1="${anime.THUMNAIL_GARO_URL}" th:data-image2="${anime.THUMNAIL_SERO_URL}">
      			
@@ -96,6 +97,7 @@
 	// 클릭 이벤트 추가
 	document.querySelectorAll(".anime-card").forEach(card => {
         card.addEventListener("click", function () {
+			const id = card.getAttribute("data-id");
             const title = card.getAttribute("data-title");
             const rating = card.getAttribute("data-rating");
             const image1 = card.getAttribute("data-image1");

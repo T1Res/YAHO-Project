@@ -19,4 +19,14 @@
       	ORDER BY 
       		TITLE
 	</select>
+
+	<select id="getAnimeBaseInfo" resultType="com.njm.yaho.domain.mysql.main.MainMSDTO">
+		SELECT
+			TITLE AS title,
+			THUMNAIL_GARO_URL AS thumnailGaroUrl
+		FROM
+			TBL_ANIME
+		WHERE
+			ANIME_ID = #{animeId}
+	</select>
 </mapper>
