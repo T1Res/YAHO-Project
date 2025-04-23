@@ -71,7 +71,7 @@
 				<!-- 평점 게시판 -->
 
 				<div class="wrap">
-					<div class="rating-container">
+					<div class="rating-container-row">
 						<div class="rating-box">
 							<h1>평점 게시판</h1>
 							<!-- 회원이 벌써 작성한 내용이 존재한다면 값 받아와서 평점 수정-->
@@ -147,9 +147,9 @@
 							<input type="hidden" id="userId" name="USER_ID"
 								th:value="${USER_ID}" /> <input type="hidden" id="animeId"
 								name="ANIME_ID" value="999" />
-							
+
 							<div class="rating-container-row"></div>
-							
+
 							<!-- radio, textarea는 그대로 유지 -->
 							<!-- ⭐ 별점 입력 영역 -->
 							<div class="rating">
@@ -199,35 +199,35 @@
 							<button type="button" onclick="submitRate()">등록</button>
 
 						</div>
-					</div>
 
-					<!-- 통계 -->
 
-					<div class="rating-box2">
+						<!-- 통계 -->
 
-						<div class="stats-row">
+						<div class="rating-box2">
 
-							<!-- 평점 숫자 -->
-							<div class="grade-section">
-								<span style="font-size: 30px;"th:text=${grade}></span><br> <span
-									class="grade-badge" th:text="${gradeMark}"></span>
+							<div class="stats-row">
+
+								<!-- 평점 숫자 -->
+								<div class="grade-section">
+									<span style="font-size: 30px;" th:text=${grade}></span><br>
+									<span class="grade-badge" th:text="${gradeMark}"></span>
+								</div>
+
+								<!-- 막대 그래프 -->
+								<div class="chart-section">
+									<canvas id="myChart"></canvas>
+								</div>
+
+								<!-- 도넛 차트 -->
+								<div class="chart-section donut-section">
+									<canvas id="genderChart"></canvas>
+								</div>
+
 							</div>
-
-							<!-- 막대 그래프 -->
-							<div class="chart-section">
-								<canvas id="myChart"></canvas>
-							</div>
-
-							<!-- 도넛 차트 -->
-							<div class="chart-section donut-section">
-								<canvas id="genderChart"></canvas>
-							</div>
-
 						</div>
+
 					</div>
-
 				</div>
-
 				<!-- 평점 게시판 목록 -->
 
 				<div class="wrap">

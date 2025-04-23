@@ -76,7 +76,7 @@ h1 {
   width: 90%;
   max-width: 550px;
   min-width: 320px;  
-  height: auto;
+  height: 360px;
   max-height:300px;
   margin: 20px 0 20px 40px;
   color: white;
@@ -91,9 +91,9 @@ h1 {
   min-width: 320px;  
   margin: 20px 0 20px 40px;
   color: white;
-
+  height: 300px;
   /* 📏 전체 높이 제한 */
-  max-height: 350px;
+  max-height: 360px;
   overflow: hidden;
 }
 
