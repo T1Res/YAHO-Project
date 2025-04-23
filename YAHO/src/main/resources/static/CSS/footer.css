@@ -2,6 +2,7 @@
 
 footer {
 	padding: 30px 2%;
+	color: #fff;
 }
 
 .footer-content {
@@ -9,6 +10,10 @@ footer {
 	justify-content: space-between;
 	align-content: start;
 	gap: 30px;
+	width: 130%;
+	max-width: 1400px;  /* 원하는 최대 너비 지정 */
+	margin: 0 auto; 
+	transform: translateX(-15%);
 }
 
 .footer-content a {
@@ -21,34 +26,33 @@ footer {
 	flex-basis: 60%;
 }
 
-.center, .right {
-	flex-basis: 20%;
+.center {
+	flex-basis: 30%;
+	vertical-align: top;
+}
+
+.right {
+	flex-basis: 30%;
 	vertical-align: top;
 }
 
 .col h2{
 	color: #fff;
 	font-size: 32px;
-	margin-bottom:20px;
+	margin-bottom: 20px;
 }
 .col h3 {
 	color: #fff;
 	font-size: 26px;
-	margin-bottom: 20px;
 }
 
 .footer-nav {
 	display: flex;
 	justify-content: start;
 	align-content: center;
-	gap: 20px;
+	gap: 30px;
 	list-style: none;
-	margin-bottom: 40px;
-}
-
-.footer-nav li:not(:last-child) {
-	padding-right: 20px;
-	border-right: 1px solid #eee;
+	margin-bottom: 25px;
 }
 
 .footer-info {
@@ -56,4 +60,28 @@ footer {
 	color: #fff;
 }
 
+.socials {
+	margin-top: 10px;
+	display: flex;
+	justify-content: start;
+	align-content: center;
+	gap: 10px; /* 아이콘 사이 간격 */
+	list-style: none;
+}
 
+.socials a i {
+	font-size: 30px; /* 원하는 크기로 변경 */
+	color: #fff;     /* 아이콘 색상 (필요에 따라 변경) */
+	transition: transform 0.7s;
+}
+
+.socials a:hover i {
+	transform: scale(1.2); /* 마우스 호버 시 약간 확대 */
+}
+
+.copyright {
+	margin-top: 20px;
+	margin-left: 160px;
+	color: #fff;
+	font-size: 16px;
+}
