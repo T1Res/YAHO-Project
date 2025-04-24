@@ -38,7 +38,8 @@
 			<div th:each="anime : ${animeByDay[day.trim()]}" class="anime-card"
 				th:data-title="${anime.TITLE}" th:data-rating="${anime.SCORE}"
 				th:data-image1="${anime.THUMNAIL_GARO_URL}"
-				th:data-image2="${anime.THUMNAIL_SERO_URL}">
+				th:data-image2="${anime.THUMNAIL_SERO_URL}"
+				th:data-anime-id="${anime.ANIME_ID}">
 
 				<img th:src="${anime.THUMNAIL_SERO_URL}" alt="애니메이션 이미지">
 				<div class="anime-title" th:text="${anime.TITLE}">제목</div>

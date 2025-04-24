@@ -1,78 +1,72 @@
-const rateWrap = document.querySelectorAll('.rating'),
-label = document.querySelectorAll('.rating .rating__label'),
-input = document.querySelectorAll('.rating .rating__input'),
-labelLength = label.length,
-opacityHover = '0.5';
+// 별점 시스템 초기화 함수 - DOMContentLoaded 또는 동적 생성 후 호출
+function initRatingEvents() {
+    const rateWraps = document.querySelectorAll('.rating');
 
-let stars = document.querySelectorAll('.rating .star-icon');
+    rateWraps.forEach(wrap => {
+        const labels = wrap.querySelectorAll('.rating__label');
+        const stars = wrap.querySelectorAll('.star-icon');
 
-checkedRate();
+        labels.forEach((label, idx) => {
+            const starIcon = label.querySelector('.star-icon');
 
-rateWrap.forEach(wrap => {
-wrap.addEventListener('mouseenter', () => {
-stars = wrap.querySelectorAll('.star-icon');
+            label.addEventListener('mouseenter', () => {
+                initStars(wrap);
+                fillStars(wrap, idx);
+            });
 
-stars.forEach((starIcon, idx) => {
-    starIcon.addEventListener('mouseenter', () => {
-        initStars(); 
-        filledRate(idx, labelLength); 
+            label.addEventListener('mouseleave', () => {
+                initStars(wrap);
+                checkStars(wrap);
+            });
+        });
 
-        for (let i = 0; i < stars.length; i++) {
-            if (stars[i].classList.contains('filled')) {
-                stars[i].style.opacity = opacityHover;
+        wrap.addEventListener('mouseleave', () => {
+            initStars(wrap);
+            checkStars(wrap);
+        });
+
+        // 초기 상태 체크
+        checkStars(wrap);
+    });
+}
+
+// 별점 초기화: 모든 별에서 .filled 제거
+function initStars(container) {
+    const stars = container.querySelectorAll('.star-icon');
+    stars.forEach(star => {
+        star.classList.remove('filled');
+        star.style.opacity = '1';
+    });
+}
+
+// 별 채우기: index까지 .filled 클래스 적용
+function fillStars(container, index) {
+    const stars = container.querySelectorAll('.star-icon');
+    for (let i = 0; i <= index && i < stars.length; i++) {
+        stars[i].classList.add('filled');
+        stars[i].style.opacity = '0.5';
+        console.log(`★ 채움 index: ${i}`);
+    }
+}
+
+// 체크된 별 반영
+function checkStars(container) {
+    initStars(container);
+
+    const checkedRadio = container.querySelector('input[type="radio"]:checked');
+    if (checkedRadio) {
+        const labels = Array.from(container.querySelectorAll('.rating__label'));
+        const index = labels.findIndex(label => label.contains(checkedRadio));
+        if (index !== -1) {
+            for (let i = 0; i <= index && i < labels.length; i++) {
+                const icon = labels[i].querySelector('.star-icon');
+                icon.classList.add('filled');
             }
         }
-    });
-
-    starIcon.addEventListener('mouseleave', () => {
-        starIcon.style.opacity = '1';
-        checkedRate(); 
-    });
-
-    wrap.addEventListener('mouseleave', () => {
-        starIcon.style.opacity = '1';
-    });
-});
-});
-});
-
-function filledRate(index, length) {
-if (index <= length) {
-for (let i = 0; i <= index; i++) {
-    stars[i].classList.add('filled');
-}
-}
-}
-
-function checkedRate() {
-let checkedRadio = document.querySelectorAll('.rating input[type="radio"]:checked');
-
-
-initStars();
-checkedRadio.forEach(radio => {
-let previousSiblings = prevAll(radio);
-
-for (let i = 0; i < previousSiblings.length; i++) {
-    previousSiblings[i].querySelector('.star-icon').classList.add('filled');
-}
-
-radio.nextElementSibling.classList.add('filled');
-
-function prevAll() {
-    let radioSiblings = [],
-        prevSibling = radio.parentElement.previousElementSibling;
-
-    while (prevSibling) {	
-        radioSiblings.push(prevSibling);
-        prevSibling = prevSibling.previousElementSibling;
     }
-    return radioSiblings;
-}
-});
 }
 
-function initStars() {
-for (let i = 0; i < stars.length; i++) {
-stars[i].classList.remove('filled');
-}
-}
+// 초기 로딩 시 실행
+document.addEventListener('DOMContentLoaded', () => {
+    initRatingEvents();
+});

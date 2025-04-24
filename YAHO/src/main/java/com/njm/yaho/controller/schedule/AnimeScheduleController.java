@@ -37,7 +37,7 @@ public class AnimeScheduleController {
 	private RateService Rateservice;
 
 	@GetMapping("animeSchedule")
-	public void showAnimeList(Model model, HttpSession session,int ANIME_ID) {
+	public void showAnimeList(Model model, HttpSession session) {
 		
 		String USER_ID = (String)session.getAttribute("USER_ID");
 		//유저 아이디 보내기
@@ -51,9 +51,11 @@ public class AnimeScheduleController {
 		model.addAttribute("daysOfWeek", daysOfWeek);
 		model.addAttribute("animeByDay", service.WeekdayAnimeList());
 
-		// 모델에 평균
+		int ANIME_ID = 999;
 		
+		// 모델에 평균
 		double grade = Rateservice.getAverageScore(ANIME_ID);
+		
 		log.info("평균: " + grade);
 
 		model.addAttribute("grade", grade);
@@ -164,6 +166,8 @@ public class AnimeScheduleController {
 
 		model.addAttribute("list", fullList);
 	}
+	
+	
 	@PostMapping("/submitTest")
 	public String submitTest(RatingDTO dto, Model model) {
 		log.info("dto.SCORE_ID : " + dto.getSCORE_ID());

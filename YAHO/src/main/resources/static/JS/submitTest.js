@@ -29,12 +29,11 @@ function submitRate() {
             alert('등록 완료!');
             refreshAll(animeId, userId);
 			// ✅ 등록 폼 영역 날리기
-						const registerForm = document.getElementById("registerFormArea");
-						if (registerForm) {
-						    console.log("등록폼 날림");
-							registerForm.remove();  // ✅ 완전히 삭제
-							
-						}
+				const registerForm = document.getElementById("registerFormArea");
+				if (registerForm) {
+					console.log("등록폼 날림");
+					registerForm.remove();  // ✅ 완전히 삭제
+				}
 			
             const rateFormArea = document.getElementById("rateFormArea");
             if (rateFormArea && !rateFormArea.querySelector("form")) {
@@ -157,6 +156,8 @@ function buildEditForm(userId, animeId, score, content) {
                 }
             }
         });
+		
+		initRatingEvents();
     }, 0); // DOM 붙은 후 실행
 
     return form;
@@ -232,6 +233,8 @@ function deleteRate() {
             
 
             refreshAll(animeId, userId);
+			
+			initRatingEvents();
         } else {
             alert('삭제 실패');
         }
