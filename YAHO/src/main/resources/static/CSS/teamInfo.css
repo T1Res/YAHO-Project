@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #f9f9f9;
+	margin: 0;
+	padding: 20px;
+}
+
+.title {
+	text-align: center;
+	margin-bottom: 40px;
+	color: #333;
+}
+
+.team-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 30px;
+	max-width: 1200px; /* 카드 3개까지 한 줄에 보이도록 너비 제한 */
+	margin: 0 auto;
+}
+
+.member-card {
+	background-color: #fff;
+	border-radius: 20px;
+	padding: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	width: 250px;
+	text-align: center;
+	transition: transform 0.3s ease;
+}
+
+.member-card:hover {
+	transform: translateY(-5px);
+}
+
+.member-photo {
+	width: 200px;
+	height: 120px;
+	object-fit: cover;
+	border-radius: 10%;
+	margin-bottom: 15px;
+}
+
+.role {
+	font-weight: bold;
+	color: #666;
+	margin-bottom: 10px;
+}

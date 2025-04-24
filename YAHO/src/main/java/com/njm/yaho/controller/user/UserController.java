@@ -1,9 +1,9 @@
 package com.njm.yaho.controller.user;
 
 import org.slf4j.Logger;
-
-
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +52,9 @@ public class UserController {
 		if (profile != null && !profile.isEmpty()) {
 			String savedPath = service.saveProfileImage(profile); // 따로 구현
 			dto.setUSER_PROFILE_IMG(savedPath);
-		}
+		}else {
+            dto.setUSER_PROFILE_IMG("/img/default_profile.png"); // 기본 이미지 설정
+    }
 
 		// DB 저장
 		int result = service.UserInsert(dto);
@@ -68,21 +70,24 @@ public class UserController {
 
 	// 로그인
 	@GetMapping("User/User_Login")
-	public String UserLogin() {
-
+	public String UserLogin(Model model) {
+		if (!model.containsAttribute("error")) {
+            model.addAttribute("error", "");
+        }
 		return "User/User_Login";
 	}
 
 	@PostMapping("User/User_Login")
-	public String UserLoginPro(@ModelAttribute UserDTO dto, Model model, HttpSession session) {
+	public String UserLoginPro(@ModelAttribute UserDTO dto, RedirectAttributes redirectAttributes, HttpSession session) {
 		UserDTO loggedInUser = service.UserLogin(dto.getUSER_ID(), dto.getUSER_PASSWORD());
 		if (loggedInUser != null) {
 			session.setAttribute("USER_ID", loggedInUser.getUSER_ID());
 			session.setAttribute("user", loggedInUser);
-			return "redirect:/"; // 로그인 후 이동할 페이지
+			redirectAttributes.addFlashAttribute("playAudio", true);
+			return "redirect:/Main"; // 로그인 후 이동할 페이지
 		} else {
-			model.addAttribute("error", "아이디 또는 비밀번호가 틀렸습니다.");
-			return "User/User_Login";
+			redirectAttributes.addFlashAttribute("error", "아이디 또는 비밀번호가 틀렸습니다.");
+			return "redirect:/User/User_Login";
 		}
 	}
 	// 중복검사
@@ -191,26 +196,26 @@ public class UserController {
 		return "User/User_Delete";
 	}
 	@PostMapping("/User/User_Delete")
-	public String UserDeletePro(HttpSession session,@RequestParam("password") String password,RedirectAttributes redirectAttributes) {
+	public ResponseEntity<String> UserDeletePro(HttpSession session,@RequestParam("password") String password) {
 		String USER_ID = (String) session.getAttribute("USER_ID");
 		UserDTO dto = service.UserSearch(USER_ID);
 		
 		// 비밀번호 일치 확인
 		if (dto == null || !PassUtil.checkPassword(password, dto.getUSER_PASSWORD())) {
-	        redirectAttributes.addFlashAttribute("msg", "비밀번호가 틀렸습니다.");
-	        return "redirect:/User/User_Delete";
+	        return ResponseEntity.badRequest().body("비밀번호가 일치하지 않습니다."); // 비밀번호 불일치
 	    }
 
 	    service.UserDelete(USER_ID);
 	    session.invalidate(); // 탈퇴 후 로그아웃
-	    redirectAttributes.addFlashAttribute("msg", "회원탈퇴가 완료되었습니다.");
-		return "redirect:/";
+	    
+		return ResponseEntity.ok("회원탈퇴에 성공했습니다.");
 	}
 	
 	// 로그아웃
 	@GetMapping("/User/User_Logout")
-	public String UserLogout(HttpSession session) {
+	public String UserLogout(HttpSession session,RedirectAttributes redirectAttributes) {
 	    session.invalidate(); // 세션 전체 삭제
+	    redirectAttributes.addFlashAttribute("playAudio", true);
 	    return "redirect:/";  // 메인으로
-	}
+  }
 }

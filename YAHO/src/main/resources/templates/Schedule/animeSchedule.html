@@ -15,22 +15,17 @@
 </head>
 <body>
 	<div class="nav">
-		<img src="/IMG/logo_test1.png" alt=""
-			onclick="location.href='/Schedule/animeSchedule'">
-
-		<div class="navitem" onclick="location.href='/Main'">홈</div>
-		<div class="navitem" onclick="location.href='/List/List_list'">전체
-			애니</div>
-		<div class="navitem" onclick="location.href='/Schedule/animeSchedule'">방영중
-			애니</div>
-		<div class="navitem">자유게시판</div>
-		<div class="navitem" onclick="location.href='/Admin/insert'">관리자</div>
-	</div>
-	<br>
-	<br>
-
-	<h1 class="title-bar">애니메이션 방영 시간표</h1>
-
+        <img src="/IMG/logo_test1.png">
+        <div class="navitem" onclick="location.href='/Main'">홈</div>
+        <div class="navitem" onclick="location.href='/List'">전체 애니</div>
+        <div class="navitem" onclick="location.href='/Schedule/animeSchedule'">방영중 애니</div>
+        
+        <div class="navitem" onclick="location.href='/Admin/insert'">관리자</div>
+    </div>
+    <br><br>
+    
+	<h1 class = "title-bar">애니메이션 방영 시간표</h1>
+	
 	<!-- 상단 고정 요일 바 -->
 	<div class="day-title-bar">
 		<div th:each="day : ${daysOfWeek}" class="day-title-cell"

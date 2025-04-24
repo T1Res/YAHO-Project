@@ -5,19 +5,19 @@ import java.time.LocalDateTime;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.njm.yaho.domain.oracle.util.EmailAuthDTO;
+import com.njm.yaho.domain.oracle.util.EmailAuthOCDTO;
 
 @Mapper
-public interface EmailAuthMapper {
-	EmailAuthDTO findByEmail(@Param("email") String email);
+public interface EmailAuthMapperOC {
+	EmailAuthOCDTO findByEmail(@Param("email") String email);
 
-    void insertEmailAuth(EmailAuthDTO dto);
+    void insertEmailAuth(EmailAuthOCDTO dto);
 
-    void updateEmailAuth(EmailAuthDTO dto);
+    void updateEmailAuth(EmailAuthOCDTO dto);
 
     void deleteByEmail(@Param("email") String email);
     
-    EmailAuthDTO findByEmailAndCode(@Param("email") String email, @Param("authCode") String authCode);
+    EmailAuthOCDTO findByEmailAndCode(@Param("email") String email, @Param("authCode") String authCode);
 
     void markEmailAsVerified(@Param("email") String email);
     

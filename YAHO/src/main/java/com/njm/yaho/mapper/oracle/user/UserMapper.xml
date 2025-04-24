@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.njm.yaho.mapper.oracle.user.UserMapper">
-
 	<!-- id중복 -->
 	<select id="UserIdCheck" resultType="com.njm.yaho.domain.oracle.user.UserDTO">
     	SELECT * FROM tbl_user WHERE USER_ID = #{USER_ID}
@@ -52,5 +51,4 @@
 	<select id="UserProfile" resultType="com.njm.yaho.domain.oracle.user.UserDTO">
 		select * from tbl_user where USER_ID=#{USER_ID}
 	</select>
-
 </mapper>

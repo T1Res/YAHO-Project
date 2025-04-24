@@ -13,5 +13,4 @@ public class UserDTO {
 	private int USER_GENDER;
 	private String USER_CREATED_DATE;
 	private int USER_PERMISSION;
-
 }
