@@ -25,7 +25,7 @@ public class EmailAuthServiceImpl implements EmailAuthService {
     
     @Override
 	public boolean emailExistsInUser(String email) {
-    	return true;
+    	return userMapper.countByEmail(email) > 0;
 	}
     
     @Override

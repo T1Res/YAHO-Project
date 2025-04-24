@@ -1,7 +1,6 @@
 package com.njm.yaho.mapper.oracle.user;
 
 import org.apache.ibatis.annotations.Mapper;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import com.njm.yaho.domain.oracle.user.UserDTO;
