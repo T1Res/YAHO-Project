@@ -4,18 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>애니메이션 방영 시간표</title>
-<link rel="stylesheet" href="/CSS/AnimeSchedule.css">
-<link rel="stylesheet" href="/CSS/AnimeMain.css">
+<link rel="stylesheet" href="/CSS/testSchedule.css">
+<link rel="stylesheet" href="/CSS/test.css">
+<link rel="stylesheet" th:href="@{/CSS/test3.css}">
 
-<!-- 기본 favicon -->
-<link rel="icon" href="IMG/favicon/favicon.ico" type="image/x-icon">
-
-<!-- 확장 favicon -->
-<link rel="shortcut icon" href="IMG/favicon/favicon.ico" type="image/x-icon">
-
-<!-- PNG favicon -->
-<link rel="icon" href="IMG/favicon/android-chrome-512x512.png" type="image/png">
- 
+<!-- 글꼴 -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
+	rel="stylesheet">
 </head>
 <body>
 	<div class="nav">
@@ -39,37 +35,346 @@
 	<div class="schedule-container">
 		<!-- 요일별 반복 -->
 		<div th:each="day : ${daysOfWeek}" class="day-column">
-			<div th:each="anime : ${animeByDay[day.trim()]}" 
-				class="anime-card"
-				th:data-id="${anime.ANIME_ID}"
+			<div th:each="anime : ${animeByDay[day.trim()]}" class="anime-card"
 				th:data-title="${anime.TITLE}" th:data-rating="${anime.SCORE}"
-     			th:data-image1="${anime.THUMNAIL_GARO_URL}" th:data-image2="${anime.THUMNAIL_SERO_URL}">
-     			
+				th:data-image1="${anime.THUMNAIL_GARO_URL}"
+				th:data-image2="${anime.THUMNAIL_SERO_URL}">
+
 				<img th:src="${anime.THUMNAIL_SERO_URL}" alt="애니메이션 이미지">
 				<div class="anime-title" th:text="${anime.TITLE}">제목</div>
 				<div class="anime-rating" th:text="'⭐ ' + ${anime.SCORE}">⭐평점</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- 모달 -->
 	<div id="animeModal" class="modal">
 		<div class="modal_content">
 			<span class="close" onclick="modal_close()">&times;</span>
 			<div class="modal_div">
-			
+
 				<div class="modal_img">
 					<img id="modal_img" src="" alt="이미지">
 				</div>
-				
+
 				<div class="modal_title" id="modal_title"></div>
-				
+
 				<div class="modal_desc">
 					<div class="desc_inf" id="modal_desc"></div>
 				</div>
+
+				<!-- 평점 게시판 -->
+
+				<div class="wrap">
+					<div class="rating-container-row">
+						<div class="rating-box">
+							<h1>평점 게시판</h1>
+							<!-- 회원이 벌써 작성한 내용이 존재한다면 값 받아와서 평점 수정-->
+							<div id="rateFormArea">
+								<div th:if="${!#strings.isEmpty(Aluser_ID)}">
+
+
+									<input type="text" name="USER_ID" th:value="${Aldto.USER_ID}" />
+									<input type="hidden" name="ANIME_ID"th:value="${Aldto.ANIME_ID}" />
+									<!-- 수정폼 전체를 감싸는 영역에만 id 부여 -->
+
+									<!-- ⭐ 별점 입력 영역 -->
+									<div class="rating">
+										<label class="rating__label rating__label--half"
+											for="starhalf"> <input type="radio" id="starhalf"
+											class="rating__input" name="SCORE_SCORE" value=0.5 /> <span
+											class="star-icon"></span>
+										</label> <label class="rating__label rating__label--full" for="star1">
+											<input type="radio" id="star1" class="rating__input"
+											name="SCORE_SCORE" value=1.0 /> <span class="star-icon"></span>
+										</label> <label class="rating__label rating__label--half"
+											for="star1half"> <input type="radio" id="star1half"
+											class="rating__input" name="SCORE_SCORE" value=1.5 /> <span
+											class="star-icon"></span>
+										</label> <label class="rating__label rating__label--full" for="star2">
+											<input type="radio" id="star2" class="rating__input"
+											name="SCORE_SCORE" value=2.0 /> <span class="star-icon"></span>
+										</label> <label class="rating__label rating__label--half"
+											for="star2half"> <input type="radio" id="star2half"
+											class="rating__input" name="SCORE_SCORE" value=2.5 /> <span
+											class="star-icon"></span>
+										</label> <label class="rating__label rating__label--full" for="star3">
+											<input type="radio" id="star3" class="rating__input"
+											name="SCORE_SCORE" value=3.0 /> <span class="star-icon"></span>
+										</label> <label class="rating__label rating__label--half"
+											for="star3half"> <input type="radio" id="star3half"
+											class="rating__input" name="SCORE_SCORE" value=3.5 checked />
+											<span class="star-icon"></span>
+										</label> <label class="rating__label rating__label--full" for="star4">
+											<input type="radio" id="star4" class="rating__input"
+											name="SCORE_SCORE" value=4.0 /> <span class="star-icon"></span>
+										</label> <label class="rating__label rating__label--half"
+											for="star4half"> <input type="radio" id="star4half"
+											class="rating__input" name="SCORE_SCORE" value=4.5 /> <span
+											class="star-icon"></span>
+										</label> <label class="rating__label rating__label--full" for="star5">
+											<input type="radio" id="star5" class="rating__input"
+											name="SCORE_SCORE" value=5.0 /> <span class="star-icon"></span>
+										</label>
+									</div>
+									<br>
+									<!-- 📝 댓글 입력창 -->
+									<div style="margin-top: 20px;">
+										<textarea name="SCORE_CONTENT" rows="4" cols="50"
+											th:text="${Aldto.SCORE_CONTENT}"></textarea>
+									</div>
+
+									<!-- 수정버튼 -->
+
+									<button type="button" onclick="updateRate()">수정</button>
+
+									
+										<!-- 삭제버튼 -->
+										<input type="hidden" name="USER_ID"th:value="${Aldto.USER_ID}" /> 
+										<input type="hidden"name="ANIME_ID" th:value="${Aldto.ANIME_ID}" />
+										<button type="button" onclick="deleteRate()">삭제</button>
+									
+									<hr style="margin-top: 20px;" />
+								</div>
+							</div>
+							<!-- 히든 -->
+							<input type="hidden" id="userId" name="USER_ID"
+								th:value="${USER_ID}" /> <input type="hidden" id="animeId"
+								name="ANIME_ID" value="999" />
+								
+							<div id="registerFormArea">
+							<div th:if="${#strings.isEmpty(Aluser_ID)}">
+							<!-- 기존 form 태그 제거 -->
+							
+
+							<div class="rating-container-row"></div>
+
+							<!-- radio, textarea는 그대로 유지 -->
+							<!-- ⭐ 별점 입력 영역 -->
+							<div class="rating">
+								<label class="rating__label rating__label--half" for="starhalf">
+									<input type="radio" id="starhalf" class="rating__input"
+									name="SCORE_SCORE" value=0.5 /> <span class="star-icon"></span>
+								</label> <label class="rating__label rating__label--full" for="star1">
+									<input type="radio" id="star1" class="rating__input"
+									name="SCORE_SCORE" value=1.0 /> <span class="star-icon"></span>
+								</label> <label class="rating__label rating__label--half"
+									for="star1half"> <input type="radio" id="star1half"
+									class="rating__input" name="SCORE_SCORE" value=1.5 /> <span
+									class="star-icon"></span>
+								</label> <label class="rating__label rating__label--full" for="star2">
+									<input type="radio" id="star2" class="rating__input"
+									name="SCORE_SCORE" value=2.0 /> <span class="star-icon"></span>
+								</label> <label class="rating__label rating__label--half"
+									for="star2half"> <input type="radio" id="star2half"
+									class="rating__input" name="SCORE_SCORE" value=2.5 /> <span
+									class="star-icon"></span>
+								</label> <label class="rating__label rating__label--full" for="star3">
+									<input type="radio" id="star3" class="rating__input"
+									name="SCORE_SCORE" value=3.0 /> <span class="star-icon"></span>
+								</label> <label class="rating__label rating__label--half"
+									for="star3half"> <input type="radio" id="star3half"
+									class="rating__input" name="SCORE_SCORE" value=3.5 checked />
+									<span class="star-icon"></span>
+								</label> <label class="rating__label rating__label--full" for="star4">
+									<input type="radio" id="star4" class="rating__input"
+									name="SCORE_SCORE" value=4.0 /> <span class="star-icon"></span>
+								</label> <label class="rating__label rating__label--half"
+									for="star4half"> <input type="radio" id="star4half"
+									class="rating__input" name="SCORE_SCORE" value=4.5 /> <span
+									class="star-icon"></span>
+								</label> <label class="rating__label rating__label--full" for="star5">
+									<input type="radio" id="star5" class="rating__input"
+									name="SCORE_SCORE" value=5.0 /> <span class="star-icon"></span>
+								</label>
+							</div>
+							<br>
+							<!-- 📝 댓글 입력창 -->
+							<div style="margin-top: 20px;">
+								<textarea name="SCORE_CONTENT" rows="4" cols="50"
+									placeholder="댓글을 입력해주세요"></textarea>
+							</div>
+							<!-- 등록(Ajax테스트) 버튼 -->
+							<button type="button" onclick="submitRate()">등록</button>
+
+						</div>
+						</div>
+</div>
+
+						<!-- 통계 -->
+
+						<div class="rating-box2">
+
+							<div class="stats-row">
+
+								<!-- 평점 숫자 -->
+								<div class="grade-section">
+									<span style="font-size: 30px;" th:text=${grade}></span><br>
+									<span class="grade-badge" th:text="${gradeMark}"></span>
+								</div>
+
+								<!-- 막대 그래프 -->
+								<div class="chart-section">
+									<canvas id="myChart"></canvas>
+								</div>
+
+								<!-- 도넛 차트 -->
+								<div class="chart-section donut-section">
+									<canvas id="genderChart"></canvas>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+				
+				<!-- 평점 게시판 목록 -->
+
+				<div class="wrap">
+					<h1>게시판 목록</h1>
+
+
+					<!-- 리스트 반복 -->
+					<div th:each="dto : ${list}" style="margin-bottom: 20px;">
+
+						<!-- 사용자 아이디 -->
+						<div style="color: white;">
+							<strong th:text="${dto.USER_ID}">작성자</strong> :
+						</div>
+
+						<!-- 별점 표시 -->
+						<div style="color: gold; font-size: 20px; margin-top: 4px;">
+							<span th:if="${dto.SCORE_SCORE == 0.5}"> <img
+								src="/IMG/star_half.png" width="20" height="20" />
+							</span> <span th:if="${dto.SCORE_SCORE == 1}"> <img
+								src="/IMG/star_full.png" width="20" height="20" />
+							</span> <span th:if="${dto.SCORE_SCORE == 1.5}"> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_half.png" width="20" height="20" />
+							</span> <span th:if="${dto.SCORE_SCORE == 2}"> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" />
+							</span> <span th:if="${dto.SCORE_SCORE == 2.5}"> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_half.png" width="20" height="20" />
+							</span> <span th:if="${dto.SCORE_SCORE == 3}"> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" />
+							</span> <span th:if="${dto.SCORE_SCORE == 3.5}"> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_half.png" width="20" height="20" />
+							</span> <span th:if="${dto.SCORE_SCORE == 4}"> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" />
+							</span> <span th:if="${dto.SCORE_SCORE == 4.5}"> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_half.png" width="20" height="20" />
+							</span> <span th:if="${dto.SCORE_SCORE == 5}"> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" /> <img
+								src="/IMG/star_full.png" width="20" height="20" />
+							</span>
+						</div>
+
+						<!-- 댓글 내용 -->
+						<div style="color: white;">
+							<div style="margin-top: 4px;">
+								<span th:text="${dto.SCORE_CONTENT}">댓글</span>
+							</div>
+						</div>
+						<form th:action="@{/Schedule//updateRate}" method="post">
+							<input type="text" name="USER_ID" th:value="${dto.USER_ID}" /> <input
+								type="hidden" name="ANIME_ID" th:value="${dto.ANIME_ID}" />
+
+						</form>
+						<hr style="margin-top: 20px;" />
+					</div>
+				</div>
+
+
 			</div>
 		</div>
 	</div>
+	<script src="/JS/chart.umd.js"></script>
+	<!-- 등록 Ajax -->
+	<script src="/JS/submitTest.js"></script>
+	<!-- 수정 Ajax -->
+	<script src="/JS/updateTest.js"></script>
+	<!-- 도넛 -->
+	<script src="/JS/genderChart.js"></script>
+	<!-- 별점 기능 -->
+	<script src="/JS/Rating.js"></script>
+	<!-- 통계 -->
+
+	<script th:inline="javascript">
+    /*<![CDATA[*/
+        let voteLabels = /*[[${scoreList}]]*/ [];
+        let voteCounts = /*[[${countList}]]*/ [];
+    /*]]>*/
+    </script>
+
+	<script>
+    const ctx2 = document.getElementById('myChart').getContext('2d');
+
+    // ✅ 전역에 등록
+    window.myChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: voteLabels,
+            datasets: [{
+                label: '평점 분포',
+                data: voteCounts,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',   // 0~1
+                    'rgba(54, 162, 235, 0.6)',   // 1~2
+                    'rgba(255, 206, 86, 0.6)',   // 2~3
+                    'rgba(75, 192, 192, 0.6)',   // 3~4
+                    'rgba(153, 102, 255, 0.6)'   // 4~5
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1,
+                barPercentage: 0.5,
+                categoryPercentage: 0.5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+	<!-- 도넛 함수 -->
+	<script th:inline="javascript">
+/*<![CDATA[*/
+  const maleRatio = /*[[${maleRatio}]]*/ 50;
+  const femaleRatio = /*[[${femaleRatio}]]*/ 50;
+/*]]>*/
+</script>
+
+
 
 </body>
 <script>
@@ -97,7 +402,6 @@
 	// 클릭 이벤트 추가
 	document.querySelectorAll(".anime-card").forEach(card => {
         card.addEventListener("click", function () {
-			const id = card.getAttribute("data-id");
             const title = card.getAttribute("data-title");
             const rating = card.getAttribute("data-rating");
             const image1 = card.getAttribute("data-image1");
