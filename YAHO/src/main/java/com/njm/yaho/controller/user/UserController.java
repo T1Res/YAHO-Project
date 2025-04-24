@@ -3,7 +3,6 @@ package com.njm.yaho.controller.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,7 +53,7 @@ public class UserController {
 			dto.setUSER_PROFILE_IMG(savedPath);
 		}else {
             dto.setUSER_PROFILE_IMG("/img/default_profile.png"); // 기본 이미지 설정
-    }
+        }
 
 		// DB 저장
 		int result = service.UserInsert(dto);
