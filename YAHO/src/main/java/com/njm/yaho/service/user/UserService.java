@@ -26,4 +26,7 @@ public interface UserService {
 	// 프로필
 	public UserDTO UserProfile(String USER_ID);
 	public String saveProfileImage(MultipartFile file);
+  
+  // 비밀번호 리셋 서비스
+  boolean resetPassword(String userId, String email);
 }

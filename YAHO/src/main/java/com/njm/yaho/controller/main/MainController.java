@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,14 +28,17 @@ public class MainController {
 	@Autowired
 	private MainService service;
 	private static final Logger log = LoggerFactory.getLogger(RateControllerTest.class);
+  
 	@GetMapping("")
-	public String main(Model model,HttpSession session) {
+	public String main(Model model,@ModelAttribute("playAudio") Object flashAudio,HttpSession session) {
 		List<MainMSDTO> animeList = service.getTodayAnimeList();
 		int animeCount = animeList.size();
 		log.info("세션 로그인 확인"+(String)session.getAttribute("USER_ID"));
 		model.addAttribute("animeCount", animeCount);
 		model.addAttribute("animeList", animeList);
-		
+		if (flashAudio != null) {
+	        model.addAttribute("playAudio", true);
+	    }
         return "Main/index";
     }
 	
