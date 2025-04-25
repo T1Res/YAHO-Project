@@ -6,6 +6,7 @@
 <title>애니메이션 방영 시간표</title>
 <link rel="stylesheet" href="/CSS/testSchedule.css">
 <link rel="stylesheet" href="/CSS/test.css">
+<link rel="stylesheet" href="/CSS/info.css">
 <link rel="stylesheet" th:href="@{/CSS/test3.css}">
 
 <!-- 글꼴 -->
@@ -58,10 +59,42 @@
 					<img id="modal_img" src="" alt="이미지">
 				</div>
 
-				<div class="modal_title" id="modal_title"></div>
-
-				<div class="modal_desc">
-					<div class="desc_inf" id="modal_desc"></div>
+				<!-- 애니 상세 정보 -->
+				<div class="anime-info-container">
+					<div class="ani-content">
+						<section class="ani-section">
+							<div class="ani-row">
+								<h2>애니제목</h2>
+								<p id="anime_title"></p>
+							</div>
+							
+							<div class="ani-row">
+								<h2>방영일</h2>
+								<p id="start_date"></p>
+							</div>
+							
+							<div class="ani-row">
+								<h2>방영차수</h2>
+								<p id="total_episode"></p>
+							</div>
+							
+							<div class="ani-row">
+								<h2>제작사</h2>
+								<p id="studio"><a href="#" id="studio_link">제작사1</a></p>
+							</div>
+							
+							<div class="ani-row">
+								<h2>상영등급</h2>
+								<p id="age_rating"></p>
+							</div>
+							
+							<div class="ani-summary">
+								<h2>애니 줄거리</h2>
+								<p id="anime_desc">줄거리 내용</p>
+								<span id="summaryButton" class="toggle-btn">더보기</span>
+							</div>
+						</section>
+					</div>
 				</div>
 
 				<!-- 평점 게시판 -->
@@ -229,18 +262,43 @@
     card.addEventListener("click", function () {
         const animeId = card.getAttribute("data-anime-id");
         const userId = document.getElementById("register_user_id")?.value || "";
-        const title = card.getAttribute("data-title");
-        const image1 = card.getAttribute("data-image1");
-
-        // 모달의 기본 정보 삽입
-        document.getElementById("modal_title").textContent = title;
-        document.getElementById("modal_img").src = image1;
-
-        // 설명 텍스트 (임시)
-        let desc = "이것은 스크롤 테스트용 설명입니다.\n\n\n\n\n\n\n\n\n\n";
-        desc += "여기에 더 많은 줄바꿈을 추가합니다.\n\n\n\n\n\n\n\n\n\n";
-        desc += "이제 모달에서 스크롤이 잘 되는지 확인하세요!";
-        document.getElementById("modal_desc").innerText = desc;
+        console.log(animeId,userId);
+        //애니메이션 정보 로딩
+     	// 기본 정보 로딩
+		fetch(`/Main/anime/baseInfo?animeId=${animeId}`)
+		    .then(res => res.json())
+		    .then(data => {
+	            console.log("기본 정보:", data);
+		        const titleEl = document.getElementById("anime_title");
+		        const animeGaroImgEl = document.getElementById("modal_img");
+		
+		        if (titleEl) titleEl.innerText = data.title || "제목 없음";
+		        if (animeGaroImgEl) animeGaroImgEl.setAttribute("src", data.thumnailGaroUrl || "IMG/default.png");
+		    });
+		
+		// 상세 정보 로딩
+		fetch(`/Main/anime/detailInfo?animeId=${animeId}`)
+		    .then(res => res.json())
+		    .then(data => {
+		        const startDateEl = document.getElementById("start_date");
+		        const totalEpEl = document.getElementById("total_episode");
+		        const studioEl = document.getElementById("studio");
+		        const studioLinkEl = document.getElementById("studio_link");
+		        const ratingEl = document.getElementById("age_rating");
+		        const descEl = document.getElementById("anime_desc");
+		
+		        if (startDateEl) startDateEl.innerText = data.startDate.substring(0, 10) || "정보가 없습니다.";
+		        if (totalEpEl) totalEpEl.innerText = data.totalEpisode || "정보가 없습니다.";
+		        
+		        if (studioLinkEl) {
+		        	studioLinkEl.setAttribute("href", data.studioLink);
+		        	studioLinkEl.setAttribute("target", "_blank"); // 새 창 열기
+		        	studioLinkEl.innerText = data.studio || "제작사 정보 없음";
+		        }
+		        
+		        if (ratingEl) ratingEl.innerText = data.ageRating || "미정";
+		        if (descEl) descEl.innerHTML = (data.animeDesc || "설명이 없습니다.").replace(/\n/g, "<br>");
+		    });
 
         // 평가 정보 JSON으로 요청
         fetch("/Schedule/rateInfoJson", {
@@ -273,6 +331,14 @@
  	// 모달 닫기 함수
     function modal_close() {
         document.getElementById("animeModal").style.display = "none";
+        
+     // 줄거리 더보기 초기화
+	    const summaryText = document.querySelector('.ani-summary p');
+	    const summaryButton = document.getElementById('summaryButton');
+	    if (summaryText.classList.contains('expanded')) {
+	        summaryText.classList.remove('expanded');
+	        summaryButton.textContent = '더보기';
+	    }
     }
 
     // 모달 바깥 영역 클릭 시 닫기 기능 추가
@@ -377,5 +443,19 @@ function updateDonutChart(maleRatio, femaleRatio) {
     });
 }
 
+</script>
+<script>
+//모달 내부 줄거리 확장 버튼
+  const summaryText = document.querySelector('.ani-summary p');
+  const summaryButton = document.getElementById('summaryButton');
+
+  summaryButton.addEventListener('click', () => {
+    summaryText.classList.toggle('expanded');
+    if (summaryText.classList.contains('expanded')) {
+      summaryButton.textContent = '접기';
+    } else {
+      summaryButton.textContent = '더보기';
+    }
+  });
 </script>
 </html>

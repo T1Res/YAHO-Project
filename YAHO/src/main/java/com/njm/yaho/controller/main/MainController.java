@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.njm.yaho.controller.info.RateControllerTest;
@@ -45,8 +47,9 @@ public class MainController {
 	// 요약정보 전송
 	@GetMapping("/anime/baseInfo")
 	@ResponseBody
-	public MainMSDTO getAnimeBaseInfo(int animeId) {
+	public MainMSDTO getAnimeBaseInfo( int animeId) {
 		MainMSDTO dto = service.getAnimeBaseInfo(animeId);
+		log.info("dto, animeId"+dto+animeId);
         return dto;
 	}
 	

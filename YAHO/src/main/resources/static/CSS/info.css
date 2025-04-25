@@ -18,7 +18,8 @@
 	box-shadow: border-box;
 }
 
-body {
+
+.anime-info-container {
 	min-height: 100vh;
 	font-family: 'Roboto', sans-serif;
 	display: flex;
@@ -26,9 +27,6 @@ body {
 	align-items: center;
 	flex-direction: column;
 	background-color: #000;
-}
-
-.anime-info-container {
 	width: 100%;
 	margin: 0 auto;
 	padding: 20px;
