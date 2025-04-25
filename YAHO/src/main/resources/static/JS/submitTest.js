@@ -2,12 +2,16 @@ function submitRate() {
     const scoreInput = document.querySelector('input[name="SCORE_SCORE"]:checked');
     const score = scoreInput ? scoreInput.value : null;
 
-    const contentElement = document.querySelector('textarea[name="SCORE_CONTENT"]');
+    const contentElement = document.querySelector('#registerFormArea textarea[name="SCORE_CONTENT"]');
     const content = contentElement ? contentElement.value.trim() : "";
 
-    const animeId = document.querySelector('input[name="ANIME_ID"]')?.value;
-    const userId = document.querySelector('input[name="USER_ID"]')?.value;
-
+    const animeId = document.getElementById('register_anime_id')?.value;
+    const userId = document.getElementById('register_user_id')?.value;
+	console.log(animeId);
+	console.log(userId);
+	console.log(content);
+	console.log(score);
+	
     if (!score || !content || !animeId || !userId) {
         alert('별점, 댓글, 사용자 ID, 애니 ID를 모두 입력해주세요!');
         return;
@@ -29,12 +33,11 @@ function submitRate() {
             alert('등록 완료!');
             refreshAll(animeId, userId);
 			// ✅ 등록 폼 영역 날리기
-						const registerForm = document.getElementById("registerFormArea");
-						if (registerForm) {
-						    console.log("등록폼 날림");
-							registerForm.remove();  // ✅ 완전히 삭제
-							
-						}
+				const registerForm = document.getElementById("registerFormArea");
+				if (registerForm) {
+					console.log("등록폼 날림");
+					registerForm.remove();  // ✅ 완전히 삭제
+				}
 			
             const rateFormArea = document.getElementById("rateFormArea");
             if (rateFormArea && !rateFormArea.querySelector("form")) {
@@ -157,6 +160,8 @@ function buildEditForm(userId, animeId, score, content) {
                 }
             }
         });
+		
+		initRatingEvents();
     }, 0); // DOM 붙은 후 실행
 
     return form;
@@ -232,6 +237,8 @@ function deleteRate() {
             
 
             refreshAll(animeId, userId);
+			
+			initRatingEvents();
         } else {
             alert('삭제 실패');
         }

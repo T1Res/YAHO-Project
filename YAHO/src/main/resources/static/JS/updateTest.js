@@ -5,8 +5,13 @@ function updateRate() {
     const contentElement = document.querySelector('textarea[name="SCORE_CONTENT"]');
     const content = contentElement ? contentElement.value.trim() : "";
 
-    const animeId = document.getElementById('animeId')?.value;
-    const userId = document.getElementById('userId')?.value;
+    const animeId = document.getElementById('rated_anime_id')?.value;
+    const userId = document.getElementById('rated_user_id')?.value;
+	
+		console.log(animeId);
+		console.log(userId);
+		console.log(content);
+		console.log(score);
 
     if (!score || !content || !animeId || !userId) {
         alert('모든 정보를 입력해주세요.');

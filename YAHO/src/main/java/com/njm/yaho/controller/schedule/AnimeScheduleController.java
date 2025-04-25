@@ -37,23 +37,33 @@ public class AnimeScheduleController {
 	private RateService Rateservice;
 
 	@GetMapping("animeSchedule")
-	public void showAnimeList(Model model, HttpSession session,int ANIME_ID) {
-		
-		String USER_ID = (String)session.getAttribute("USER_ID");
-		//유저 아이디 보내기
-		model.addAttribute("USER_ID",USER_ID);
-		log.info("세션 유저아이디"+USER_ID);
-		
+	public String showAnimeList(Model model,HttpSession session) {
 		// 요일 리스트 (요일 순서 보장)
 		List<String> daysOfWeek = Arrays.asList("월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일");
 
 		// 모델에 데이터 추가
 		model.addAttribute("daysOfWeek", daysOfWeek);
 		model.addAttribute("animeByDay", service.WeekdayAnimeList());
-
-		// 모델에 평균
+		String USER_ID = (String)session.getAttribute("USER_ID");
+		model.addAttribute("USER_ID", USER_ID);
+		log.info("세션 유저아이디"+USER_ID);
 		
+		return "schedule/animeSchedule";
+	}
+	
+	
+	@PostMapping("/rateInfo")
+	public void rateInfo(int ANIME_ID, Model model, HttpSession session) {
+		//int ANIME_ID = 999;
+		
+		//유저 아이디 보내기
+		String USER_ID = (String)session.getAttribute("USER_ID");
+		model.addAttribute("USER_ID", USER_ID);
+		log.info("세션 유저아이디"+USER_ID);
+		
+		// 모델에 평균
 		double grade = Rateservice.getAverageScore(ANIME_ID);
+		
 		log.info("평균: " + grade);
 
 		model.addAttribute("grade", grade);
@@ -164,6 +174,73 @@ public class AnimeScheduleController {
 
 		model.addAttribute("list", fullList);
 	}
+
+	@PostMapping("/rateInfoJson")
+	@ResponseBody
+	public Map<String, Object> rateInfoJson(@RequestBody RatingDTO dto, HttpSession session) {
+		log.info("▶ rateInfoJson 호출됨: ANIME_ID = {}", dto.getANIME_ID());
+
+		Map<String, Object> map = new HashMap<>();
+	    int ANIME_ID = dto.getANIME_ID();
+	    String USER_ID = (String) session.getAttribute("USER_ID");
+	    map.put("USER_ID", USER_ID);
+
+	    //double grade = Rateservice.getAverageScore(ANIME_ID);
+	    Double gradeObj = Rateservice.getAverageScore(ANIME_ID);
+	    double grade = (gradeObj != null) ? gradeObj : 0.0;
+
+	    String mark = (grade >= 4.0) ? "명작" : (grade >= 3.0) ? "훌륭해요" : (grade >= 2.0) ? "평범해요" : "별로에요";
+
+	    map.put("grade", grade);
+	    map.put("gradeMark", mark);
+
+	    List<RatingDTO> rateList = Rateservice.selectRateListByAnime(ANIME_ID);
+	    RatingDTO matched = null;
+	    if (USER_ID != null) {
+	        for (RatingDTO r : rateList) {
+	            if (USER_ID.equals(r.getUSER_ID())) {
+	                matched = r;
+	                break;
+	            }
+	        }
+	        if (matched != null) rateList.remove(matched);
+	    }
+
+	    map.put("Aldto", matched); // 내 평점
+	    map.put("list", rateList); // 나머지 평점 리스트
+
+	    List<RatingDTO> countList = Rateservice.selectRateCount(ANIME_ID);
+	    int[] countPerRange = new int[5];
+	    for (RatingDTO r : countList) {
+	        double score = r.getSCORE_SCORE();
+	        int count = r.getCOUNT();
+	        if (score < 1) countPerRange[0] += count;
+	        else if (score < 2) countPerRange[1] += count;
+	        else if (score < 3) countPerRange[2] += count;
+	        else if (score < 4) countPerRange[3] += count;
+	        else countPerRange[4] += count;
+	    }
+	    map.put("scoreList", Arrays.asList("0~1", "1~2", "2~3", "3~4", "4~5"));
+	    map.put("countList", Arrays.stream(countPerRange).boxed().collect(Collectors.toList()));
+
+	    List<RatingChartDTO> chart = Rateservice.selectGenderCount(ANIME_ID);
+	    double male = 0, female = 0;
+	    if (!chart.isEmpty()) {
+	        RatingChartDTO gender = chart.get(0);
+	        int total = gender.getMENCOUNT() + gender.getGIRLCOUNT();
+	        if (total > 0) {
+	            male = Math.round((gender.getMENCOUNT() * 100.0 / total) * 10) / 10.0;
+	            female = Math.round((gender.getGIRLCOUNT() * 100.0 / total) * 10) / 10.0;
+	        }
+	    }
+	    map.put("maleRatio", male);
+	    map.put("femaleRatio", female);
+
+	    return map;
+	}
+
+
+	
 	@PostMapping("/submitTest")
 	public String submitTest(RatingDTO dto, Model model) {
 		log.info("dto.SCORE_ID : " + dto.getSCORE_ID());

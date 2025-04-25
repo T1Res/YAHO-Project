@@ -37,7 +37,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		        dto.setSCORE(anime.getSCORE());
 		        dto.setTAGS(anime.getTAGS());
 		        dto.setWEEKDAY(day.trim());
-
+		        
 		        expandedList.add(dto);
 		    }
 		}
