@@ -47,6 +47,19 @@ public class AnimeServiceImpl implements AnimeService {
     public List<AnimeOCDTO> getoclist() {
     	return oc.getoclist();
     }
+
     
-   
+
+    
+    @Override
+    public void deleteMS(int animeId) {
+        // MySQL과 Oracle에 대해 각각 삭제를 처리
+        ms.deleteAnime(animeId);
+    }
+    
+    @Override
+    public void deleteOC(int animeId) {
+        // MySQL과 Oracle에 대해 각각 삭제를 처리
+        oc.deleteAnime(animeId);
+    }
 }

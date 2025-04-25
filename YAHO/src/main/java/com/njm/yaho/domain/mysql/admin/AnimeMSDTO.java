@@ -12,4 +12,5 @@ public class AnimeMSDTO {
 	private double SCORE;
 	private String TAGS;
 	private String updated_at;
+
 }

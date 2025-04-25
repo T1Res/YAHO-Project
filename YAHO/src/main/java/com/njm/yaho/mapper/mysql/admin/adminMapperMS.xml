@@ -3,8 +3,8 @@
 <mapper namespace="com.njm.yaho.mapper.mysql.admin.adminMapperMS">
 	
 	<insert id="insertAnimeMS" parameterType="com.njm.yaho.domain.mysql.admin.AnimeMSDTO" useGeneratedKeys="true" keyProperty="ANIME_ID">
-    INSERT INTO TBL_ANIME (TITLE, THUMNAIL_GARO_URL, THUMNAIL_SERO_URL, WEEKDAY, SCORE, TAGS)
-    VALUES (#{TITLE}, #{THUMNAIL_GARO_URL}, #{THUMNAIL_SERO_URL}, #{WEEKDAY}, #{SCORE}, #{TAGS})
+    	INSERT INTO TBL_ANIME (TITLE, THUMNAIL_GARO_URL, THUMNAIL_SERO_URL, WEEKDAY, SCORE, TAGS)
+    	VALUES (#{TITLE}, #{THUMNAIL_GARO_URL}, #{THUMNAIL_SERO_URL}, #{WEEKDAY}, #{SCORE}, #{TAGS})
 	</insert>
 	
 	<select id="getmslist" resultType="com.njm.yaho.domain.mysql.admin.AnimeMSDTO">
@@ -12,5 +12,40 @@
         FROM TBL_ANIME ORDER BY TITLE
     </select>
 	
-	 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<update id="updateAnimeInfo">
+		UPDATE TBL_ANIME
+        SET TITLE = #{TITLE},
+            THUMNAIL_GARO_URL = #{THUMNAIL_GARO_URL},
+            THUMNAIL_SERO_URL = #{THUMNAIL_SERO_URL},
+            WEEKDAY = #{WEEKDAY},
+            SCORE = #{SCORE},
+            TAGS = #{TAGS}
+        WHERE ANIME_ID = #{ANIME_ID}
+   	</update>
+   	
+   	
+   	
+   	
+   	
+   	
+   	
+   	
+   	
+   	
+   	
+   	
+   	
+   	<delete id="deleteAnime" parameterType="int">
+        DELETE FROM TBL_ANIME WHERE ANIME_ID = #{animeId}
+    </delete>
+    
 </mapper>

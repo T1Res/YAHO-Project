@@ -10,12 +10,26 @@ import com.njm.yaho.domain.mysql.admin.AnimeMSDTO;
 @Mapper
 public interface adminMapperMS {
 //    void insertAnime(AnimeMSDTO anime);
-     
-	
-	void insertAnimeMS(AnimeMSDTO anime);
-	   
 
-	
+	void insertAnimeMS(AnimeMSDTO anime);
+
     List<AnimeMSDTO> getmslist(); // 제목 목록 불러오기
 
+
+    
+    
+    
+    
+    
+    
+    void updateAnimeInfo(AnimeMSDTO animeMSDTO); // 기본 정보 업데이트
+    
+    
+    
+    
+    
+    
+    
+    
+    void deleteAnime(int animeId);
 }
