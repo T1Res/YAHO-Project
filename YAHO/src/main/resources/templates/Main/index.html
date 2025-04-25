@@ -8,9 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YAHO</title>
-    <link rel="stylesheet" href="CSS/AnimeMain.css">
-    <link rel="stylesheet" href="CSS/info.css">
-	<link rel="stylesheet" href="CSS/footer.css">
+    <link rel="stylesheet" href="/CSS/AnimeMain.css">
+    <link rel="stylesheet" href="/CSS/info.css">
+	<link rel="stylesheet" href="/CSS/footer.css">
     
 <!-- 기본 favicon -->
 <link rel="icon" href="IMG/favicon/favicon.ico" type="image/x-icon">
@@ -23,34 +23,12 @@
  
  <!-- 아이콘 -->
 <script src="https://kit.fontawesome.com/071aa8f784.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
-	
-    <div class="nav">
-        <img src="/IMG/logo_test1.png">
-        <div class="navitem" onclick="location.href='/Main'">홈</div>
-        <div class="navitem" onclick="location.href='/List'">전체 애니</div>
-        <div class="navitem" onclick="location.href='/Schedule/animeSchedule'">방영중 애니</div>
-        
-        <div class="navitem" onclick="location.href='/Admin/insert'">관리자</div>
-        <div class="navitem" th:if="${session.USER_ID == null}">
-   			<a th:href="@{/User/User_Login}">로그인</a>
-		</div>
-        <div class="navitem" th:if="${session.USER_ID == null}">
-   			<a th:href="@{/User/User_EmailCheck}">회원가입</a>
-		</div>
-        <div class="navitem" th:if="${session.USER_ID != null}">
-   			<a th:href="@{/User/User_Modify}">회원정보 수정</a>
-		</div>
-		<div class="navitem" th:if="${session.USER_ID != null}">
-   			<a th:href="@{/User/User_Logout}">로그아웃</a>
-		</div>
-		<div class="navitem" th:if="${session.USER_ID != null}">
-   			<a th:href="@{/User/User_Profile}">프로필보기</a>
-		</div>
-    </div>
-    
+    <div th:replace="~{fragments/nav :: navbar}"></div>
+
     <br><br>
     
     <div class="title" style="background-color: black;">
@@ -263,7 +241,7 @@
 							
 							<div class="ani-row">
 								<h2>제작사</h2>
-								<p id="studio"><a href="#" id="studio_link">제작사1</a></p>
+								<p id="studio">제작사1</p>
 							</div>
 							
 							<div class="ani-row">
@@ -366,8 +344,6 @@
 		const animeId = el.getAttribute("data-anime-id");
 		const userId = "aa1111"; // 로그인 중인 유저 ID, 현재 아직 기능이 없으므로 임시로 aa1111로 설정
 		
-		console.log("애니 ID:", animeId);
-		
 		// 기본 정보 로딩
 		fetch(`Main/anime/baseInfo?animeId=${animeId}`)
 		    .then(res => res.json())
@@ -394,10 +370,10 @@
 		        if (startDateEl) startDateEl.innerText = data.startDate.substring(0, 10) || "정보가 없습니다.";
 		        if (totalEpEl) totalEpEl.innerText = data.totalEpisode || "정보가 없습니다.";
 		        
-		        if (studioLinkEl) {
-		        	studioLinkEl.setAttribute("href", data.studioLink);
-		        	studioLinkEl.setAttribute("target", "_blank"); // 새 창 열기
-		        	studioLinkEl.innerText = data.studio || "제작사 정보 없음";
+		        if (studioEl) {
+		        //	studioLinkEl.setAttribute("href", data.studioLink);
+		        //	studioLinkEl.setAttribute("target", "_blank"); // 새 창 열기
+		        	studioEl.innerText = data.studio || "제작사 정보 없음";
 		        }
 		        
 		        if (ratingEl) ratingEl.innerText = data.ageRating || "미정";
@@ -580,4 +556,5 @@ showSlide(0);
     }
   });
 </script>
+<script src="/js/navbar.js"></script>
 </html>

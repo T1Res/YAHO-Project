@@ -17,14 +17,7 @@
 </head>
 <body>
 	<div class="admin_container">
-	<div class="nav">
-        <img src="/IMG/logo_test1.png">
-        <div class="navitem" onclick="location.href='/Main'">홈</div>
-        <div class="navitem" onclick="location.href='/List'">전체 애니</div>
-        <div class="navitem" onclick="location.href='/Schedule/animeSchedule'">방영중 애니</div>
-        <div class="navitem">자유게시판</div>
-        <div class="navitem" onclick="location.href='/Admin/insert'">관리자</div>
-    </div>
+	<div th:replace="~{fragments/nav :: navbar}"></div>
     
     <br><br>
     
@@ -58,6 +51,17 @@
 
         <button type="submit">등록</button>
     </form>
+    
+    <button onclick="syncScore()">애니 평점 새로고침</button>
     </div>
 </body>
+<script>
+function syncScore() {
+    fetch("/Admin/syncScore", { method: "POST" })
+        .then(res => res.text())
+        .then(msg => alert(msg))
+        .catch(err => alert("오류 발생: " + err));
+}
+</script>
+<script src="/js/navbar.js"></script>
 </html>

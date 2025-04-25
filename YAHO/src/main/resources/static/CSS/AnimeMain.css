@@ -214,6 +214,22 @@ h3 a{
     font-size: 1rem;
 }
 
+.navitem a {
+    color: white; /* 텍스트 색상 흰색 */
+    text-decoration: none; /* 밑줄 제거 */
+    font-size: 1rem; /* navitem과 동일한 크기 */
+    text-shadow: 
+        -1px -1px 2px black, 
+         1px -1px 2px black, 
+        -1px 1px 2px black, 
+         1px 1px 2px black;
+}
+
+.navitem a:visited {
+    color: white; /* 방문 후에도 동일한 색 유지 */
+}
+
+
 .logo{
     background-color: white;
     width: 80px;
@@ -689,4 +705,98 @@ h3 a{
     border: none;
     outline: none;
     cursor: pointer;
+}
+
+
+
+
+
+
+.USER-profile-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.USER-menu-container {
+    position: relative;
+    margin-left: 20px;
+    align-self: flex-end; /* ✅ 상위 flex의 수직 정렬 무시하고 아래로 붙이기 */
+}
+
+
+.USER-profile-button {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-size: cover;        /* ✅ 원형 안에 꽉 차게 */
+    background-position: center;   /* ✅ 중앙 기준 */
+    background-repeat: no-repeat;
+    border: 2px solid white;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+
+
+.USER-profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;             /* ✅ 핵심: 비율 유지하며 프레임 채움 */
+    object-position: center center;
+    border-radius: 50%;            /* ✅ 원형 */
+    display: block;
+}
+
+
+/* 드롭다운 위치 보정 */
+.USER-profile-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px); /* 이미지 아래에 공간 확보 */
+    left: 50%;
+    transform: translateX(-50%); /* 중앙 정렬 */
+    background-color: #1f1f1f;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    width: 150px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    z-index: 9999;
+}
+
+/* 말풍선 꼬리 위치 정중앙으로 */
+.USER-profile-dropdown::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0 10px 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent #1f1f1f transparent;
+}
+
+/* 메뉴 항목 */
+.USER-dropdown-item {
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    border-top: 1px solid #444;
+}
+
+.USER-dropdown-item:first-child {
+    border-top: none;
+}
+
+.USER-dropdown-item:hover {
+    background-color: #333;
+}
+
+
+.USER-profile-dropdown hr {
+    border: none;
+    border-top: 1px solid #666;
+    margin: 0;
 }

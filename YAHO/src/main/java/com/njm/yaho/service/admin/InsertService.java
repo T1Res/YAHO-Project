@@ -8,4 +8,6 @@ public interface InsertService {
     void insertAnime(InsertMSDTO anime);
     
     List<InsertMSDTO> findAll();
+    
+    public void syncScoreManually();
 }

@@ -1,15 +1,21 @@
 package com.njm.yaho.controller.admin;
 
-import com.njm.yaho.domain.mysql.admin.InsertMSDTO;
-import com.njm.yaho.service.admin.InsertService;
-
 import java.io.File;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.njm.yaho.domain.mysql.admin.InsertMSDTO;
+import com.njm.yaho.service.admin.InsertService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/Admin")
@@ -20,7 +26,7 @@ public class AdminAnimeController {
 
     // 등록 폼 보여주는 GET 요청
     @GetMapping("/insert")
-    public String showInsertForm() {
+    public String showInsertForm(HttpSession session) {
         return "Admin/admin_insert.html"; // templates/Admin/admin_insert.html
     }
 
@@ -82,5 +88,13 @@ public class AdminAnimeController {
         // DB 저장
         animeService.insertAnime(anime);
         return "redirect:/Admin/insert";
+    }
+    
+    // ★ 추가: 애니메이션 평점 수동 갱신 버튼 처리
+    @PostMapping("/syncScore")
+    @ResponseBody
+    public String syncScoreManually() {
+        animeService.syncScoreManually(); // Oracle 평균 계산 + MySQL 동기화 수행
+        return "평점 갱신 완료";
     }
 }
