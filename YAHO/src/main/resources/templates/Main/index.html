@@ -27,6 +27,17 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
+<!-- 오디오 태그 -->
+<audio id="audioPlayer" hidden autoplay></audio>
+
+<!-- JS에서 참조할 전역변수 설정 -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    window.playAudioFlag = /*[[${playAudio}]]*/ false;
+    /*]]>*/
+</script>
+<!-- 오디오 재생 스크립트 외부 포함 -->
+<script src="/js/audio-play.js"></script>
 
 <body>
     <div th:replace="~{fragments/nav :: navbar}"></div>
@@ -269,45 +280,7 @@
 			</div>
 		</div>
 	</div>
-	    <!-- 오디오 재생 태그 -->
-    <audio id="audioPlayer" hidden autoplay muted></audio>
-
-    <script th:inline="javascript">
-       
-		let playAudio = /*[[${playAudio}]]*/ false;
-		console.log("playAudio 플래그 값:", playAudio); 
-
-        if (playAudio) {
-            const mp3Files = [
-                "[[@{/ljj/audio/yahojhr.mp3}]]",
-                "[[@{/ljj/audio/yahoasy.mp3}]]",
-                "[[@{/ljj/audio/yahokrw.mp3}]]",
-                "[[@{/ljj/audio/yahosgm.mp3}]]",
-                "[[@{/ljj/audio/yaholjj.mp3}]]"
-            ];
-
-            function getRandomMP3() {
-                const randomIndex = Math.floor(Math.random() * mp3Files.length);
-                return mp3Files[randomIndex];
-            }
-
-            window.addEventListener("load", function () {
-                const audioElement = document.getElementById("audioPlayer");
-                console.log("audioElement 존재 여부:", audioElement);
-                if (audioElement) {
-                    audioElement.src = getRandomMP3();
-                    audioElement.muted = false;
-                    audioElement.play().then(() => {
-                        console.log("🎵 재생 성공");
-                    }).catch(error => {
-                        console.log("❌ 재생 실패:", error);
-                    });
-                }
-            });
-        }
-    </script>
-	
-	<footer class="footer-wrapper">
+<footer>
 		<div class="footer-content">
 			<div class="col left">
 				<ul class="footer-nav">

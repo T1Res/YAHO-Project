@@ -21,6 +21,8 @@ import com.njm.yaho.service.main.VoteService;
 
 import jakarta.servlet.http.HttpSession;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 
 @RequestMapping("/Main")
@@ -37,7 +39,7 @@ public class MainController {
 	private static final Logger log = LoggerFactory.getLogger(RateControllerTest.class);
   
 	@GetMapping("")
-	public String main(Model model,@ModelAttribute("playAudio") Object flashAudio,HttpSession session) {
+	public String main(Model model,HttpSession session) {
 		List<MainMSDTO> animeList = service.getTodayAnimeList();
 		int animeCount = animeList.size();
 		
@@ -60,9 +62,14 @@ public class MainController {
 		model.addAttribute("USER_ID", USER_ID);
 		model.addAttribute("animeCount", animeCount);
 		model.addAttribute("animeList", animeList);
-		if (flashAudio != null) {
-	        model.addAttribute("playAudio", true);
-	    }
+		
+		Object playAudio = session.getAttribute("playAudio");
+	  if (playAudio != null && (boolean) playAudio) {
+	      model.addAttribute("playAudio", true);
+	      session.removeAttribute("playAudio"); // ✅ 재생 후 삭제
+	  }
+      return "Main/index";
+	  }
 		
 		// 애니 랭킹 TOP10 가져오기
 		List<MainMSDTO> animeListTop10 = service.selectTop10AnimeByScore();
