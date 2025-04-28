@@ -585,6 +585,32 @@ h3 a{
     flex: 0 0 auto; /* 영상 크기를 고정 */
 }
 
+.youtube-thumbnail {
+    position: relative;
+    width: 400px;
+    height: 315px;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: black;
+}
+
+.youtube-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.youtube-thumbnail .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    color: white;
+    opacity: 0.8;
+}
+
 /* 끝 */
 
 
@@ -800,3 +826,171 @@ h3 a{
     border-top: 1px solid #666;
     margin: 0;
 }
+
+
+
+/* 메인 아래 랭킹+투표를 나누는 wrapper */
+.main-bottom-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 30px 5%;
+    box-sizing: border-box;
+}
+
+/* 왼쪽 랭킹 */
+.ranking-section {
+    width: 48%;
+    height: 600px;
+    overflow: hidden;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+
+/* 오른쪽 투표 */
+.vote-section {
+    width: 48%;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 20px;
+    color: #fff;
+}
+
+.vote-result {
+	width: 48%;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 20px;
+    color: #fff;
+}
+
+/* 애니 랭킹 */
+.swiper-container-ranking {
+    height: 540px;
+    overflow: hidden;
+}
+
+.swiper-container-ranking .swiper-slide {
+	padding: 0;
+    margin: 0;
+    height: 90px; /* ✅ 슬라이드 하나당 고정 높이 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.swiper-container-ranking .swiper-slide img {
+    width: 50px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.rank-card {
+	height: 90px; /* ✅ 슬라이드 하나당 고정 높이 */
+    display: flex;
+    align-items: center;
+    background-color: #1e1e1e;
+    padding: 0;
+    border-radius: 8px;
+    width: 90%;
+    box-sizing: border-box;
+    gap: 10px; /* 썸네일과 텍스트 간격 추가 */
+}
+
+.rank-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: gold;
+    width: 30px;
+    text-align: center;
+}
+
+.rank-thumbnail {
+    width: 50px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.rank-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.rank-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.rank-score {
+    font-size: 14px;
+    color: #ccc;
+}
+
+/* 순위별 테두리 색상 */
+.rank-1 {
+    border: 2px solid #FFD700; /* 금색 */
+}
+
+.rank-2 {
+    border: 2px solid #C0C0C0; /* 은색 */
+}
+
+.rank-3 {
+    border: 2px solid #CD7F32; /* 동색 */
+}
+
+.rank-others {
+    border: 2px solid #555555; /* 회색 */
+}
+
+/* 애니 랭킹 끝 */
+
+/* 투표 */
+.vote-section {
+    width: 48%;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 20px;
+    color: #fff;
+}
+
+.vote-card {
+    display: flex;
+    align-items: center;
+    background-color: #292929;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.vote-card img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.vote-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.vote-btn {
+    background-color: #ff5e57;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.vote-btn:hover {
+    background-color: #ff3b30;
+}
+/* 투표 끝 */
