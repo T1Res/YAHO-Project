@@ -1,18 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="/CSS/User.css" rel="stylesheet">
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <script>
 	function send(){
 		if(user.USER_ID.value==""){
-			alert("id을 입력하");
+			alert("아이디를 입력하세요");
 			user.USER_ID.focus();
 			return;
 		}
 		if(user.USER_PASSWORD.value==""){
-			alert("비번을 입력하");
+			alert("비밀번호를 입력하세요");
 			user.USER_PASSWORD.focus();
 			return;
 		}
@@ -20,89 +23,73 @@
 	}
 </script>
 <body>
-	
-	<form name="user" method="post" th:action="@{/User/User_Login}">
-		<table width="583" border="0" cellspacing="0" cellpadding="0"
-			height="265">
-			<tr valign=bottom>
-				<td width="21"><img src="/img/h_bl02.gif" width="18"
-					height="16"></td>
-				<td width="55" nowrap>아 이 디</td>
-				<td width="175">: <input type=text name="USER_ID" size=16
-					maxlength=16 STYLE="WIDTH: 155" placeholder="아이디를 입력하세요">
-				</td>
-				<td width="79"></td>
-			</tr>
-			<tr valign=bottom>
-				<td><img src="/img/h_bl02.gif" width="18" height="16"></td>
-				<td nowrap>비밀번호</td>
-				<td>: <input type=password name="USER_PASSWORD" id="password" size=14
-					maxlength=12 STYLE="WIDTH: 155" placeholder="비밀번호를 입력하세요">
-				</td>
-				<td><img src="/img/login.gif" border=0 align=absmiddle
-					onClick="send()"></td>
-			</tr>
-		</table>
-	</form>
+<div class="login-wrapper">
+	<div class="login-box">	
+	<!-- 로그인 폼 -->
+		<form name="user" method="post" th:action="@{/User/User_Login}" class="login-form">
+			<h1>로그인</h1>
+			<input type=text name="USER_ID" maxlength=16 placeholder="아이디를 입력하세요">
+			<input type=password name="USER_PASSWORD" id="password" maxlength=12 placeholder="비밀번호를 입력하세요">
+			<!-- <img src="/IMG/loginbutton2.png" onClick="send()"> -->
+			<button type="button" class="login-submit-btn" onClick="send()">로그인</button>
 	
 	<!-- 계정 찾기 버튼 -->
-	<div class="form-group helper-links">
-		<div class="helper-links">
-  			<a href="#" onclick="openFindId()">아이디 찾기</a>
-  			<a href="#" onclick="openFindPw()">비밀번호 찾기</a>
+		<div class="account-recovery-links">
+	  		<a href="#" onclick="openFindId()">아이디 찾기</a>
+	  		<a href="#" onclick="openFindPw()">비밀번호 찾기</a>
 		</div>
-  	</div>
-  
+	
+		</form>
+	</div><!-- .login-box -->
+</div><!-- .login-wrapper -->
+ 
+
   	<!-- ✅ ID 찾기 모달 -->
-	<div id="findIdModal" class="modal" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%);
-		background:#fff; border:1px solid #ccc; padding:20px; z-index:1000; width:300px; box-shadow:0 0 10px rgba(0,0,0,0.2);">
+	<div id="findIdModal" class="modal">
 		
-		<h3>아이디 찾기</h3>
+		<h3 class="findname">아이디 찾기</h3>
 		
 		<!-- 이메일 입력 -->
-		<input type="email" id="findIdEmail" placeholder="가입한 이메일 입력" style="width:100%; margin-bottom:10px;">
-		<div id="findIdResult" style="font-size:0.9em; height:20px;"></div>
+		<input type="email" id="findIdEmail" class="findinput" placeholder="가입한 이메일 입력">
+		<div id="findIdResult" class="findresult"></div>
 		
-		<!-- ID 찾기 버튼 -->
-		<button id="findIdBtn" onclick="submitFindId()">ID 찾기</button>
-		<span id="findIdDelay" style="font-size:0.9em; color:gray; margin-left:10px;"></span>
-
-		<!-- 닫기 버튼 -->
-		<button onclick="closeFindIdModal()" style="float:right;">닫기</button>
+		<div class="findbutton-container">
+			<!-- ID 찾기 버튼 -->
+			<button id="findIdBtn" class="findbutton" onclick="submitFindId()">ID 찾기</button>
+			<span id="findIdDelay"></span>
+			<!-- 닫기 버튼 -->
+			<button class="findbutton" onclick="closeFindIdModal()">닫기</button>
+		</div>
 	</div>
-	
+
 	<!-- ✅ 비밀번호 찾기 모달 -->
-	<div id="findPwModal" class="modal"
-		style="display: none; position: fixed; top: 20%; left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid #ccc; padding: 20px; z-index: 1000; width: 320px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+	<div id="findPwModal" class="modal">
 		
-		<h3>비밀번호 찾기</h3>
+		<h3 class="findname">비밀번호 찾기</h3>
 
 	    <!-- 아이디와 이메일 입력 -->
-		<input type="text" id="findPwId" placeholder="아이디 입력"
-			style="width: 100%; margin-bottom: 10px;">
+		<input type="text" id="findPwId" class="findinput" placeholder="아이디 입력">
 		
-		<input type="email" id="findPwEmail" placeholder="이메일 입력"
-			style="width: 100%; margin-bottom: 10px;">
+		<input type="email" id="findPwEmail" class="findinput" placeholder="이메일 입력">
 
-		<div id="findPwResult" style="font-size: 0.9em; height: 20px;"></div>
+		<div id="findPwResult" class="findresult"></div>
 		
 		<!-- reCAPTCHA -->
-		<div class="g-recaptcha" data-sitekey="6LfUSyArAAAAAFd72_SuYgkIYMEhS1l1Mzxcco_b"></div>
-		
-		<br>
-		
-		<!-- 비밀번호 재설정 버튼 -->
-		<button id="findPwBtn" onclick="submitFindPw()">비밀번호 재설정</button>
-		<span id="findPwDelay" style="font-size:0.9em; color:gray; margin-left:10px;"></span>
-
-		<button onclick="closeFindPwModal()" style="float: right;">닫기</button>
+		<div class="g-recaptcha-wrapper">
+			<div class="g-recaptcha" data-sitekey="6LfUSyArAAAAAFd72_SuYgkIYMEhS1l1Mzxcco_b"></div>
+		</div>
+		<div class="findbutton-container">
+			<!-- 비밀번호 재설정 버튼 -->
+			<button id="findPwBtn" class="findbutton" onclick="submitFindPw()">비밀번호 재설정</button>
+			<span id="findPwDelay"></span>
+			<button class="findbutton" onclick="closeFindPwModal()">닫기</button>
+		</div>
 	</div>
+	
 	<!-- ❗ 로그인 실패 모달창 -->
-<div id="errorModal" class="modal" style="display:none; position:fixed; top:30%; left:50%; transform:translate(-50%, -50%);
-	background-color:white; border:1px solid #ccc; padding:20px; z-index:1000; box-shadow:0 0 10px rgba(0,0,0,0.2); width:300px;">
-	
-	<p id="errorModalMessage" style="color:red; font-weight:bold; margin-bottom:20px;" th:text="${error}">에러 메시지</p>
-	
+	<div id="modalOverlay"></div>
+	<div id="errorModal" class="modal">
+		<p id="errorModalMessage" th:text="${error}">에러 메시지</p>
 	<div style="text-align:center;">
 		<button onclick="closeErrorModal()">확인</button>
 	</div>
