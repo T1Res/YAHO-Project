@@ -14,6 +14,8 @@ import com.njm.yaho.domain.mysql.main.MainMSDTO;
 import com.njm.yaho.domain.oracle.main.MainOCDTO;
 import com.njm.yaho.service.main.MainService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/Main")
 public class MainController {
@@ -21,14 +23,17 @@ public class MainController {
 	private MainService service;
 	
 	@GetMapping("")
-	public String main(Model model,@ModelAttribute("playAudio") Object flashAudio) {
+	public String main(Model model,HttpSession session) {
 		List<MainMSDTO> animeList = service.getTodayAnimeList();
 		int animeCount = animeList.size();
 		
 		model.addAttribute("animeCount", animeCount);
 		model.addAttribute("animeList", animeList);
-		if (flashAudio != null) {
+		
+		Object playAudio = session.getAttribute("playAudio");
+	    if (playAudio != null && (boolean) playAudio) {
 	        model.addAttribute("playAudio", true);
+	        session.removeAttribute("playAudio"); // ✅ 재생 후 삭제
 	    }
         return "Main/index";
     }

@@ -82,7 +82,7 @@ public class UserController {
 		if (loggedInUser != null) {
 			session.setAttribute("USER_ID", loggedInUser.getUSER_ID());
 			session.setAttribute("user", loggedInUser);
-			redirectAttributes.addFlashAttribute("playAudio", true);
+			session.setAttribute("playAudio", true);
 			return "redirect:/Main"; // 로그인 후 이동할 페이지
 		} else {
 			redirectAttributes.addFlashAttribute("error", "아이디 또는 비밀번호가 틀렸습니다.");
@@ -213,8 +213,8 @@ public class UserController {
 	// 로그아웃
 	@GetMapping("/User/User_Logout")
 	public String UserLogout(HttpSession session,RedirectAttributes redirectAttributes) {
-	    session.invalidate(); // 세션 전체 삭제
-	    redirectAttributes.addFlashAttribute("playAudio", true);
+		session.invalidate(); // 세션 전체 삭제
+		redirectAttributes.addFlashAttribute("playAudio", true);
 	    return "redirect:/";  // 메인으로
   }
 }
