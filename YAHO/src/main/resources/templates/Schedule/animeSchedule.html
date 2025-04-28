@@ -349,6 +349,7 @@
 
             // 평가 등록/수정 폼 구분
             applyUserRatingForm(data.Aldto, animeId, userId);
+            console.log(data.Aldto);
 
             // 모달 열기
             document.getElementById("animeModal").style.display = "block";
@@ -383,28 +384,40 @@
 <script>
 
 function applyUserRatingForm(dto, animeId, userId) {
+    // 수정 폼과 등록 폼을 찾기
+    const rateFormArea = document.getElementById("rateFormArea");
+    const registerFormArea = document.getElementById("registerFormArea");
+    
+    // 수정 폼 내용 초기화
     const ratedContent = document.getElementById("rated_content");
+    const ratedStarsArea = document.getElementById("rated_stars_area");
 
+    // 새로운 애니메이션의 수정 폼을 불러올 때마다 폼을 초기화
+    if (rateFormArea && registerFormArea) {
+        // 폼 초기화
+        ratedContent.value = "";  // 댓글 내용 초기화
+        ratedStarsArea.innerHTML = "";  // 별점 초기화
+    }
+
+    // 수정 폼이 있을 경우, 해당 애니메이션의 정보를 불러옴
     if (dto) {
-        // 수정 폼 표시
-        document.getElementById("rateFormArea").style.display = "block";
-        document.getElementById("registerFormArea").style.display = "none";
+        rateFormArea.style.display = "block";
+        registerFormArea.style.display = "none";
         document.getElementById("rated_user_id").value = dto.USER_ID || userId;
         document.getElementById("rated_anime_id").value = dto.ANIME_ID || animeId;
         document.getElementById("rated_content").value = dto.SCORE_CONTENT; // 기존 내용 표시
         applyStars("rated_stars_area", dto.SCORE_SCORE, "SCORE_SCORE");
     } else {
         // 등록 폼 표시
-        document.getElementById("rateFormArea").style.display = "none";
-        document.getElementById("registerFormArea").style.display = "block";
+        rateFormArea.style.display = "none";
+        registerFormArea.style.display = "block";
         document.getElementById("register_anime_id").value = animeId;
         document.getElementById("register_user_id").value = userId;
         document.getElementById("register_content").value = ""; // 초기화
-        // textarea 초기화
-        //ratedContent.value = "";  // 댓글 내용 초기화
         applyStars("register_stars_area", 3.5, "SCORE_SCORE"); // 기본 별점
     }
 }
+
 function applyStars(containerId, selectedValue, inputName) {
     const area = document.getElementById(containerId);
     area.innerHTML = "";

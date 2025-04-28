@@ -6,6 +6,7 @@ function submitRate() {
     const animeId = getInputValue("register_anime_id");
     const userId = getInputValue("register_user_id");
 
+	
     if (!score || !content || !animeId || !userId) {
         alert("별점, 댓글, 사용자 ID, 애니 ID를 모두 입력해주세요!");
         return;
@@ -35,6 +36,12 @@ function updateRate() {
     const animeId = getInputValue("rated_anime_id");
     const userId = getInputValue("rated_user_id");
 
+	
+	console.log("스코어"+score);
+	console.log("컨텐츠"+content);
+	console.log("아니메아이디"+animeId);
+	console.log("유저아이디"+userId);
+		
     if (!score || !content || !animeId || !userId) {
         alert("모든 정보를 입력해주세요.");
         return;

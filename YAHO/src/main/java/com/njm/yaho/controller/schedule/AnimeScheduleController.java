@@ -184,6 +184,7 @@ public class AnimeScheduleController {
 
 		Map<String, Object> map = new HashMap<>();
 	    int ANIME_ID = dto.getANIME_ID();
+	    log.info("getAnime 아이디:"+dto.getANIME_ID());
 	    String USER_ID = (String) session.getAttribute("USER_ID");
 	    map.put("USER_ID", USER_ID);
 
@@ -209,6 +210,7 @@ public class AnimeScheduleController {
 	    }
 
 	    map.put("Aldto", matched); // 내 평점
+	    log.info("aldto:"+matched);
 	    map.put("list", rateList); // 나머지 평점 리스트
 
 	    List<RatingDTO> countList = Rateservice.selectRateCount(ANIME_ID);

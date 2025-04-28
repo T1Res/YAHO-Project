@@ -55,7 +55,7 @@
 	</select>
 	<update id="updateRate" >
 		UPDATE tbl_score SET SCORE_CONTENT=#{SCORE_CONTENT},SCORE_SCORE=#{SCORE_SCORE},SCORE_REGDATE=sysdate
-		WHERE USER_ID=#{USER_ID}
+		WHERE USER_ID=#{USER_ID} AND ANIME_ID=#{ANIME_ID}
 	</update>
 	<select id="searchRating" resultType="com.njm.yaho.domain.oracle.info.RatingDTO">
 		SELECT *
