@@ -10,4 +10,7 @@ public interface MainMapperMS {
 	
 	// 특정 애니 요약 정보 가져오기
 	public MainMSDTO getAnimeBaseInfo(int animeId);
+	
+	// 애니 랭킹 TOP10 가져오기
+	List<MainMSDTO> selectTop10AnimeByScore();
 }
