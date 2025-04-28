@@ -41,6 +41,9 @@ public class MainController {
 		if (flashAudio != null) {
 	        model.addAttribute("playAudio", true);
 	    }
+		
+		String USER_ID = (String)session.getAttribute("USER_ID");
+		model.addAttribute("USER_ID", USER_ID);
         return "Main/index";
     }
 	

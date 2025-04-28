@@ -141,8 +141,7 @@
 								<input type="hidden" id="register_anime_id" name="ANIME_ID" /> <img
 									src="/IMG/kibon_image.jpg" class="profile-img" />
 								<div class="user-id" th:text="${USER_ID}"></div>
-								<input type="hidden" id="register_user_id" name="USER_ID"
-									th:value="${USER_ID}" /> <br>
+								<input type="hidden" id="register_user_id" name="USER_ID"th:value="${USER_ID}" /> <br>
 								<div class="rating" id="register_stars_area"></div>
 
 								<div style="margin-top: 20px;">
@@ -384,13 +383,15 @@
 <script>
 
 function applyUserRatingForm(dto, animeId, userId) {
+    const ratedContent = document.getElementById("rated_content");
+
     if (dto) {
         // 수정 폼 표시
         document.getElementById("rateFormArea").style.display = "block";
         document.getElementById("registerFormArea").style.display = "none";
         document.getElementById("rated_user_id").value = dto.USER_ID || userId;
         document.getElementById("rated_anime_id").value = dto.ANIME_ID || animeId;
-        document.getElementById("rated_content").value = dto.SCORE_CONTENT;
+        document.getElementById("rated_content").value = dto.SCORE_CONTENT; // 기존 내용 표시
         applyStars("rated_stars_area", dto.SCORE_SCORE, "SCORE_SCORE");
     } else {
         // 등록 폼 표시
@@ -398,10 +399,12 @@ function applyUserRatingForm(dto, animeId, userId) {
         document.getElementById("registerFormArea").style.display = "block";
         document.getElementById("register_anime_id").value = animeId;
         document.getElementById("register_user_id").value = userId;
+        document.getElementById("register_content").value = ""; // 초기화
+        // textarea 초기화
+        //ratedContent.value = "";  // 댓글 내용 초기화
         applyStars("register_stars_area", 3.5, "SCORE_SCORE"); // 기본 별점
     }
 }
-
 function applyStars(containerId, selectedValue, inputName) {
     const area = document.getElementById(containerId);
     area.innerHTML = "";
@@ -504,6 +507,7 @@ function updateDonutChart(maleRatio, femaleRatio) {
     }
   });
 </script>
+<!-- 글자수 확인 함수 -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 	  const maxChars = 100;
