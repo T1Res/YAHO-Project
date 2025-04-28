@@ -8,9 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YAHO</title>
-    <link rel="stylesheet" href="CSS/AnimeMain.css">
-    <link rel="stylesheet" href="CSS/info.css">
-	<link rel="stylesheet" href="CSS/footer.css">
+    <link rel="stylesheet" href="/CSS/AnimeMain.css">
+    <link rel="stylesheet" href="/CSS/info.css">
+	<link rel="stylesheet" href="/CSS/footer.css">
     
 <!-- 기본 favicon -->
 <link rel="icon" href="IMG/favicon/favicon.ico" type="image/x-icon">
@@ -21,36 +21,16 @@
 <!-- PNG favicon -->
 <link rel="icon" href="IMG/favicon/android-chrome-512x512.png" type="image/png">
  
- <!-- 아이콘 -->
+<!-- 아이콘 -->
 <script src="https://kit.fontawesome.com/071aa8f784.js" crossorigin="anonymous"></script>
+<!-- 투표 차트 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
-	
-    <div class="nav">
-        <img src="/IMG/logo_test1.png">
-        <div class="navitem" onclick="location.href='/Main'">홈</div>
-        <div class="navitem" onclick="location.href='/List'">전체 애니</div>
-        <div class="navitem" onclick="location.href='/Schedule/animeSchedule'">방영중 애니</div>
-        
-        <div class="navitem" onclick="location.href='/Admin/insert'">관리자</div>
-        <div class="navitem" th:if="${session.USER_ID == null}">
-   			<a th:href="@{/User/User_Login}">로그인</a>
-		</div>
-        <div class="navitem" th:if="${session.USER_ID == null}">
-   			<a th:href="@{/User/User_EmailCheck}">회원가입</a>
-		</div>
-        <div class="navitem" th:if="${session.USER_ID != null}">
-   			<a th:href="@{/User/User_Modify}">회원정보 수정</a>
-		</div>
-		<div class="navitem" th:if="${session.USER_ID != null}">
-   			<a th:href="@{/User/User_Logout}">로그아웃</a>
-		</div>
-		<div class="navitem" th:if="${session.USER_ID != null}">
-   			<a th:href="@{/User/User_Profile}">프로필보기</a>
-		</div>
-    </div>
-    
+    <div th:replace="~{fragments/nav :: navbar}"></div>
+
     <br><br>
     
     <div class="title" style="background-color: black;">
@@ -148,89 +128,96 @@
 	<!-- 유튜브 -->
 	<h2 style="color:#ffffff;"> &nbsp; - YouTube</h2>
 	<div class="swiper-container-youtube">
-		<div class="swiper-wrapper">
-			<div class="swiper-slide">
-				<iframe width="400" height="315"
-					src="https://www.youtube.com/embed/9FCX_7tCcrk?si=1ulvnLTJXmSAwlgW"
-					title="YouTube video player" frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</div>
-			
-			<div class="swiper-slide">
-				<iframe width="400" height="315"
-					src="https://www.youtube.com/embed/GjfSwJlq4rk?si=f9fk3v_gPepNK2ca"
-					title="YouTube video player" frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</div>
-			
-			<div class="swiper-slide">
-				<iframe width="400" height="315"
-					src="https://www.youtube.com/embed/BGlQakaaJDs?si=F9D4zQm0PJ-uHCa1"
-					title="YouTube video player" frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</div>
-			
-			<div class="swiper-slide">
-				<iframe width="400" height="315"
-					src="https://www.youtube.com/embed/w1J9aH9DhrY?si=cP41P8iSmbmiioR-"
-					title="YouTube video player" frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</div>
-			
-			<div class="swiper-slide">
-				<iframe width="400" height="315"
-					src="https://www.youtube.com/embed/ptc0YXw9ZOo?si=DhFn1kfVL9nlSlRr" 
-					title="YouTube video player" frameborder="0" 
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</div>
-			
-			<div class="swiper-slide">
-				<iframe width="400" height="315"
-					src="https://www.youtube.com/embed/VYFsjzOmJhk?si=5pkyNXQ0yBM61KjG" 
-					title="YouTube video player" frameborder="0" 
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</div>
-		</div>
-		
-		<!-- 좌우 화살표 -->
-		<div class="swiper-button-prev"></div>
-		<div class="swiper-button-next"></div>
+	    <div class="swiper-wrapper">
+	        <!-- 영상 1 -->
+	        <div class="swiper-slide">
+	            <div class="youtube-thumbnail" data-video-id="9FCX_7tCcrk">
+	                <img src="https://img.youtube.com/vi/9FCX_7tCcrk/0.jpg" alt="YouTube 썸네일">
+	                <div class="play-button">▶</div>
+	            </div>
+	        </div>
+	
+	        <!-- 영상 2 -->
+	        <div class="swiper-slide">
+	            <div class="youtube-thumbnail" data-video-id="GjfSwJlq4rk">
+	                <img src="https://img.youtube.com/vi/GjfSwJlq4rk/0.jpg" alt="YouTube 썸네일">
+	                <div class="play-button">▶</div>
+	            </div>
+	        </div>
+	
+	        <!-- 영상 3 -->
+	        <div class="swiper-slide">
+	            <div class="youtube-thumbnail" data-video-id="BGlQakaaJDs">
+	                <img src="https://img.youtube.com/vi/BGlQakaaJDs/0.jpg" alt="YouTube 썸네일">
+	                <div class="play-button">▶</div>
+	            </div>
+	        </div>
+	
+	        <!-- 영상 4 -->
+	        <div class="swiper-slide">
+	            <div class="youtube-thumbnail" data-video-id="w1J9aH9DhrY">
+	                <img src="https://img.youtube.com/vi/w1J9aH9DhrY/0.jpg" alt="YouTube 썸네일">
+	                <div class="play-button">▶</div>
+	            </div>
+	        </div>
+	
+	        <!-- 영상 5 -->
+	        <div class="swiper-slide">
+	            <div class="youtube-thumbnail" data-video-id="ptc0YXw9ZOo">
+	                <img src="https://img.youtube.com/vi/ptc0YXw9ZOo/0.jpg" alt="YouTube 썸네일">
+	                <div class="play-button">▶</div>
+	            </div>
+	        </div>
+	
+	        <!-- 영상 6 -->
+	        <div class="swiper-slide">
+	            <div class="youtube-thumbnail" data-video-id="VYFsjzOmJhk">
+	                <img src="https://img.youtube.com/vi/VYFsjzOmJhk/0.jpg" alt="YouTube 썸네일">
+	                <div class="play-button">▶</div>
+	            </div>
+	        </div>
+	
+	    </div>
+	
+	    <!-- 좌우 화살표 -->
+	    <div class="swiper-button-prev"></div>
+	    <div class="swiper-button-next"></div>
 	</div>
+
 	
 	<hr class="custom-hr"><br>
 
-	<div class="core">
-		<div class="core_title">추천 애니</div>
-		<div class="core_cont">
-			<img src="" alt=""> 
-			<img src="" alt=""> 
-			<img src="" alt=""> 
-			<img src="" alt=""> 
-			<img src="" alt=""> 
-			<img src="" alt="">
-		</div>
-		
-		<div class="core_title">뭘넣을까</div>
-		<div class="core_cont" style="margin-bottom: 0; padding-bottom: 80px;">
-			<img id="umc" src="" alt="">
-			<div id="umc_activity" class="activity">
-				<li>UMC 3rd Spring 부원</li>
-				<li>UMC 아이디어톤 5개 중 3개 수상</li>
-				<li>UMC 4th 운영진 Server 파트장</li>
-			</div>
-			
-			<img id="demoday" src="" alt="">
-			<div id="demoday_activity" class="activity">
-				<li>UMC DemoDay 최우수상</li>
-			</div>
+	<!-- 메인 하단 -->
+	<div class="main-bottom-wrapper">
+	    <!-- 왼쪽 : 인기 랭킹 -->
+	    <div class="ranking-section">
+	        <h2 style = "color: #fff;">🔥 인기 애니 랭킹 Top 10</h2>
+	        <div class="swiper-container-ranking">
+	            <div class="swiper-wrapper">
+	                <div class="swiper-slide" th:each="anime, iterStat : ${animeListTop10}">
+	                    <div class="rank-card"
+     						th:classappend="${iterStat.count == 1 ? 'rank-1' : (iterStat.count == 2 ? 'rank-2' : (iterStat.count == 3 ? 'rank-3' : 'rank-others'))}"
+     						th:data-anime-id="${anime.animeId}"
+     						onclick="openModalDetail(this)">
+							<div class="rank-number" th:text="${iterStat.count}"></div>
+	                        <img th:src="${anime.thumnailSeroUrl}" alt="썸네일" class="rank-thumbnail">
+	                        <div class="rank-info">
+	                            <div class="rank-title" th:text="${anime.title}">애니 제목</div>
+	                            <div class="rank-score" th:text="${anime.score} + '점'">9.5점</div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	
+	    <!-- 오른쪽 -->
+	    <div class="vote-section">
+		    
 		</div>
 	</div>
+	
+	<hr class="custom-hr"><br>
 	
 	<!-- 모달 -->
 	<div id="animeModal" class="modal">
@@ -263,7 +250,7 @@
 							
 							<div class="ani-row">
 								<h2>제작사</h2>
-								<p id="studio"><a href="#" id="studio_link">제작사1</a></p>
+								<p id="studio">제작사1</p>
 							</div>
 							
 							<div class="ani-row">
@@ -319,7 +306,8 @@
             });
         }
     </script>
-<footer>
+	
+	<footer class="footer-wrapper">
 		<div class="footer-content">
 			<div class="col left">
 				<ul class="footer-nav">
@@ -357,7 +345,7 @@
 			<p>Copyright &copy; YAHO. All rights reserved.
 		</div>
 	</footer>
-  
+
 	<!-- Swiper JS -->
 	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>  
 </body>
@@ -365,8 +353,6 @@
 	function openModalDetail(el) {
 		const animeId = el.getAttribute("data-anime-id");
 		const userId = "aa1111"; // 로그인 중인 유저 ID, 현재 아직 기능이 없으므로 임시로 aa1111로 설정
-		
-		console.log("애니 ID:", animeId);
 		
 		// 기본 정보 로딩
 		fetch(`Main/anime/baseInfo?animeId=${animeId}`)
@@ -394,10 +380,10 @@
 		        if (startDateEl) startDateEl.innerText = data.startDate.substring(0, 10) || "정보가 없습니다.";
 		        if (totalEpEl) totalEpEl.innerText = data.totalEpisode || "정보가 없습니다.";
 		        
-		        if (studioLinkEl) {
-		        	studioLinkEl.setAttribute("href", data.studioLink);
-		        	studioLinkEl.setAttribute("target", "_blank"); // 새 창 열기
-		        	studioLinkEl.innerText = data.studio || "제작사 정보 없음";
+		        if (studioEl) {
+		        //	studioLinkEl.setAttribute("href", data.studioLink);
+		        //	studioLinkEl.setAttribute("target", "_blank"); // 새 창 열기
+		        	studioEl.innerText = data.studio || "제작사 정보 없음";
 		        }
 		        
 		        if (ratingEl) ratingEl.innerText = data.ageRating || "미정";
@@ -494,25 +480,22 @@
 
     // 유튜브 캐러셀 자동 이동
     const swiper = new Swiper('.swiper-container-youtube', {
-        loop: true, // 무한 반복
-        autoplay: {
-            delay: 3000, // 3초마다 자동 이동
-            disableOnInteraction: false, // 사용자가 터치해도 자동 재생 유지
-        },
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        slidesPerView: 4, // 한 번에 4개의 슬라이드 보이게
-        spaceBetween: 10, // 슬라이드 간 간격
-        speed: 1000, // 애니메이션 속도 (1초)
-        loopedSlides: 4, // 루프 시 자연스럽게 연결되도록 설정
-        autoplay: {
-            delay: 3000, // 3초마다 자동 슬라이드
-            disableOnInteraction: false, // 사용자가 터치해도 자동 재생 유지
-        },
-        slidesPerGroup: 1, // 한 번에 하나의 슬라이드만 이동
-    });
+	    loop: true,
+	    autoplay: {
+	        delay: 3000,
+	        disableOnInteraction: false, // 사용자가 넘겨도 autoplay 유지
+	        pauseOnMouseEnter: true,     // 마우스 올리면 멈추기
+	    },
+	    navigation: {
+	        nextEl: '.swiper-button-next',
+	        prevEl: '.swiper-button-prev',
+	    },
+	    slidesPerView: 4,
+	    spaceBetween: 10,
+	    speed: 1000,
+	    slidesPerGroup: 1,
+	});
+
 </script>
 
 <!-- 캐러셀 -->
@@ -580,4 +563,57 @@ showSlide(0);
     }
   });
 </script>
+
+<!-- 유튜브 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.youtube-thumbnail').forEach(thumbnail => {
+        thumbnail.addEventListener('click', function() {
+            const videoId = this.dataset.videoId;
+            this.innerHTML = `<iframe width="400" height="315"
+                                src="https://www.youtube.com/embed/${videoId}?autoplay=1"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>`;
+        });
+    });
+
+    // 유튜브 캐러셀 Swiper 활성화
+    const swiper = new Swiper('.swiper-container-youtube', {
+        loop: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        slidesPerView: 4,
+        spaceBetween: 10,
+        speed: 1000,
+        loopedSlides: 4,
+        slidesPerGroup: 1,
+    });
+});
+</script>
+
+<!-- 애니 랭킹 캐러셀 -->
+<script>
+const swiperRanking = new Swiper('.swiper-container-ranking', {
+    direction: 'vertical',
+    slidesPerView: 5,
+    spaceBetween: 10,
+    loop: true,
+    autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+    },
+});
+
+
+
+</script>
+
+<script src="/js/navbar.js"></script>
 </html>

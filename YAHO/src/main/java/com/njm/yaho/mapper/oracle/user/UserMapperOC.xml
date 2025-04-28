@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.njm.yaho.mapper.oracle.user.UserMapperOC">
 	<resultMap id="userResultMap" type="com.njm.yaho.domain.oracle.user.UserOCDTO">
-	    <result property="userId" column="USER_ID"/>
-	    <result property="userPassword" column="USER_PASSWORD"/>
-	    <result property="userNickname" column="USER_NICKNAME"/>
-	    <result property="userEmail" column="USER_EMAIL"/>
-	    <result property="userBio" column="USER_BIO"/>
-	    <result property="userProfileImg" column="USER_PROFILE_IMG"/>
-	    <result property="userCreatedDate" column="USER_CREATED_DATE"/>
-	    <result property="userPermission" column="USER_PERMISSION"/>
-	    <result property="userGender" column="USER_GENDER"/>
+		<result property="userId" column="USER_ID" />
+		<result property="userPassword" column="USER_PASSWORD" />
+		<result property="userNickname" column="USER_NICKNAME" />
+		<result property="userEmail" column="USER_EMAIL" />
+		<result property="userBio" column="USER_BIO" />
+		<result property="userProfileImg" column="USER_PROFILE_IMG" />
+		<result property="userCreatedDate" column="USER_CREATED_DATE" />
+		<result property="userPermission" column="USER_PERMISSION" />
+		<result property="userGender" column="USER_GENDER" />
 	</resultMap>
 
 	<!-- 이메일로 계정 존재여부 확인 -->
@@ -55,4 +55,15 @@
 	  VALUES (#{userId}, #{email}, CURRENT_TIMESTAMP)
 	</insert>
 	
+	<!-- 유저 권한 확인 -->
+	<select id="checkUserRole" resultType="int">
+		SELECT USER_PERMISSION FROM TBL_USER
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	<!-- 사용자 프로필 이미지 가져오기 -->
+	<select id="getUserProfileImg" resultType="String">
+		SELECT USER_PROFILE_IMG FROM TBL_USER
+		WHERE USER_ID = #{userId}
+	</select>
 </mapper>

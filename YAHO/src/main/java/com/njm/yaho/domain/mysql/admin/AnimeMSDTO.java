@@ -3,7 +3,7 @@ package com.njm.yaho.domain.mysql.admin;
 import lombok.Data;
 
 @Data
-public class InsertMSDTO {
+public class AnimeMSDTO {
 	private int ANIME_ID;
 	private String TITLE;
 	private String THUMNAIL_GARO_URL;
@@ -12,4 +12,5 @@ public class InsertMSDTO {
 	private double SCORE;
 	private String TAGS;
 	private String updated_at;
+
 }

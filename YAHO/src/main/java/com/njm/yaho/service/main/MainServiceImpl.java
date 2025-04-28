@@ -41,4 +41,10 @@ public class MainServiceImpl implements MainService {
 		MainOCDTO dto = mapperOC.getAnimeDetailInfo(animeId);
 		return dto;
 	}
+
+	// 애니 랭킹 TOP10 가져오기
+	@Override
+	public List<MainMSDTO> selectTop10AnimeByScore() {
+		return mapperMS.selectTop10AnimeByScore();
+	}
 }
