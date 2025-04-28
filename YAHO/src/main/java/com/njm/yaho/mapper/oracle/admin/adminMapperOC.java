@@ -8,27 +8,17 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface adminMapperOC {
-//    void insertInfo(AnimeOCDTO anime); 
 	
+	//등록
 	void insertAnimeOC(AnimeOCDTO anime);
     
-	List<AnimeOCDTO> getoclist(); // 제목 목록 불러오기
+	//제목 불러오기
+	List<AnimeOCDTO> getoclist();
 	
-	
-	
-	
-	
-	
-	
-	 // 애니메이션 상세 정보 수정
-	    int updateAnimeDetail(AnimeOCDTO animeDetailDTO);
+	//수정
+	void updateAnimeDetail(AnimeOCDTO animeDetailDTO);
 
-	    // 애니메이션 상세 정보 조회
-	    AnimeOCDTO getAnimeDetailById(int animeId);
+	//삭제
+	void deleteAnime(int animeId);
 	
-	
-	
-	
-	
-	 void deleteAnime(int animeId);
 }

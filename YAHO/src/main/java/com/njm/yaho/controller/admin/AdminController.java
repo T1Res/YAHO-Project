@@ -40,7 +40,6 @@ public class AdminController {
         @RequestParam int CURRENT_EPISODE,
         @RequestParam String STUDIO,
         @RequestParam String STUDIO_LINK,
-        @RequestParam double ANIME_SCORE,
         @RequestParam String AGE_RATING
     ) {
         AnimeMSDTO animeMS = new AnimeMSDTO();
@@ -88,7 +87,7 @@ public class AdminController {
         animeOC.setCURRENT_EPISODE(CURRENT_EPISODE);
         animeOC.setSTUDIO(STUDIO);
         animeOC.setSTUDIO_LINK(STUDIO_LINK);
-        animeOC.setANIME_SCORE(ANIME_SCORE);
+        animeOC.setANIME_SCORE(SCORE);
         animeOC.setAGE_RATING(AGE_RATING);
 
         animeService.insertAnimeOC(animeOC);
@@ -134,12 +133,56 @@ public class AdminController {
     }
 
     
+    @PostMapping("/edit_basic")
+    public String editAnimeBasic(@RequestParam("ANIME_ID") int animeId,
+                                  @RequestParam("TITLE") String title,
+                                  @RequestParam("SCORE") double score,
+                                  @RequestParam(required = false) MultipartFile THUMNAIL_GARO_URL,
+                                  @RequestParam(required = false) MultipartFile THUMNAIL_SERO_URL,
+                                  @RequestParam("TAGS") String tags,
+                                  @RequestParam("BASIC-WEEKDAY") String[] weekdays) {
+        AnimeMSDTO anime = new AnimeMSDTO();
+        
+        String uploadGARO = System.getProperty("user.dir") + "/src/main/resources/static/IMG/ANIME/GARO/";
+        String uploadSERO = System.getProperty("user.dir") + "/src/main/resources/static/IMG/ANIME/SERO/";
+
+        try {
+            if (THUMNAIL_GARO_URL != null && !THUMNAIL_GARO_URL.isEmpty()) {
+                File saveFile = new File(uploadGARO + THUMNAIL_GARO_URL.getOriginalFilename());
+                THUMNAIL_GARO_URL.transferTo(saveFile);
+                anime.setTHUMNAIL_GARO_URL("/IMG/ANIME/GARO/" + THUMNAIL_GARO_URL.getOriginalFilename());
+            }
+
+            if (THUMNAIL_SERO_URL != null && !THUMNAIL_SERO_URL.isEmpty()) {
+                File saveFile = new File(uploadSERO + THUMNAIL_SERO_URL.getOriginalFilename());
+                THUMNAIL_SERO_URL.transferTo(saveFile);
+                anime.setTHUMNAIL_SERO_URL("/IMG/ANIME/SERO/" + THUMNAIL_SERO_URL.getOriginalFilename());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "error";
+        }
+        
+        // 파라미터들을 각각 @RequestParam으로 받음
+        anime.setANIME_ID(animeId);
+        anime.setTITLE(title);
+        anime.setSCORE(score);
+        anime.setTAGS(tags);
+        
+        // 요일 배열로 받기
+        String weekdayString = String.join(",", weekdays); // "월,화,수" 이렇게 만들기
+        anime.setWEEKDAY(weekdayString);
+        
+        animeService.updateAnimeBasic(anime);
+        return "redirect:/Admin/list";
+    }
     
-    
- 
-    
-    
-    
+    @PostMapping("/edit_detail")
+    public String editAnimeDetail(@ModelAttribute AnimeOCDTO anime) {
+        animeService.updateAnimeDetail(anime);
+        return "redirect:/Admin/list"; // 수정 완료 후 이동할 페이지
+    }
+
     @PostMapping("/deleteAnime")
     public String deleteAnime(@RequestParam("animeId") int animeId) {
     	System.out.print(animeId);

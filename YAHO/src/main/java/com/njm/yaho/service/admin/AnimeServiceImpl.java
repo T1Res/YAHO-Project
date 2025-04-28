@@ -21,6 +21,7 @@ public class AnimeServiceImpl implements AnimeService {
     @Autowired
 	private adminMapperOC oc;
 
+    
     @Override
     public void insertAnimeMS(AnimeMSDTO anime) {
     	ms.insertAnimeMS(anime);
@@ -31,12 +32,25 @@ public class AnimeServiceImpl implements AnimeService {
     	oc.insertAnimeOC(anime);
     }
     
+    
     @Override
     public void insertFullAnime(AnimeMSDTO animeMS, AnimeOCDTO animeOC) {
         ms.insertAnimeMS(animeMS);
         animeOC.setANIME_ID(animeMS.getANIME_ID());
         oc.insertAnimeOC(animeOC);
     }
+
+    
+    @Override
+    public void updateAnimeBasic(AnimeMSDTO anime) {
+        ms.updateAnimeBasic(anime);
+    }
+    
+    @Override
+    public void updateAnimeDetail(AnimeOCDTO anime) {
+        oc.updateAnimeDetail(anime);
+    }
+    
     
     @Override
     public List<AnimeMSDTO> getmslist() {
@@ -49,17 +63,13 @@ public class AnimeServiceImpl implements AnimeService {
     }
 
     
-
-    
     @Override
     public void deleteMS(int animeId) {
-        // MySQL과 Oracle에 대해 각각 삭제를 처리
         ms.deleteAnime(animeId);
     }
     
     @Override
     public void deleteOC(int animeId) {
-        // MySQL과 Oracle에 대해 각각 삭제를 처리
         oc.deleteAnime(animeId);
     }
 }
