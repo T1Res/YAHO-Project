@@ -1,4 +1,12 @@
 .wrap {
+    height: 70vh;
+    min-height: 200px;
+    display: block;
+    justify-content: center;
+    align-items: left;
+    gap: 32px;
+}
+.wrap2 {
     height: 200vh;
     min-height: 200px;
     display: block;
@@ -76,8 +84,8 @@ h1 {
   width: 90%;
   max-width: 550px;
   min-width: 320px;  
-  height: 360px;
-  max-height:300px;
+  height: 410px;
+  max-height:410px;
   margin: 20px 0 20px 40px;
   color: white;
 }
@@ -91,9 +99,9 @@ h1 {
   min-width: 320px;  
   margin: 20px 0 20px 40px;
   color: white;
-  height: 300px;
+  height: 410px;
   /* 📏 전체 높이 제한 */
-  max-height: 360px;
+  max-height: 410px;
   overflow: hidden;
 }
 
@@ -138,9 +146,9 @@ h1 {
 .chart-section {
   flex: 0 0 auto;
   width: 220px;
-  height: 180px; /* ⬅️ 기존보다 높게 */
+  height: 200px; /* ⬅️ 기존보다 높게 */
   max-width: 220px;
-  max-height: 180px;
+  max-height: 200px;
   position: relative;
 }
 
@@ -153,9 +161,9 @@ h1 {
 /*도넛차트*/
 .donut-section {
   width: 140px;
-  height: 140px;
+  height: 160px;
   max-width: 140px;
-  max-height: 140px;
+  max-height: 160px;
   flex: 0 0 auto;
   position: relative;
 }
@@ -170,3 +178,189 @@ body {
       color: white;
       font-family: 'Gowun Dodum', sans-serif;
     }
+    
+.comment-card {
+    display: flex;
+    align-items: center;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+}
+/* 평점 게시판 부분*/
+.comment-card {
+    display: flex;
+    align-items: flex-start; /* 왼쪽부터 위에 맞추기 */
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+}
+
+.comment-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    height: 150px; /* 🔥 무조건 고정 높이 */
+     width: 100px; /* 🔥 가로폭 고정 (원하는 크기로 조정) */
+    min-height: 150px;
+    max-height: 150px;
+    overflow: hidden;
+}
+.profile-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 5px;
+}
+
+
+/*유저 아이디 글씨 색*/
+.user-id {
+    font-family: 'Poppins', 'Roboto', sans-serif; /* 깔끔하고 모던한 글씨체 */
+    font-size: 20px;
+    font-weight: 600;
+    background: linear-gradient(90deg, #5e60ce, #f1c40f); /* 보라 → 진보라 그라데이션 */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: softGlow 2s ease-in-out infinite alternate;
+    text-align: center;
+    margin-top: 8px;
+}
+
+@keyframes softGlow {
+    from {
+        text-shadow: 0 0 5px #5e60ce;
+    }
+    to {
+        text-shadow: 0 0 12px #6930c3;
+    }
+}
+
+.comment-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    justify-content: space-between; /* 작성일자를 아래쪽으로 */
+}
+
+.comment-content-box {
+    background: #2c2c2c;
+    border-radius: 8px;
+    padding: 10px;
+    min-height: 120px; /* 🔥 오른쪽 박스 높이도 고정 */
+    flex: 1; /* 🔥 왼쪽 높이에 맞춰 커짐 */
+    display: flex;
+    align-items: center; /* 텍스트 세로 가운데 */
+    justify-content: center;
+}
+
+.comment-content {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #ddd;
+}
+
+.comment-stars {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap; /* 🔥 별 줄바꿈 금지 */
+    font-size: 24px;
+    color: gold;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+.comment-meta {
+    font-size: 14px;
+    color: #aaa;
+    margin-top: 5px;
+    text-align: right;
+}
+.comment-footer {
+    display: flex;              /* 가로 정렬 */
+    flex-direction: row;         /* 🔥 row 방향 */
+    justify-content: space-between; /* 🔥 별 왼쪽, 작성일자 오른쪽 */
+    align-items: center;         /* 수직 중앙 정렬 */
+    margin-top: 5px;
+    width: 100%;                 /* 공간 전체 사용 */
+}
+/*등록 수정 폼 댓글 입력 창*/
+textarea {
+    width: 100%; /* 부모(rating-box) 기준 100%로 */
+    max-width: 100%; /* 부모를 절대 넘지 않게 */
+    min-width: 100%; /* 부모보다 작아지지도 않게 */
+    box-sizing: border-box; /* ✅ 패딩, 보더까지 포함해서 100% 맞추기 */
+    
+    background: #2c2c2c;
+    color: #ffffff;
+    border: 1px solid #555;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 16px;
+    resize: vertical;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    outline: none;
+     min-height: 80px;
+}
+
+textarea:focus {
+    border: 1px solid #6a5acd;
+    box-shadow: 0 0 10px #6a5acd, 0 0 20px #6a5acd;
+    background: #333;
+}
+/*버튼 꾸미기*/
+button {
+    background-color: #1f3c88; /* 딥블루 */
+    color: white;
+    font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; /* 고딕 계열 폰트 */
+    font-weight: bold;
+    border: none;
+    padding: 10px 22px;
+    margin: 8px 5px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4); /* 부드러운 그림자 */
+}
+
+button:hover {
+    background-color: #162c5f; /* 호버시 더 진한 블루 */
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(31,60,136,0.6);
+}
+
+button:active {
+    transform: scale(0.97); /* 클릭시 살짝 줄어드는 느낌 */
+}
+.button-container {
+    display: flex;               /* 버튼들을 가로로 정렬 */
+    justify-content: center;     /* 버튼들을 중앙 정렬 */
+    align-items: center;         /* 버튼과 글자수 카운트를 세로로 가운데 정렬 */
+    gap: 10px;                   /* 버튼 사이 간격 */
+    width: 100%;                 /* 부모 너비를 100%로 설정해서 공간을 채우기 */
+    margin-top: 10px;            /* 위쪽 여백 */
+}
+
+.char-count {
+    font-size: 14px;
+    color: #aaa;
+    margin-left: auto;           /* 글자수 카운트를 오른쪽 끝에 배치 */
+}

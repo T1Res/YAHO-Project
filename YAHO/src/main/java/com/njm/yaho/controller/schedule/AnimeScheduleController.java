@@ -151,6 +151,7 @@ public class AnimeScheduleController {
 		log.info("전체 평점 리스트:"+fullList);
 		RatingDTO matchedDto = null;
 		log.info("USER_ID:"+USER_ID);
+		
 		// USER_ID가 유효할 때만 필터링
 		if (USER_ID != null && !USER_ID.trim().isEmpty()) {
 			String trimmedId = USER_ID.trim();
@@ -162,6 +163,7 @@ public class AnimeScheduleController {
 					model.addAttribute("Aluser_ID", trimmedId);
 					model.addAttribute("Aldto", dto);
 					log.info("특정 유저아이디 dto 확인: " + trimmedId + " / " + dto);
+					log.info("scorereg: "+ dto.getSCORE_REGDATE());
 					break;
 				}
 			}

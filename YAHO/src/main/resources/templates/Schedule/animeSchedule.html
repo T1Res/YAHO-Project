@@ -105,43 +105,74 @@
 				
 				      <!-- 수정 영역: 유저가 이미 평가한 경우에만 표시 -->
 				      <div id="rateFormArea" style="display: none;">
-				        <input type="hidden" id="rated_user_id" name="USER_ID" th:value="${USER_ID}" />
+				        <img src="/IMG/kibon_image.jpg" class="profile-img"/>
+				        <div class="user-id" th:text="${USER_ID}"></div><input type="hidden" id="rated_user_id" name="USER_ID" th:value="${USER_ID}" />
 				        <input type="hidden" id="rated_anime_id" name="ANIME_ID"/>
-				
+						<br>
+						
 				        <!-- 별점 입력 -->
 				        <div class="rating" id="rated_stars_area"></div>
 				
 				        <!-- 댓글 입력 -->
-				        <div style="margin-top: 20px;">
-				          <textarea id="rated_content" rows="4" cols="50" name="SCORE_CONTENT"></textarea>
-				        </div>
-				
-				        <button type="button" onclick="updateRate()">수정</button>
-				        <button type="button" onclick="deleteRate()">삭제</button>
-				
-				        <hr style="margin-top: 20px;" />
-				      </div>
+
+								<div style="margin-top: 20px;">
+									<textarea id="rated_content" rows="4" cols="50" maxlength="100"></textarea>
+
+									<!-- 버튼을 가로로 정렬 -->
+									<div class="button-container">
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;
+										<button type="button" onclick="updateRate()">수정</button>
+										<button type="button" onclick="deleteRate()">삭제</button>
+										<div id="rated_charCount" class="char-count">0/100</div>
+										<!-- 글자수 카운트는 오른쪽 끝에 위치 -->
+									</div>
+								</div>
+
+
+
+
+							</div>
 				
 				      <!-- 등록 영역: 평가를 안 했을 때만 표시 -->
-				      <div id="registerFormArea" style="display: none;">
-				        <input type="hidden" id="register_anime_id" name="ANIME_ID"/>
-				        <input type="hidden" id="register_user_id" name="USER_ID"th:value="${USER_ID}"  />
-				
-				        <div class="rating" id="register_stars_area"></div>
-				
-				        <div style="margin-top: 20px;">
-				          <textarea id="register_content" rows="4" cols="50" placeholder="댓글을 입력해주세요"name="SCORE_CONTENT"></textarea>
-				        </div>
-				
-				        <button type="button" onclick="submitRate()">등록</button>
-				      </div>
-				    </div>
+							<div id="registerFormArea" style="display: none;">
+								<input type="hidden" id="register_anime_id" name="ANIME_ID" /> <img
+									src="/IMG/kibon_image.jpg" class="profile-img" />
+								<div class="user-id" th:text="${USER_ID}"></div>
+								<input type="hidden" id="register_user_id" name="USER_ID"
+									th:value="${USER_ID}" /> <br>
+								<div class="rating" id="register_stars_area"></div>
+
+								<div style="margin-top: 20px;">
+									<textarea id="register_content" rows="4" cols="50"
+										maxlength="100"></textarea>
+
+								</div>
+								<div class="button-container">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;
+									<button type="button" onclick="submitRate()">등록</button>
+									<div id="register_charCount" class="char-count">0/100</div>
+								</div>
+							</div>
+
+						</div>
 				
 				    <!-- 통계 -->
 				    <div class="rating-box2">
+				     <h1>통계</h1>
+				     <br>
+				     <br>
+				     <br>
+				     
 				      <div class="stats-row">
 				        <div class="grade-section">
-				          <span id="grade-number" style="font-size: 30px;"></span><br>
+				          <span id="grade-number" style="font-size: 50px;"></span><br>
 				          <span class="grade-badge" id="grade-mark"></span>
 				        </div>
 				
@@ -158,7 +189,7 @@
 				</div>
 				
 				<!-- 댓글 목록 영역 -->
-				<div class="wrap" id="comment-list-area">
+				<div class="wrap2" id="comment-list-area">
 				  <h1>게시판 목록</h1>
 				  <!-- JS에서 동적으로 삽입 -->
 				</div>
@@ -386,17 +417,32 @@ function applyStars(containerId, selectedValue, inputName) {
             </label>`;
     });
 }
+//평점게시판
 function updateCommentList(list) {
     const area = document.getElementById("comment-list-area");
-    area.innerHTML = "<h1>게시판 목록</h1>";
+    area.innerHTML = "<h1 style='color: white; text-align: center; margin-bottom: 30px;'>게시판 목록</h1>";
+    
     list.forEach(dto => {
         const div = document.createElement("div");
-        div.style.marginBottom = "20px";
+        div.className = "comment-card";
         div.innerHTML = `
-            <div style="color:white;"><strong>${dto.USER_ID}</strong> :</div>
-            <div style="color: gold; font-size: 20px;">${generateStarsHTML(dto.SCORE_SCORE)}</div>
-            <div style="color: white; margin-top: 4px;">${dto.SCORE_CONTENT}</div>
-            <hr style="margin-top: 20px;" />
+        	<div class="comment-left">
+            <img src="/IMG/kibon_image.jpg" class="profile-img"/>
+            	<div class="user-id">${dto.USER_ID}</div>
+            <div class="comment-stars">
+                ${generateStarsHTML(dto.SCORE_SCORE)}
+            </div>
+        </div>
+        <div class="comment-right">
+            <div class="comment-content-box">
+                <div class="comment-content">
+                    ${dto.SCORE_CONTENT}
+                </div>
+            </div>
+            <div class="comment-meta">
+                ${dto.SCORE_REGDATE.substring(0,10) || '작성일자 없음'}
+            </div>
+        </div>
         `;
         area.appendChild(div);
     });
@@ -411,7 +457,7 @@ function generateStarsHTML(score) {
     return html;
 }
 
-function updateDonutChart(maleRatio, femaleRatio) {
+function updateDonutChart(maleRatio, femaleRatio) {	
     const canvas = document.getElementById('genderChart');
     if (!canvas) {
         console.warn("genderChart 캔버스를 찾을 수 없습니다.");
@@ -457,5 +503,34 @@ function updateDonutChart(maleRatio, femaleRatio) {
       summaryButton.textContent = '더보기';
     }
   });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+	  const maxChars = 100;
+
+	  // register 폼
+	  const regTA    = document.getElementById('register_content');
+	  const regCount = document.getElementById('register_charCount');
+	  // 수정 폼
+	  const ratTA    = document.getElementById('rated_content');
+	  const ratCount = document.getElementById('rated_charCount');
+
+	  function attachCounter(textarea, counter) {
+	    if (!textarea || !counter) return;
+	    // 초기 세팅
+	    counter.textContent = `0/${maxChars}`;
+	    textarea.addEventListener('input', () => {
+	      // 초과 자동 커트 (maxlength 써도 혹시 몰라서)
+	      if (textarea.value.length > maxChars) {
+	        textarea.value = textarea.value.substring(0, maxChars);
+	      }
+	      // 실시간 업데이트
+	      counter.textContent = `${textarea.value.length}/${maxChars}`;
+	    });
+	  }
+
+	  attachCounter(regTA, regCount);
+	  attachCounter(ratTA, ratCount);
+	});
 </script>
 </html>
