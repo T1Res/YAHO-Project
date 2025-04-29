@@ -2,12 +2,16 @@ function submitRate() {
     const scoreInput = document.querySelector('input[name="SCORE_SCORE"]:checked');
     const score = scoreInput ? scoreInput.value : null;
 
-    const contentElement = document.querySelector('textarea[name="SCORE_CONTENT"]');
+    const contentElement = document.querySelector('#registerFormArea textarea[name="SCORE_CONTENT"]');
     const content = contentElement ? contentElement.value.trim() : "";
 
-    const animeId = document.querySelector('input[name="ANIME_ID"]')?.value;
-    const userId = document.querySelector('input[name="USER_ID"]')?.value;
-
+    const animeId = document.getElementById('register_anime_id')?.value;
+    const userId = document.getElementById('register_user_id')?.value;
+	console.log(animeId);
+	console.log(userId);
+	console.log(content);
+	console.log(score);
+	
     if (!score || !content || !animeId || !userId) {
         alert('별점, 댓글, 사용자 ID, 애니 ID를 모두 입력해주세요!');
         return;

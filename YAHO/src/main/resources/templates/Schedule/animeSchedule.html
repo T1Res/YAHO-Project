@@ -7,6 +7,7 @@
 
 <link rel="stylesheet" href="/CSS/testSchedule.css">
 <link rel="stylesheet" href="/CSS/test.css">
+<link rel="stylesheet" href="/CSS/info.css">
 <link rel="stylesheet" th:href="@{/CSS/test3.css}">
 
 <link rel="stylesheet" href="/CSS/AnimeMain.css">
@@ -82,7 +83,7 @@
 							
 							<div class="ani-row">
 								<h2>제작사</h2>
-								<p id="studio">제작사1</p>
+								<p id="studio"><a href="#" id="studio_link">제작사1</a></p>
 							</div>
 							
 							<div class="ani-row">
@@ -107,43 +108,75 @@
 				
 				      <!-- 수정 영역: 유저가 이미 평가한 경우에만 표시 -->
 				      <div id="rateFormArea" style="display: none;">
-				        <input type="hidden" id="rated_user_id" />
-				        <input type="hidden" id="rated_anime_id" />
-				
+								<div id="image-filter">
+									<img th:src="@{${profileImagePath}}" class="profile-img" />
+								</div>
+								<div class="user-id" th:text="${USER_ID}"></div><input type="hidden" id="rated_user_id" name="USER_ID" th:value="${USER_ID}" />
+				        <input type="hidden" id="rated_anime_id" name="ANIME_ID"/>
+						<br>
+						
 				        <!-- 별점 입력 -->
 				        <div class="rating" id="rated_stars_area"></div>
 				
 				        <!-- 댓글 입력 -->
-				        <div style="margin-top: 20px;">
-				          <textarea id="rated_content" rows="4" cols="50"></textarea>
-				        </div>
-				
-				        <button type="button" onclick="updateRate()">수정</button>
-				        <button type="button" onclick="deleteRate()">삭제</button>
-				
-				        <hr style="margin-top: 20px;" />
-				      </div>
+
+								<div style="margin-top: 20px;">
+									<textarea id="rated_content" rows="4" cols="50" maxlength="100"></textarea>
+
+									<!-- 버튼을 가로로 정렬 -->
+									<div class="button-container">
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;
+										<button type="button" onclick="updateRate()">수정</button>
+										<button type="button" onclick="deleteRate()">삭제</button>
+										<div id="rated_charCount" class="char-count">0/100</div>
+										<!-- 글자수 카운트는 오른쪽 끝에 위치 -->
+									</div>
+								</div>
+
+
+
+
+							</div>
 				
 				      <!-- 등록 영역: 평가를 안 했을 때만 표시 -->
-				      <div id="registerFormArea" style="display: none;">
-				        <input type="hidden" id="register_anime_id" />
-				        <input type="hidden" id="register_user_id" />
-				
-				        <div class="rating" id="register_stars_area"></div>
-				
-				        <div style="margin-top: 20px;">
-				          <textarea id="register_content" rows="4" cols="50" placeholder="댓글을 입력해주세요"></textarea>
-				        </div>
-				
-				        <button type="button" onclick="submitRate()">등록</button>
-				      </div>
-				    </div>
+							<div id="registerFormArea" style="display: none;">
+								<input type="hidden" id="register_anime_id" name="ANIME_ID" /> <img
+									src="/IMG/kibon_image.jpg" class="profile-img" />
+								<div class="user-id" th:text="${USER_ID}"></div>
+								<input type="hidden" id="register_user_id" name="USER_ID"th:value="${USER_ID}" /> <br>
+								<div class="rating" id="register_stars_area"></div>
+
+								<div style="margin-top: 20px;">
+									<textarea id="register_content" rows="4" cols="50"
+										maxlength="100"></textarea>
+
+								</div>
+								<div class="button-container">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;
+									<button type="button" onclick="submitRate()">등록</button>
+									<div id="register_charCount" class="char-count">0/100</div>
+								</div>
+							</div>
+
+						</div>
 				
 				    <!-- 통계 -->
 				    <div class="rating-box2">
+				     <h1>통계</h1>
+				     <br>
+				     <br>
+				     <br>
+				     
 				      <div class="stats-row">
 				        <div class="grade-section">
-				          <span id="grade-number" style="font-size: 30px;"></span><br>
+				          <span id="grade-number" style="font-size: 50px;"></span><br>
 				          <span class="grade-badge" id="grade-mark"></span>
 				        </div>
 				
@@ -160,7 +193,7 @@
 				</div>
 				
 				<!-- 댓글 목록 영역 -->
-				<div class="wrap" id="comment-list-area">
+				<div class="wrap2" id="comment-list-area">
 				  <h1>게시판 목록</h1>
 				  <!-- JS에서 동적으로 삽입 -->
 				</div>
@@ -171,10 +204,7 @@
 		</div>
 	</div>
 	<script src="/JS/chart.umd.js"></script>
-	<!-- 등록 Ajax -->
-	<script src="/JS/submitTest.js"></script>
-	<!-- 수정 Ajax -->
-	<script src="/JS/updateTest.js"></script>
+	<script src="/JS/Rating3.js"></script>로 HTML에 등록
 	<!-- 도넛 -->
 	<script src="/JS/genderChart.js"></script>
 	<!-- 별점 기능 -->
@@ -266,8 +296,9 @@
 	document.querySelectorAll(".anime-card").forEach(card => {
     card.addEventListener("click", function () {
         const animeId = card.getAttribute("data-anime-id");
-        const userId = document.getElementById("userId")?.value || "";
-
+        const userId = document.getElementById("register_user_id")?.value || "";
+        console.log(animeId,userId);
+        //애니메이션 정보 로딩
      	// 기본 정보 로딩
 		fetch(`/Main/anime/baseInfo?animeId=${animeId}`)
 		    .then(res => res.json())
@@ -294,10 +325,10 @@
 		        if (startDateEl) startDateEl.innerText = data.startDate.substring(0, 10) || "정보가 없습니다.";
 		        if (totalEpEl) totalEpEl.innerText = data.totalEpisode || "정보가 없습니다.";
 		        
-		        if (studioEl) {
-		        //	studioLinkEl.setAttribute("href", data.studioLink);
-		        //	studioLinkEl.setAttribute("target", "_blank"); // 새 창 열기
-		        	studioEl.innerText = data.studio || "제작사 정보 없음";
+		        if (studioLinkEl) {
+		        	studioLinkEl.setAttribute("href", data.studioLink);
+		        	studioLinkEl.setAttribute("target", "_blank"); // 새 창 열기
+		        	studioLinkEl.innerText = data.studio || "제작사 정보 없음";
 		        }
 		        
 		        if (ratingEl) ratingEl.innerText = data.ageRating || "미정";
@@ -317,12 +348,13 @@
             document.getElementById("grade-mark").textContent = data.gradeMark;
             updateBarChart(data.scoreList, data.countList);
             updateDonutChart(data.maleRatio, data.femaleRatio);
-
+	
             // 댓글 리스트
             updateCommentList(data.list);
 
             // 평가 등록/수정 폼 구분
             applyUserRatingForm(data.Aldto, animeId, userId);
+            console.log("애니별 내용 확인"+data.Aldto);
 
             // 모달 열기
             document.getElementById("animeModal").style.display = "block";
@@ -335,6 +367,14 @@
  	// 모달 닫기 함수
     function modal_close() {
         document.getElementById("animeModal").style.display = "none";
+        
+     // 줄거리 더보기 초기화
+	    const summaryText = document.querySelector('.ani-summary p');
+	    const summaryButton = document.getElementById('summaryButton');
+	    if (summaryText.classList.contains('expanded')) {
+	        summaryText.classList.remove('expanded');
+	        summaryButton.textContent = '더보기';
+	    }
     }
 
     // 모달 바깥 영역 클릭 시 닫기 기능 추가
@@ -349,20 +389,36 @@
 <script>
 
 function applyUserRatingForm(dto, animeId, userId) {
+    // 수정 폼과 등록 폼을 찾기
+    const rateFormArea = document.getElementById("rateFormArea");
+    const registerFormArea = document.getElementById("registerFormArea");
+    
+    // 수정 폼 내용 초기화
+    const ratedContent = document.getElementById("rated_content");
+    const ratedStarsArea = document.getElementById("rated_stars_area");
+
+    // 새로운 애니메이션의 수정 폼을 불러올 때마다 폼을 초기화
+    if (rateFormArea && registerFormArea) {
+        // 폼 초기화
+        ratedContent.value = "";  // 댓글 내용 초기화
+        ratedStarsArea.innerHTML = "";  // 별점 초기화
+    }
+
+    // 수정 폼이 있을 경우, 해당 애니메이션의 정보를 불러옴
     if (dto) {
-        // 수정 폼 표시
-        document.getElementById("rateFormArea").style.display = "block";
-        document.getElementById("registerFormArea").style.display = "none";
-        document.getElementById("rated_user_id").value = dto.USER_ID;
-        document.getElementById("rated_anime_id").value = dto.ANIME_ID;
-        document.getElementById("rated_content").value = dto.SCORE_CONTENT;
+        rateFormArea.style.display = "block";
+        registerFormArea.style.display = "none";
+        document.getElementById("rated_user_id").value = dto.USER_ID || userId;
+        document.getElementById("rated_anime_id").value = dto.ANIME_ID || animeId;
+        document.getElementById("rated_content").value = dto.SCORE_CONTENT; // 기존 내용 표시
         applyStars("rated_stars_area", dto.SCORE_SCORE, "SCORE_SCORE");
     } else {
         // 등록 폼 표시
-        document.getElementById("rateFormArea").style.display = "none";
-        document.getElementById("registerFormArea").style.display = "block";
+        rateFormArea.style.display = "none";
+        registerFormArea.style.display = "block";
         document.getElementById("register_anime_id").value = animeId;
         document.getElementById("register_user_id").value = userId;
+        document.getElementById("register_content").value = ""; // 초기화
         applyStars("register_stars_area", 3.5, "SCORE_SCORE"); // 기본 별점
     }
 }
@@ -382,17 +438,32 @@ function applyStars(containerId, selectedValue, inputName) {
             </label>`;
     });
 }
+//평점게시판
 function updateCommentList(list) {
     const area = document.getElementById("comment-list-area");
-    area.innerHTML = "<h1>게시판 목록</h1>";
+    area.innerHTML = "<h1 style='color: white; text-align: center; margin-bottom: 30px;'>게시판 목록</h1>";
+    
     list.forEach(dto => {
         const div = document.createElement("div");
-        div.style.marginBottom = "20px";
+        div.className = "comment-card";
         div.innerHTML = `
-            <div style="color:white;"><strong>${dto.USER_ID}</strong> :</div>
-            <div style="color: gold; font-size: 20px;">${generateStarsHTML(dto.SCORE_SCORE)}</div>
-            <div style="color: white; margin-top: 4px;">${dto.SCORE_CONTENT}</div>
-            <hr style="margin-top: 20px;" />
+        	<div class="comment-left">
+            <img src="/IMG/kibon_image.jpg" class="profile-img"/>
+            	<div class="user-id">${dto.USER_ID}</div>
+            <div class="comment-stars">
+                ${generateStarsHTML(dto.SCORE_SCORE)}
+            </div>
+        </div>
+        <div class="comment-right">
+            <div class="comment-content-box">
+                <div class="comment-content">
+                    ${dto.SCORE_CONTENT}
+                </div>
+            </div>
+            <div class="comment-meta">
+                ${dto.SCORE_REGDATE.substring(0,10) || '작성일자 없음'}
+            </div>
+        </div>
         `;
         area.appendChild(div);
     });
@@ -407,7 +478,7 @@ function generateStarsHTML(score) {
     return html;
 }
 
-function updateDonutChart(maleRatio, femaleRatio) {
+function updateDonutChart(maleRatio, femaleRatio) {	
     const canvas = document.getElementById('genderChart');
     if (!canvas) {
         console.warn("genderChart 캔버스를 찾을 수 없습니다.");
@@ -454,5 +525,34 @@ function updateDonutChart(maleRatio, femaleRatio) {
     }
   });
 </script>
-<script src="/js/navbar.js"></script>
+<!-- 글자수 확인 함수 -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+	  const maxChars = 100;
+
+	  // register 폼
+	  const regTA    = document.getElementById('register_content');
+	  const regCount = document.getElementById('register_charCount');
+	  // 수정 폼
+	  const ratTA    = document.getElementById('rated_content');
+	  const ratCount = document.getElementById('rated_charCount');
+
+	  function attachCounter(textarea, counter) {
+	    if (!textarea || !counter) return;
+	    // 초기 세팅
+	    counter.textContent = `0/${maxChars}`;
+	    textarea.addEventListener('input', () => {
+	      // 초과 자동 커트 (maxlength 써도 혹시 몰라서)
+	      if (textarea.value.length > maxChars) {
+	        textarea.value = textarea.value.substring(0, maxChars);
+	      }
+	      // 실시간 업데이트
+	      counter.textContent = `${textarea.value.length}/${maxChars}`;
+	    });
+	  }
+
+	  attachCounter(regTA, regCount);
+	  attachCounter(ratTA, ratCount);
+	});
+</script>
 </html>

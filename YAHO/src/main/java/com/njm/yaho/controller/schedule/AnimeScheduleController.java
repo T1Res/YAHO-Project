@@ -37,13 +37,19 @@ public class AnimeScheduleController {
 	private RateService Rateservice;
 
 	@GetMapping("animeSchedule")
-	public void showAnimeList(Model model, HttpSession session) {
+	public String showAnimeList(Model model,HttpSession session) {
 		// 요일 리스트 (요일 순서 보장)
 		List<String> daysOfWeek = Arrays.asList("월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일");
 
 		// 모델에 데이터 추가
 		model.addAttribute("daysOfWeek", daysOfWeek);
 		model.addAttribute("animeByDay", service.WeekdayAnimeList());
+
+		String USER_ID = (String)session.getAttribute("USER_ID");
+		model.addAttribute("USER_ID", USER_ID);
+		log.info("세션 유저아이디"+USER_ID);
+		
+		return "schedule/animeSchedule";
 	}
 	
 	
@@ -60,6 +66,10 @@ public class AnimeScheduleController {
 		double grade = Rateservice.getAverageScore(ANIME_ID);
 		
 		log.info("평균: " + grade);
+		
+		//평균을 TBL_ANIME에 업데이트
+		int Arow = Rateservice.updateAnimeRate(grade, ANIME_ID);
+		log.info("평균 업뎃 확인: "+Arow);
 
 		model.addAttribute("grade", grade);
 
@@ -146,6 +156,7 @@ public class AnimeScheduleController {
 		log.info("전체 평점 리스트:"+fullList);
 		RatingDTO matchedDto = null;
 		log.info("USER_ID:"+USER_ID);
+		
 		// USER_ID가 유효할 때만 필터링
 		if (USER_ID != null && !USER_ID.trim().isEmpty()) {
 			String trimmedId = USER_ID.trim();
@@ -157,6 +168,7 @@ public class AnimeScheduleController {
 					model.addAttribute("Aluser_ID", trimmedId);
 					model.addAttribute("Aldto", dto);
 					log.info("특정 유저아이디 dto 확인: " + trimmedId + " / " + dto);
+					log.info("scorereg: "+ dto.getSCORE_REGDATE());
 					break;
 				}
 			}
@@ -177,6 +189,8 @@ public class AnimeScheduleController {
 
 		Map<String, Object> map = new HashMap<>();
 	    int ANIME_ID = dto.getANIME_ID();
+
+	    //log.info("getAnime 아이디:"+dto.getANIME_ID());
 	    String USER_ID = (String) session.getAttribute("USER_ID");
 	    map.put("USER_ID", USER_ID);
 
@@ -185,6 +199,9 @@ public class AnimeScheduleController {
 	    double grade = (gradeObj != null) ? gradeObj : 0.0;
 
 	    String mark = (grade >= 4.0) ? "명작" : (grade >= 3.0) ? "훌륭해요" : (grade >= 2.0) ? "평범해요" : "별로에요";
+
+	    int Arow = Rateservice.updateAnimeRate(grade, ANIME_ID);
+		  log.info("평균 업뎃 확인: "+Arow);
 
 	    map.put("grade", grade);
 	    map.put("gradeMark", mark);
@@ -202,6 +219,9 @@ public class AnimeScheduleController {
 	    }
 
 	    map.put("Aldto", matched); // 내 평점
+
+	    //log.info("aldto:"+matched);
+
 	    map.put("list", rateList); // 나머지 평점 리스트
 
 	    List<RatingDTO> countList = Rateservice.selectRateCount(ANIME_ID);
@@ -277,7 +297,7 @@ public class AnimeScheduleController {
 	    
 	    
 	    int row = Rateservice.insertRate(dto);
-
+	    
 	    Map<String, Object> result = new HashMap<>();
 	    result.put("success", row > 0);
 	    result.put("message", row > 0 ? "등록 완료!" : "등록 실패");
@@ -302,7 +322,12 @@ public class AnimeScheduleController {
 
 	    map.put("grade", grade);
 	    map.put("mark", mark);
-
+	    
+	    //평점 업데이트 TBL_ANIME 테이블
+	    int Arow = Rateservice.updateAnimeRate(grade, ANIME_ID);
+		log.info("평균 업뎃 확인: "+Arow);
+		
+		
 	    // ✅ 성별 도넛 통계
 	    List<RatingChartDTO> chartList = Rateservice.selectGenderCount(animeId);
 	    double maleRatio = 0, femaleRatio = 0;

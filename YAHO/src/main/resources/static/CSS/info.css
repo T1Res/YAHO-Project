@@ -21,10 +21,10 @@
 
 .anime-info-container {
 	font-family: 'Roboto', sans-serif;
-    background-color: #000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
     
 	width: 100%;
 	margin: 0 auto;

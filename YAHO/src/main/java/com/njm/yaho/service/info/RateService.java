@@ -24,4 +24,7 @@ public interface RateService {
     RatingDTO searchRating(int ANIME_ID,String USER_ID);
     //댓글 삭제
     int deleteRate(int ANIME_ID,String USER_ID);
+    
+    int updateAnimeRate(double SCORE,int ANIME_ID);
+    
 }

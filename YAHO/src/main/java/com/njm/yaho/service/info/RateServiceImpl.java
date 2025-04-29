@@ -67,4 +67,10 @@ public class RateServiceImpl implements RateService {
 	// TODO Auto-generated method stub
 	return rateMapper.deleteRate(ANIME_ID,USER_ID);
     }
+
+	@Override
+	public int updateAnimeRate(double SCORE, int ANIME_ID) {
+		// TODO Auto-generated method stub
+		return rateMapper.updateAnimeRate(SCORE, ANIME_ID);
+	}
 }
