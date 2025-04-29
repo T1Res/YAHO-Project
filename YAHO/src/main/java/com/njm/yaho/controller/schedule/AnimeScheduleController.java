@@ -64,6 +64,7 @@ public class AnimeScheduleController {
 		// 모델에 평균
 		double grade = Rateservice.getAverageScore(ANIME_ID);
 		log.info("평균: " + grade);
+		
 		//평균을 TBL_ANIME에 업데이트
 		int Arow = Rateservice.updateAnimeRate(grade, ANIME_ID);
 		log.info("평균 업뎃 확인: "+Arow);

@@ -7,10 +7,14 @@ function submitRate() {
     const userId = getInputValue("register_user_id");
 
 	
-    if (!score || !content || !animeId || !userId) {
-        alert("별점, 댓글, 사용자 ID, 애니 ID를 모두 입력해주세요!");
+    if (!score || !content ) {
+        alert("별점, 댓글을 모두 입력해주세요!");
         return;
     }
+	if(!userId){
+		alert("로그인 해주세요!");
+		return;
+	}
 
     fetch("/Schedule/ajaxInsert", {
         method: "POST",
