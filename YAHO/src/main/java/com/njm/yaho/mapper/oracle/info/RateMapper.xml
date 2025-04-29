@@ -69,4 +69,8 @@
 		WHERE USER_ID=#{USER_ID}
 		AND ANIME_ID=#{ANIME_ID}
 	</delete>
+	<update id="updateAnimeRate">
+		UPDATE tbl_anime SET ANIME_SCORE=#{SCORE}
+		WHERE ANIME_ID=#{ANIME_ID}
+	</update>
 </mapper>

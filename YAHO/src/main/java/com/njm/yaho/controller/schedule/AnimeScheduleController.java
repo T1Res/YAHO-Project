@@ -63,8 +63,10 @@ public class AnimeScheduleController {
 		
 		// 모델에 평균
 		double grade = Rateservice.getAverageScore(ANIME_ID);
-		
 		log.info("평균: " + grade);
+		//평균을 TBL_ANIME에 업데이트
+		int Arow = Rateservice.updateAnimeRate(grade, ANIME_ID);
+		log.info("평균 업뎃 확인: "+Arow);
 
 		model.addAttribute("grade", grade);
 
@@ -187,13 +189,19 @@ public class AnimeScheduleController {
 	    log.info("getAnime 아이디:"+dto.getANIME_ID());
 	    String USER_ID = (String) session.getAttribute("USER_ID");
 	    map.put("USER_ID", USER_ID);
-
+	    
+	    
 	    //double grade = Rateservice.getAverageScore(ANIME_ID);
 	    Double gradeObj = Rateservice.getAverageScore(ANIME_ID);
 	    double grade = (gradeObj != null) ? gradeObj : 0.0;
 
 	    String mark = (grade >= 4.0) ? "명작" : (grade >= 3.0) ? "훌륭해요" : (grade >= 2.0) ? "평범해요" : "별로에요";
-
+	    
+	    
+	    int Arow = Rateservice.updateAnimeRate(grade, ANIME_ID);
+		log.info("평균 업뎃 확인: "+Arow);
+		
+		
 	    map.put("grade", grade);
 	    map.put("gradeMark", mark);
 
@@ -286,7 +294,7 @@ public class AnimeScheduleController {
 	    
 	    
 	    int row = Rateservice.insertRate(dto);
-
+	    
 	    Map<String, Object> result = new HashMap<>();
 	    result.put("success", row > 0);
 	    result.put("message", row > 0 ? "등록 완료!" : "등록 실패");
@@ -311,7 +319,12 @@ public class AnimeScheduleController {
 
 	    map.put("grade", grade);
 	    map.put("mark", mark);
-
+	    
+	    //평점 업데이트 TBL_ANIME 테이블
+	    int Arow = Rateservice.updateAnimeRate(grade, ANIME_ID);
+		log.info("평균 업뎃 확인: "+Arow);
+		
+		
 	    // ✅ 성별 도넛 통계
 	    List<RatingChartDTO> chartList = Rateservice.selectGenderCount(animeId);
 	    double maleRatio = 0, femaleRatio = 0;
