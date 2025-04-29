@@ -200,7 +200,7 @@ public class AdminController {
     @PostMapping("/syncScore")
     @ResponseBody
     public String syncScoreManually() {
-        animeService.syncScoreManually(); // Oracle 평균 계산 + MySQL 동기화 수행
+        animeService.syncScore(); // Oracle 평균 계산 + MySQL 동기화 수행
         return "평점 갱신 완료";
     }
 }

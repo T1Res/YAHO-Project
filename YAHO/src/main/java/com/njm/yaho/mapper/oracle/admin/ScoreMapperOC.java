@@ -15,6 +15,10 @@ public interface ScoreMapperOC {
 
     // 평균 평점 계산
     @Select("SELECT ROUND(AVG(SCORE_SCORE), 1) FROM TBL_SCORE WHERE ANIME_ID = #{animeId}")
+    Double calAverageScoreByAnimeId(@Param("animeId") int animeId);
+    
+    // 평균 평점 불러오기
+    @Select("SELECT ANIME_SCORE FROM TBL_ANIME WHERE ANIME_ID = #{animeId}")
     Double getAverageScoreByAnimeId(@Param("animeId") int animeId);
 
     // Oracle: TBL_ANIME에 평균 반영

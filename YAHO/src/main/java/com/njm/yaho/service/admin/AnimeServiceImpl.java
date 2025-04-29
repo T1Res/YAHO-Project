@@ -81,15 +81,24 @@ public class AnimeServiceImpl implements AnimeService {
     }
     
     @Override
-    public void syncScoreManually() {
+    public void syncScore() {
         List<Integer> animeIds = scoreMapperOC.getAllAnimeIds(); // TBL_SCORE에서 ANIME_ID 목록 가져오기
 
         for (Integer animeId : animeIds) {
-            Double avg = scoreMapperOC.getAverageScoreByAnimeId(animeId); // 평균 구하기
+        	double score = scoreMapperOC.getAverageScoreByAnimeId(animeId); // SCORE 값 가져오기
+            scoreMapperMS.updateMySQLScore(animeId, score);       // MySQL 동기화
+        }
+    }
+    
+    @Override
+    public void scoreAveCal() {
+        List<Integer> animeIds = scoreMapperOC.getAllAnimeIds(); // TBL_SCORE에서 ANIME_ID 목록 가져오기
+
+        for (Integer animeId : animeIds) {
+            Double avg = scoreMapperOC.calAverageScoreByAnimeId(animeId); // 평균 계산
             if (avg == null) avg = 0.0;
 
             scoreMapperOC.updateAnimeScore(animeId, avg); // Oracle 업데이트
-            scoreMapperMS.updateMySQLScore(animeId, avg);       // MySQL 동기화
         }
     }
 }

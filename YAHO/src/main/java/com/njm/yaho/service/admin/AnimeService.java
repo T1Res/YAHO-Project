@@ -27,5 +27,8 @@ public interface AnimeService {
 	void deleteOC(int animeId);
 	
 	// 점수 동기화
-	public void syncScoreManually();
+	public void syncScore();
+	
+	// Oracle 점수 평균 계산
+	public void scoreAveCal();
 }
