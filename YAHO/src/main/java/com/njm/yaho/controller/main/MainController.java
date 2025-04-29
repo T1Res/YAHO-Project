@@ -64,12 +64,10 @@ public class MainController {
 		model.addAttribute("animeList", animeList);
 		
 		Object playAudio = session.getAttribute("playAudio");
-	  if (playAudio != null && (boolean) playAudio) {
-	      model.addAttribute("playAudio", true);
-	      session.removeAttribute("playAudio"); // ✅ 재생 후 삭제
-	  }
-      return "Main/index";
-	  }
+		if (playAudio != null && (boolean) playAudio) {
+			model.addAttribute("playAudio", true);
+	      	session.removeAttribute("playAudio"); // ✅ 재생 후 삭제
+		}
 		
 		// 애니 랭킹 TOP10 가져오기
 		List<MainMSDTO> animeListTop10 = service.selectTop10AnimeByScore();
