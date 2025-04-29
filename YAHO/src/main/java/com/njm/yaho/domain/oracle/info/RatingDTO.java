@@ -25,5 +25,8 @@ public class RatingDTO {
     @JsonProperty("SCORE_REGDATE")
     private String SCORE_REGDATE;
     
+    @JsonProperty("USER_NICKNAME")
+    private String USER_NICKNAME;
+    
     private Integer COUNT;
 }

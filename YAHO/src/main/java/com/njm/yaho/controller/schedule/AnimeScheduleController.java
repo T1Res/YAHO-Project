@@ -324,7 +324,7 @@ public class AnimeScheduleController {
 	    map.put("mark", mark);
 	    
 	    //평점 업데이트 TBL_ANIME 테이블
-	    int Arow = Rateservice.updateAnimeRate(grade, ANIME_ID);
+	    int Arow = Rateservice.updateAnimeRate(grade, animeId);
 		log.info("평균 업뎃 확인: "+Arow);
 		
 		

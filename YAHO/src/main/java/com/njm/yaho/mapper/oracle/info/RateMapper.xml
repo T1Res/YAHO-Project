@@ -18,8 +18,24 @@
 	</insert>
 	
 	<select id="selectRateListByAnime" resultType="com.njm.yaho.domain.oracle.info.RatingDTO">
-    SELECT * FROM TBL_SCORE
-    WHERE ANIME_ID = #{ANIME_ID} order by SCORE_ID desc
+	    SELECT 
+		    SCORE_ID,
+		    ANIME_ID,
+		    T1.USER_ID,
+		    SCORE_CONTENT,
+		    SCORE_SCORE,
+		    SCORE_REGDATE,
+		    T2.USER_NICKNAME AS USER_NICKNAME
+		FROM 
+		    TBL_SCORE T1
+		JOIN
+		    TBL_USER T2
+		ON
+		    T1.USER_ID = T2.USER_ID
+		WHERE 
+		    ANIME_ID = #{ANIME_ID}
+		order by 
+		    SCORE_ID desc
     </select>
 
 	<select id="getAverageScore" resultType="double">

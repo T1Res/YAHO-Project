@@ -35,10 +35,12 @@
 		<aside class="sidebar">
 			<form class="search-box">
 				<input class="search-txt" type="text" name="keyword" id="search-input" placeholder="검색어를 입력하세요">
+				<!-- 
 				<button class="search-btn">
 					<i class="fa-duotone fa-solid fa-magnifying-glass"></i>
-					<!-- 돋보기 아이콘 -->
+					
 				</button>
+				 -->
 			</form>
 
 			<!-- Tags Start -->
@@ -201,7 +203,7 @@
 				
 				      <!-- 수정 영역: 유저가 이미 평가한 경우에만 표시 -->
 				      <div id="rateFormArea" style="display: none;">
-				        <img src="/IMG/kibon_image.jpg" class="profile-img"/>
+				        <div class="USER-profile-button" style = "align:center;" th:attr="style=${#strings.isEmpty(session.USER_PROFILE_IMG) ? 'background-image: url(/IMG/default_profile_img.png)' : 'background-image: url(' + session.USER_PROFILE_IMG + ')'}"></div>
 				        <div class="user-id" th:text="${USER_ID}"></div><input type="hidden" id="rated_user_id" name="USER_ID" th:value="${USER_ID}" />
 				        <input type="hidden" id="rated_anime_id" name="ANIME_ID"/>
 						<br>
@@ -232,12 +234,12 @@
 
 							</div>
 				
-				      <!-- 등록 영역: 평가를 안 했을 때만 표시 -->
+				      		<!-- 등록 영역: 평가를 안 했을 때만 표시 -->
 							<div id="registerFormArea" style="display: none;">
 								
 								<input type="hidden" id="register_anime_id" name="ANIME_ID" /> 
 								<br>
-								<img src="/IMG/kibon_image.jpg" class="profile-img" />
+								<div class="USER-profile-button" th:attr="style=${#strings.isEmpty(session.USER_PROFILE_IMG) ? 'background-image: url(/IMG/default_profile_img.png)' : 'background-image: url(' + session.USER_PROFILE_IMG + ')'}"></div>
 								<div class="user-id" th:text="${USER_ID}"></div>
 								<input type="hidden" id="register_user_id" name="USER_ID"th:value="${USER_ID}" /> <br>
 								<div class="rating" id="register_stars_area"></div>
@@ -538,7 +540,7 @@ function updateCommentList(list) {
         div.innerHTML = `
         	<div class="comment-left">
             <img src="/IMG/kibon_image.jpg" class="profile-img"/>
-            	<div class="user-id">${dto.USER_ID}</div>
+            	<div class="user-id">${dto.USER_NICKNAME}</div>
             <div class="comment-stars">
                 ${generateStarsHTML(dto.SCORE_SCORE)}
             </div>
