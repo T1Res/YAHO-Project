@@ -105,8 +105,10 @@
 				
 				      <!-- 수정 영역: 유저가 이미 평가한 경우에만 표시 -->
 				      <div id="rateFormArea" style="display: none;">
-				        <img src="/IMG/kibon_image.jpg" class="profile-img"/>
-				        <div class="user-id" th:text="${USER_ID}"></div><input type="hidden" id="rated_user_id" name="USER_ID" th:value="${USER_ID}" />
+								<div id="image-filter">
+									<img th:src="@{${profileImagePath}}" class="profile-img" />
+								</div>
+								<div class="user-id" th:text="${USER_ID}"></div><input type="hidden" id="rated_user_id" name="USER_ID" th:value="${USER_ID}" />
 				        <input type="hidden" id="rated_anime_id" name="ANIME_ID"/>
 						<br>
 						
