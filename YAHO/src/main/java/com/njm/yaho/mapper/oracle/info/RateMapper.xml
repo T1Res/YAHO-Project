@@ -18,24 +18,25 @@
 	</insert>
 	
 	<select id="selectRateListByAnime" resultType="com.njm.yaho.domain.oracle.info.RatingDTO">
-	    SELECT 
-		    SCORE_ID,
-		    ANIME_ID,
-		    T1.USER_ID,
-		    SCORE_CONTENT,
-		    SCORE_SCORE,
-		    SCORE_REGDATE,
-		    T2.USER_NICKNAME AS USER_NICKNAME
-		FROM 
-		    TBL_SCORE T1
-		JOIN
-		    TBL_USER T2
-		ON
-		    T1.USER_ID = T2.USER_ID
-		WHERE 
-		    ANIME_ID = #{ANIME_ID}
-		order by 
-		    SCORE_ID desc
+		SELECT 
+	        SCORE_ID,
+	        ANIME_ID,
+	        T1.USER_ID,
+	        SCORE_CONTENT,
+	        SCORE_SCORE,
+	        SCORE_REGDATE,
+	        T2.USER_NICKNAME AS USER_NICKNAME,
+	        NVL(NULLIF(TRIM(T2.USER_PROFILE_IMG), ''), '/IMG/kibon_image.jpg') AS USER_PROFILE_IMG
+	    FROM 
+	        TBL_SCORE T1
+	    JOIN
+	        TBL_USER T2
+	    ON
+	        T1.USER_ID = T2.USER_ID
+	    WHERE 
+	        ANIME_ID = #{ANIME_ID}
+	    ORDER BY 
+	        SCORE_ID DESC
     </select>
 
 	<select id="getAverageScore" resultType="double">

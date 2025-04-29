@@ -28,5 +28,8 @@ public class RatingDTO {
     @JsonProperty("USER_NICKNAME")
     private String USER_NICKNAME;
     
+    @JsonProperty("USER_PROFILE_IMG")
+    private String USER_PROFILE_IMG;
+    
     private Integer COUNT;
 }

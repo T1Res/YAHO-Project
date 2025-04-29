@@ -108,8 +108,9 @@
 				
 				      <!-- 수정 영역: 유저가 이미 평가한 경우에만 표시 -->
 				      <div id="rateFormArea" style="display: none;">
-								<div id="image-filter">
-									<img th:src="@{${profileImagePath}}" class="profile-img" />
+								<div id="rate-image-filter">
+									<img src="/IMG/kibon_image.jpg" class="profile-img" />
+									<!-- 기본 프로필 -->
 								</div>
 								<div class="user-id" th:text="${USER_ID}"></div><input type="hidden" id="rated_user_id" name="USER_ID" th:value="${USER_ID}" />
 				        <input type="hidden" id="rated_anime_id" name="ANIME_ID"/>
@@ -143,8 +144,12 @@
 				
 				      <!-- 등록 영역: 평가를 안 했을 때만 표시 -->
 							<div id="registerFormArea" style="display: none;">
-								<input type="hidden" id="register_anime_id" name="ANIME_ID" /> <img
-									src="/IMG/kibon_image.jpg" class="profile-img" />
+								<input type="hidden" id="register_anime_id" name="ANIME_ID" />
+								<div id="rate-image-filter">
+									<img src="/IMG/kibon_image.jpg" class="profile-img" />
+									<!-- 기본 프로필 -->
+								</div>
+
 								<div class="user-id" th:text="${USER_ID}"></div>
 								<input type="hidden" id="register_user_id" name="USER_ID"th:value="${USER_ID}" /> <br>
 								<div class="rating" id="register_stars_area"></div>
@@ -392,34 +397,56 @@ function applyUserRatingForm(dto, animeId, userId) {
     // 수정 폼과 등록 폼을 찾기
     const rateFormArea = document.getElementById("rateFormArea");
     const registerFormArea = document.getElementById("registerFormArea");
-    
-    // 수정 폼 내용 초기화
+
+    // 수정 폼의 요소들
     const ratedContent = document.getElementById("rated_content");
     const ratedStarsArea = document.getElementById("rated_stars_area");
+    const ratedProfileImg = document.querySelector("#rateFormArea img.profile-img");
 
-    // 새로운 애니메이션의 수정 폼을 불러올 때마다 폼을 초기화
+    // 등록 폼의 요소들
+    const registerContent = document.getElementById("register_content");
+    const registerStarsArea = document.getElementById("register_stars_area");
+    const registerProfileImg = document.querySelector("#registerFormArea img.profile-img");
+
+    // 새로운 애니메이션의 폼 불러올 때 초기화
     if (rateFormArea && registerFormArea) {
-        // 폼 초기화
-        ratedContent.value = "";  // 댓글 내용 초기화
-        ratedStarsArea.innerHTML = "";  // 별점 초기화
+        ratedContent.value = "";    // 수정 댓글 초기화
+        ratedStarsArea.innerHTML = ""; // 수정 별점 초기화
+        registerContent.value = ""; // 등록 댓글 초기화
+        registerStarsArea.innerHTML = ""; // 등록 별점 초기화
     }
 
-    // 수정 폼이 있을 경우, 해당 애니메이션의 정보를 불러옴
     if (dto) {
+        // 수정폼 활성화
         rateFormArea.style.display = "block";
         registerFormArea.style.display = "none";
+
         document.getElementById("rated_user_id").value = dto.USER_ID || userId;
         document.getElementById("rated_anime_id").value = dto.ANIME_ID || animeId;
-        document.getElementById("rated_content").value = dto.SCORE_CONTENT; // 기존 내용 표시
+        document.getElementById("rated_content").value = dto.SCORE_CONTENT || "";
+
+        // ⭐ 수정 폼 프로필 이미지 설정
+        if (ratedProfileImg) {
+            ratedProfileImg.src = dto.USER_PROFILE_IMG || '/IMG/kibon_image.jpg';
+        }
+
         applyStars("rated_stars_area", dto.SCORE_SCORE, "SCORE_SCORE");
+
     } else {
-        // 등록 폼 표시
+        // 등록폼 활성화
         rateFormArea.style.display = "none";
         registerFormArea.style.display = "block";
+
         document.getElementById("register_anime_id").value = animeId;
         document.getElementById("register_user_id").value = userId;
-        document.getElementById("register_content").value = ""; // 초기화
-        applyStars("register_stars_area", 3.5, "SCORE_SCORE"); // 기본 별점
+        document.getElementById("register_content").value = "";
+
+        // ⭐ 등록 폼 프로필 이미지 기본값
+        if (registerProfileImg) {
+            registerProfileImg.src = '/IMG/kibon_image.jpg';
+        }
+
+        applyStars("register_stars_area", 3.5, "SCORE_SCORE"); // 기본 별점 세팅
     }
 }
 
@@ -438,7 +465,7 @@ function applyStars(containerId, selectedValue, inputName) {
             </label>`;
     });
 }
-//평점게시판
+//평점게시판 업데이트
 function updateCommentList(list) {
     const area = document.getElementById("comment-list-area");
     area.innerHTML = "<h1 style='color: white; text-align: center; margin-bottom: 30px;'>게시판 목록</h1>";
@@ -448,8 +475,10 @@ function updateCommentList(list) {
         div.className = "comment-card";
         div.innerHTML = `
         	<div class="comment-left">
-            <img src="/IMG/kibon_image.jpg" class="profile-img"/>
-            	<div class="user-id">${dto.USER_ID}</div>
+        	<div id="image-filter">
+        	 <img src="${dto.USER_PROFILE_IMG || '/IMG/kibon_image.jpg'}" class="profile-img" />
+			</div>
+            	<div class="user-id">${dto.USER_NICKNAME}</div>
             <div class="comment-stars">
                 ${generateStarsHTML(dto.SCORE_SCORE)}
             </div>
