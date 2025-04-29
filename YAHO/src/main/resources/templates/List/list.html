@@ -20,23 +20,12 @@
 
 <!-- 기본 favicon -->
 <link rel="icon" href="IMG/favicon/favicon.ico" type="image/x-icon">
-
-<!-- 확장 favicon -->
-<link rel="shortcut icon" href="IMG/favicon/favicon.ico" type="image/x-icon">
-
-<!-- PNG favicon -->
-<link rel="icon" href="IMG/favicon/android-chrome-512x512.png" type="image/png">
-  
+ 
+<script src="/js/navbar.js"></script>
 </head>
 <body>
-	<div class="nav">
-        <img src="/IMG/logo_test1.png">
-        <div class="navitem" onclick="location.href='/Main'">홈</div>
-        <div class="navitem" onclick="location.href='/List'">전체 애니</div>
-        <div class="navitem" onclick="location.href='/Schedule/animeSchedule'">방영중 애니</div>
-        
-        <div class="navitem" onclick="location.href='/Admin/insert'">관리자</div>
-    </div>
+	<div th:replace="~{fragments/nav :: navbar}"></div>
+
 	<br>
 	<br>
 

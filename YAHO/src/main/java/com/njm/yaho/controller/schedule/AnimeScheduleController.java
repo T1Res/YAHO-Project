@@ -44,6 +44,7 @@ public class AnimeScheduleController {
 		// 모델에 데이터 추가
 		model.addAttribute("daysOfWeek", daysOfWeek);
 		model.addAttribute("animeByDay", service.WeekdayAnimeList());
+
 		String USER_ID = (String)session.getAttribute("USER_ID");
 		model.addAttribute("USER_ID", USER_ID);
 		log.info("세션 유저아이디"+USER_ID);
@@ -59,10 +60,11 @@ public class AnimeScheduleController {
 		//유저 아이디 보내기
 		String USER_ID = (String)session.getAttribute("USER_ID");
 		model.addAttribute("USER_ID", USER_ID);
-		log.info("세션 유저아이디"+USER_ID);
+		//log.info("세션 유저아이디"+USER_ID);
 		
 		// 모델에 평균
 		double grade = Rateservice.getAverageScore(ANIME_ID);
+		
 		log.info("평균: " + grade);
 		
 		//평균을 TBL_ANIME에 업데이트
@@ -187,22 +189,20 @@ public class AnimeScheduleController {
 
 		Map<String, Object> map = new HashMap<>();
 	    int ANIME_ID = dto.getANIME_ID();
-	    log.info("getAnime 아이디:"+dto.getANIME_ID());
+
+	    //log.info("getAnime 아이디:"+dto.getANIME_ID());
 	    String USER_ID = (String) session.getAttribute("USER_ID");
 	    map.put("USER_ID", USER_ID);
-	    
-	    
+
 	    //double grade = Rateservice.getAverageScore(ANIME_ID);
 	    Double gradeObj = Rateservice.getAverageScore(ANIME_ID);
 	    double grade = (gradeObj != null) ? gradeObj : 0.0;
 
 	    String mark = (grade >= 4.0) ? "명작" : (grade >= 3.0) ? "훌륭해요" : (grade >= 2.0) ? "평범해요" : "별로에요";
-	    
-	    
+
 	    int Arow = Rateservice.updateAnimeRate(grade, ANIME_ID);
-		log.info("평균 업뎃 확인: "+Arow);
-		
-		
+		  log.info("평균 업뎃 확인: "+Arow);
+
 	    map.put("grade", grade);
 	    map.put("gradeMark", mark);
 
@@ -219,7 +219,9 @@ public class AnimeScheduleController {
 	    }
 
 	    map.put("Aldto", matched); // 내 평점
-	    log.info("aldto:"+matched);
+
+	    //log.info("aldto:"+matched);
+
 	    map.put("list", rateList); // 나머지 평점 리스트
 
 	    List<RatingDTO> countList = Rateservice.selectRateCount(ANIME_ID);

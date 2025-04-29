@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>이메일 인증</title>
-  <style>
-    .hidden { display: none; }
-    .readonly { background-color: #eee; }
-    .timer { color: red; font-weight: bold; }
-  </style>
+<meta charset="UTF-8">
+<title>이메일 인증 | YAHO</title>
+<link href="/CSS/User.css" rel="stylesheet">
+<!-- favicon -->
+<link rel="icon" href="/IMG/favicon/favicon.ico" type="image/x-icon">
 </head>
 <body>
-  <h2>이메일 인증</h2>
+<div class="email-container">
+	<h2>이메일 인증</h2>
+	<!-- 이메일 입력 -->
+	<input type="email" id="emailInput" placeholder="이메일을 입력하세요">
+	<button id="sendBtn" class="emailbutton" onclick="sendAuthCode()">전송</button>
+	<span id="sendStatus"></span>
 
-  <!-- 이메일 입력 -->
-  <label>이메일: <input type="email" id="emailInput"></label>
-  <button id="sendBtn" onclick="sendAuthCode()">전송</button>
-  <span id="sendStatus"></span>
-
-  <!-- 인증코드 입력 -->
-  <div id="verifySection" class="hidden">
-    <br>
-    <label>인증코드: <input type="text" id="codeInput"></label>
-    <button onclick="verifyCode()">인증</button>
-    <div class="timer" id="timer">10:00</div>
-  </div>
-
-  <script>
+	<!-- 인증코드 입력 -->
+	<div id="verifySection" class="hidden">
+		<h4>인증코드:</h4><input type="text" id="codeInput" placeholder="인증코드 입력하세요">
+		<button class="emailbutton" onclick="verifyCode()">인증</button>
+		<div class="timer" id="timer">10:00</div>
+	</div>
+</div>
+	<script>
     let resendAllowed = true;
     let timerInterval = null;
     let countdown = 600; // 10분

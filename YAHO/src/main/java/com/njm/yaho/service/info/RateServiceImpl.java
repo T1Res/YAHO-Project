@@ -55,14 +55,14 @@ public class RateServiceImpl implements RateService {
     	// TODO Auto-generated method stub
     	return rateMapper.updateRate(dto);
     }
-   //댓글 검색
-   @Override
+    //댓글 검색
+    @Override
     public RatingDTO searchRating(int ANIME_ID, String USER_ID) {
 	// TODO Auto-generated method stub
 	return rateMapper.searchRating(ANIME_ID, USER_ID);
     }
     //댓글 삭제
-   @Override
+   	@Override
     public int deleteRate(int ANIME_ID,String USER_ID) {
 	// TODO Auto-generated method stub
 	return rateMapper.deleteRate(ANIME_ID,USER_ID);

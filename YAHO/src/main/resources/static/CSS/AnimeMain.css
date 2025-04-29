@@ -207,12 +207,28 @@ h3 a{
     cursor: pointer;
 }
 
-.navitem{
+.navitem {
 	z-index: 1002;
     margin: 15px;
     cursor: pointer;
     font-size: 1rem;
 }
+
+.navitem a {
+    color: white; /* 텍스트 색상 흰색 */
+    text-decoration: none; /* 밑줄 제거 */
+    font-size: 1rem; /* navitem과 동일한 크기 */
+    text-shadow: 
+        -1px -1px 2px black, 
+         1px -1px 2px black, 
+        -1px 1px 2px black, 
+         1px 1px 2px black;
+}
+
+.navitem a:visited {
+    color: white; /* 방문 후에도 동일한 색 유지 */
+}
+
 
 .logo{
     background-color: white;
@@ -532,6 +548,12 @@ h3 a{
     border-radius: 5px;
 }
 
+
+
+
+
+
+
 /* 마우스 오버 시 툴팁 표시 */
 .slide-title:hover::after {
     content: attr(data-title);
@@ -546,7 +568,19 @@ h3 a{
     font-size: 12px;
     z-index: 10;
 }
-
+.carousel_slide .slide-title:hover::after{
+	content: attr(data-title);
+    position: absolute;
+    left: 0;
+    top: 100%;
+    white-space: nowrap;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    z-index: 10;
+}
 
 
 
@@ -567,6 +601,32 @@ h3 a{
 
 .video-container iframe {
     flex: 0 0 auto; /* 영상 크기를 고정 */
+}
+
+.youtube-thumbnail {
+    position: relative;
+    width: 400px;
+    height: 315px;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: black;
+}
+
+.youtube-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.youtube-thumbnail .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    color: white;
+    opacity: 0.8;
 }
 
 /* 끝 */
@@ -591,8 +651,8 @@ h3 a{
 
 
 .carousel_main {
-    width: 1200px;
-    height: 700px;
+    width: 1100px;
+    height: 600px;
     position: relative;
     overflow: hidden;
     margin: 0 auto;
@@ -601,19 +661,23 @@ h3 a{
 
 .carousel_wrapper {
     display: flex;
+    height: 600px;
+    
     transition: transform 1s;
 }
 
 .carousel_slide {
-    flex: 0 0 1300px;
+    flex: 0 0 1100px;
+    overflow: hidden;
+    border-radius: 15px;
     position: relative;
 }
 
 .carousel_slide img {
     display: block;
     width: 100%;
-    height: 90%;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
 }
 
 .carousel_button_container {
@@ -678,6 +742,29 @@ h3 a{
     background-color: #333;
 }
 
+.carousel_slide .slide-title {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 12px;
+    font-size: 18px;
+    border-radius: 10px;
+    text-align: center;
+    display: inline-flex; /* ✅ 핵심: flex로 내부 텍스트 크기 맞춤 */
+    align-items: center;  /* 세로 중앙 정렬 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    max-width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 10;
+}
+
+
+
 
 
 
@@ -690,3 +777,265 @@ h3 a{
     outline: none;
     cursor: pointer;
 }
+
+
+
+
+
+
+.USER-profile-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.USER-menu-container {
+    position: relative;
+    margin-left: 20px;
+    align-self: flex-end; /* ✅ 상위 flex의 수직 정렬 무시하고 아래로 붙이기 */
+}
+
+
+.USER-profile-button {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-size: cover;        /* ✅ 원형 안에 꽉 차게 */
+    background-position: center;   /* ✅ 중앙 기준 */
+    background-repeat: no-repeat;
+    border: 2px solid white;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+
+
+.USER-profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;             /* ✅ 핵심: 비율 유지하며 프레임 채움 */
+    object-position: center center;
+    border-radius: 50%;            /* ✅ 원형 */
+    display: block;
+}
+
+
+/* 드롭다운 위치 보정 */
+.USER-profile-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px); /* 이미지 아래에 공간 확보 */
+    left: 50%;
+    transform: translateX(-50%); /* 중앙 정렬 */
+    background-color: #1f1f1f;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    width: 150px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    z-index: 9999;
+}
+
+/* 말풍선 꼬리 위치 정중앙으로 */
+.USER-profile-dropdown::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0 10px 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent #1f1f1f transparent;
+}
+
+/* 메뉴 항목 */
+.USER-dropdown-item {
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    border-top: 1px solid #444;
+}
+
+.USER-dropdown-item:first-child {
+    border-top: none;
+}
+
+.USER-dropdown-item:hover {
+    background-color: #333;
+}
+
+
+.USER-profile-dropdown hr {
+    border: none;
+    border-top: 1px solid #666;
+    margin: 0;
+}
+
+
+
+/* 메인 아래 랭킹+투표를 나누는 wrapper */
+.main-bottom-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 30px 5%;
+    box-sizing: border-box;
+}
+
+/* 왼쪽 랭킹 */
+.ranking-section {
+    width: 48%;
+    height: 600px;
+    overflow: hidden;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+
+/* 오른쪽 투표 */
+.vote-section {
+    width: 48%;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 20px;
+    color: #fff;
+}
+
+.vote-result {
+	width: 48%;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 20px;
+    color: #fff;
+}
+
+/* 애니 랭킹 */
+.swiper-container-ranking {
+    height: 540px;
+    overflow: hidden;
+}
+
+.swiper-container-ranking .swiper-slide {
+	padding: 0;
+    margin: 0;
+    height: 90px; /* ✅ 슬라이드 하나당 고정 높이 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.swiper-container-ranking .swiper-slide img {
+    width: 50px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.rank-card {
+	height: 90px; /* ✅ 슬라이드 하나당 고정 높이 */
+    display: flex;
+    align-items: center;
+    background-color: #1e1e1e;
+    padding: 0;
+    border-radius: 8px;
+    width: 90%;
+    box-sizing: border-box;
+    gap: 10px; /* 썸네일과 텍스트 간격 추가 */
+}
+
+.rank-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: gold;
+    width: 30px;
+    text-align: center;
+}
+
+.rank-thumbnail {
+    width: 50px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.rank-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.rank-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.rank-score {
+    font-size: 14px;
+    color: #ccc;
+}
+
+/* 순위별 테두리 색상 */
+.rank-1 {
+    border: 2px solid #FFD700; /* 금색 */
+}
+
+.rank-2 {
+    border: 2px solid #C0C0C0; /* 은색 */
+}
+
+.rank-3 {
+    border: 2px solid #CD7F32; /* 동색 */
+}
+
+.rank-others {
+    border: 2px solid #555555; /* 회색 */
+}
+
+/* 애니 랭킹 끝 */
+
+/* 투표 */
+.vote-section {
+    width: 48%;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 20px;
+    color: #fff;
+}
+
+.vote-card {
+    display: flex;
+    align-items: center;
+    background-color: #292929;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.vote-card img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.vote-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.vote-btn {
+    background-color: #ff5e57;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.vote-btn:hover {
+    background-color: #ff3b30;
+}
+/* 투표 끝 */

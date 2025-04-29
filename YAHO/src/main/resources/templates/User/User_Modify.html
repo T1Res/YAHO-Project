@@ -2,19 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>회원정보 수정</title>
+  <title>회원정보 수정 | YAHO</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <style>
-    td { padding: 6px; }
-    input[type="text"], input[type="password"] { padding: 5px; }
-    img { border-radius: 50%; }
-  </style>
+  <link href="/CSS/User.css" rel="stylesheet">
+  <!-- favicon -->
+<link rel="icon" href="/IMG/favicon/favicon.ico" type="image/x-icon">
 </head>
 <body>
-
+<div class="profile-modify-container">
 <form name="user" method="post" enctype="multipart/form-data" th:action="@{/User/User_Modify}">
-  <table align="center" border="0" width="600" cellpadding="5" cellspacing="0">
-    <tr><th colspan="2"><h2>회원정보 수정</h2></th></tr>
+  <table align="center" border="0" width="600" cellpadding="6" cellspacing="0">
+    <tr>
+    	<th colspan="2"><h2>회원정보 수정</h2></th>
+    </tr>
 
     <!-- 프로필 사진 -->
     <tr>
@@ -22,7 +22,6 @@
       <td>
         <label id="profileLabel">
           <img th:src="@{${dto.USER_PROFILE_IMG} + '?v=' + ${timestamp}}" />
-
         </label>
         <input type="file" name="USER_PROFILE_PATH" id="USER_PROFILE_PATH" accept="image/*" onchange="validateProfileImage(event)">
         <p id="profile-error-message" style="color:red; display:none;">파일 크기는 5MB 이하만 가능합니다.</p>
@@ -84,7 +83,7 @@
     </tr>
 
     <!-- 버튼 -->
-    <tr>
+    <tr class="profile-button">
       <td colspan="2" align="center">
         <button type="button" onclick="send()">수정</button>
         <button type="button" onclick="history.back()">취소</button>
@@ -92,6 +91,7 @@
     </tr>
   </table>
 </form>
+</div>
 
 <script>
   

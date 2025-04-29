@@ -26,4 +26,9 @@ public interface UserMapperOC {
 	
 	void insertPwResetLog(@Param("userId") String userId, @Param("email") String email);
 
+	// 사용자 권한 확인
+	int checkUserRole(String userId);
+	
+	// 사용자 프로필 이미지 가져오기
+	String getUserProfileImg(String userId);
 }

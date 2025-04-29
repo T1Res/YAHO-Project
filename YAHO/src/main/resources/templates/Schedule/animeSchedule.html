@@ -3,26 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>애니메이션 방영 시간표</title>
+<title>애니메이션 방영 시간표 | YAHO</title>
+
 <link rel="stylesheet" href="/CSS/testSchedule.css">
 <link rel="stylesheet" href="/CSS/test.css">
 <link rel="stylesheet" href="/CSS/info.css">
 <link rel="stylesheet" th:href="@{/CSS/test3.css}">
+
+<link rel="stylesheet" href="/CSS/AnimeMain.css">
+<link rel="stylesheet" href="/CSS/info.css">
+
+<!-- favicon -->
+<link rel="icon" href="/IMG/favicon/favicon.ico" type="image/x-icon">
 
 <!-- 글꼴 -->
 <link
 	href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
 	rel="stylesheet">
 </head>
+
+
 <body>
-	<div class="nav">
-        <img src="/IMG/logo_test1.png">
-        <div class="navitem" onclick="location.href='/Main'">홈</div>
-        <div class="navitem" onclick="location.href='/List'">전체 애니</div>
-        <div class="navitem" onclick="location.href='/Schedule/animeSchedule'">방영중 애니</div>
-        
-        <div class="navitem" onclick="location.href='/Admin/insert'">관리자</div>
-    </div>
+	<div th:replace="~{fragments/nav :: navbar}"></div>
+	
     <br><br>
     
 	<h1 class = "title-bar">애니메이션 방영 시간표</h1>

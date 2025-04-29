@@ -20,13 +20,12 @@
 
 
 .anime-info-container {
-	min-height: 100vh;
 	font-family: 'Roboto', sans-serif;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	background-color: #000;
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+    
 	width: 100%;
 	margin: 0 auto;
 	padding: 20px;

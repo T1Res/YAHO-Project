@@ -14,4 +14,7 @@ public interface MainService {
 	
 	// 특정 애니 상세 정보 가져오기
 	public MainOCDTO getAnimeDetailInfo(int animeId);
+	
+	// 애니 랭킹 TOP10 가져오기
+	public List<MainMSDTO> selectTop10AnimeByScore();
 }

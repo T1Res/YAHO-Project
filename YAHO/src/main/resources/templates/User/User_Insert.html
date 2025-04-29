@@ -2,10 +2,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>회원가입 | YAHO</title>
+<link href="/CSS/User.css" rel="stylesheet">
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	
+<!-- favicon -->
+<link rel="icon" href="/IMG/favicon/favicon.ico" type="image/x-icon">
 </head>
 <script>
 $(function() {
@@ -100,99 +102,59 @@ function send() {
 }
 </script>
 <body>
-	<form name="user" method="post" enctype="multipart/form-data" action="/User/User_Insert">
-		<table border=0 cellpadding=0 cellspacing=0 width=730 valign=top>
-			<tr>
-				<td align=center><br>
-					<table cellpadding=0 cellspacing=0 border=0 width=650 align=center>
-						<tr>
-							<td bgcolor="#7AAAD5">
-								<table cellpadding=0 cellspacing=0 border=0 width=100%>
-									<tr bgcolor=#7AAAD5>
-										<td align=left BORDER="0" HSPACE="0" VSPACE="0"></td>
-										<td align=center bgcolor="#7AAAD5"><FONT COLOR="#FFFFFF"><b>회원가입&nbsp;</b><font
-												color=black>(</font><font color=red>&nbsp;*&nbsp;</font><font
-												color=black>표시항목은 반드시 입력해주세요.)</font></FONT></td>
-										<td align=right BORDER="0" HSPACE="0" VSPACE="0"></td>
-									</tr>
-								</table>
-								
-								<table cellpadding=3 cellspacing=1 border=0 width=100%>
-									<tr>
-										<TD BGCOLOR="#EFF4F8">&nbsp;프로필사진<font color=red>&nbsp;*</font></td>
-										<TD BGCOLOR=WHITE><input type=file name=profile size=63
-											value=""></td>
-									</tr>
-									<tr>
-										<td width=110 bgcolor=#EFF4F8>&nbsp;이름<font color=red>&nbsp;*</font></td>
-										<TD BGCOLOR=WHITE><input type=text name="USER_NICKNAME"
-											size=16 maxlength=20 value="" placeholder="이름을 입력"></td>
-									</tr>
-									<tr>
-										<TD BGCOLOR="#EFF4F8">&nbsp;ID<font color=red>&nbsp;*</font></td>
-										<TD BGCOLOR=WHITE>
-											<table cellspacing=0 cellpadding=0>
-												<tr>
-													<td align=absmiddle><input type=text name="USER_ID"
-														id=userid size=12 maxlength=16 style="width: 120">
-													</td>
-													<td id="userid_c">[아이디 중복 검사 결과]</td>
-												</tr>
-											</table>
-										</td>
-									</tr>
-									<tr>
-										<TD BGCOLOR="#EFF4F8">&nbsp;비밀번호<font color=red>&nbsp;*</font></td>
-										<TD BGCOLOR=WHITE><input type=password
-											name="USER_PASSWORD" id=passwd size=8 maxlength=12
-											style="width: 80"> [6~12자 이내의 영문이나 숫자만 가능합니다.]</td>
-									</tr>
-									<tr>
-										<TD BGCOLOR="#EFF4F8">&nbsp;비밀번호확인<font color=red>&nbsp;*</font></td>
-										<TD BGCOLOR=WHITE><input type=password name=repasswd
-											id=repasswd size=8 maxlength=12 value="" style="width: 80">
-											<font id="repasswd_c" color="red">비밀번호 확인을 위해서 비밀번호를
-												한번 더 입력해주세요.</font></td>
-									</tr>
-									<tr>
-  										<TD BGCOLOR="#EFF4F8">&nbsp;성별<font color=red>&nbsp;*</font></TD>
-  										<TD BGCOLOR=WHITE>
-   										<label><input type="radio" name="USER_GENDER" value="1" checked> 남자</label>
-    									<label><input type="radio" name="USER_GENDER" value="2"> 여자</label>
- 										</TD>
-									</tr>
-									<tr>
-										<label>이메일 (변경 불가):
-      										<input type="text" name="USER_EMAIL" id="USER_EMAIL" readonly th:value="${USER_EMAIL}">
-   										</label><br>
-									</tr>
-									<tr>
-										<TD BGCOLOR="#EFF4F8">&nbsp;한줄소개<font color=red>&nbsp;</font></td>
-										<TD BGCOLOR=WHITE><input type=text name="USER_BIO"
-											size=60 value=""></td>
-									</tr>
-								</table>
-								
-								<table cellpadding=0 cellspacing=0 border=0 width=100%>
-									<tr bgcolor=#7AAAD5>
-										<td valign=bottom><img src="./img/touhou2.jpg" align=left
-											hspace=0 vspace=0 border=0></td>
-										<td align=center></td>
-										<td valign=bottom><img src="" align=right hspace=0
-											vspace=0 border=0></td>
-									</tr>
-									<tr bgcolor=#ffffff>
-										<td colspan=3 align=center><a href="javascript:send()">가입</a>
-											<a href="javascript:history.back()">취소</a></td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
-	</form>
-
+	<div class="user-insert-container">
+		<form name="user" method="post" enctype="multipart/form-data" action="/User/User_Insert">
+			<div class="user-insert-title">
+				<h2>회원가입</h2>
+				<h3>
+					(<font color=red>&nbsp;*&nbsp;</font>표시항목은 반드시 입력해주세요.)
+				</h3>
+			</div>
+			
+			<div class="user-insert-cont">
+				<div class="user-insert-input">
+					<b>프로필 사진</b>
+					<input type=file name=profile size=63 value="">
+				</div>
+				<div class="user-insert-input">
+					<b>이름<font color=red>&nbsp;*</font></b>
+					<input type=text name="USER_NICKNAME" size=16 maxlength=20 value="" placeholder="이름을 입력">
+				</div>
+				<div class="user-insert-input">
+					<b>ID<font color=red>&nbsp;*</font></b>
+					<input type=text name="USER_ID" id=userid size=12 maxlength=16 style="width: 120">
+					<span id="userid_c" color="red">[아이디 중복 검사 결과]</span>
+				</div>
+				<div class="user-insert-input">
+					<b>비밀번호<font color=red>&nbsp;*</font></b>
+					<input type=password name="USER_PASSWORD" id=passwd size=8 maxlength=12 style="width: 80">
+					<span>[6~12자 이내의 영문이나 숫자만 가능합니다.]</span>
+				</div>
+				<div class="user-insert-input">
+					<b>비밀번호확인<font color=red>&nbsp;*</font></b>
+					<input type=password name=repasswd id=repasswd size=8 maxlength=12 value="" style="width: 80">
+					<font id="repasswd_c" color="red">비밀번호 확인을 위해서 비밀번호를 한번 더 입력해주세요.</font>
+				</div>
+				<div class="user-insert-input">
+					<b>성별<font color=red>&nbsp;*</font></b>
+					<input type="radio"	name="USER_GENDER" value="1" checked> 남자</label>
+					<input type="radio" name="USER_GENDER" value="2"> 여자</label>
+				</div>
+				<div class="user-insert-input">
+					<b>이메일 (변경 불가)</b>
+					<input type="text" name="USER_EMAIL" id="USER_EMAIL" readonly th:value="${USER_EMAIL}">	
+				</div>
+				<div class="user-insert-input">
+					<b>한줄소개</b>
+					<input type=text name="USER_BIO" size=60 value="" class="">
+				</div>
+			</div>
+			
+			<div class="user-insert-button">
+				<a href="javascript:send()" class="insertbutton">가입</a>
+				<a href="javascript:history.back()" class="insertbutton">취소</a>
+			</div>
+		</form>
+	</div>
 </body>
 </html>

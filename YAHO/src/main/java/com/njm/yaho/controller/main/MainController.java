@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.njm.yaho.controller.info.RateControllerTest;
 import com.njm.yaho.domain.mysql.main.MainMSDTO;
 import com.njm.yaho.domain.oracle.main.MainOCDTO;
+import com.njm.yaho.mapper.oracle.user.UserMapperOC;
 import com.njm.yaho.service.main.MainService;
-import com.njm.yaho.service.user.UserService;
+import com.njm.yaho.service.main.VoteService;
 
 import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 
@@ -29,21 +31,58 @@ import lombok.RequiredArgsConstructor;
 public class MainController {
 	@Autowired
 	private MainService service;
+	
+	@Autowired
+	private VoteService voteService;
+	
+	@Autowired
+	private UserMapperOC userMapperOC;
+	
 	private static final Logger log = LoggerFactory.getLogger(RateControllerTest.class);
   
 	@GetMapping("")
-	public String main(Model model,@ModelAttribute("playAudio") Object flashAudio,HttpSession session) {
+	public String main(Model model,HttpSession session) {
 		List<MainMSDTO> animeList = service.getTodayAnimeList();
 		int animeCount = animeList.size();
-		log.info("세션 로그인 확인"+(String)session.getAttribute("USER_ID"));
+		
+		// 사용자 정보
+		String USER_ID = (String)session.getAttribute("USER_ID");
+		if (USER_ID != null) {
+			int USER_PERMISSION = userMapperOC.checkUserRole(USER_ID);
+			String USER_PROFILE_IMG = userMapperOC.getUserProfileImg(USER_ID);
+			
+			session.setAttribute("USER_PROFILE_IMG", USER_PROFILE_IMG);
+			session.setAttribute("USER_PERMISSION", USER_PERMISSION);
+			
+			model.addAttribute("USER_PROFILE_IMG", session.getAttribute("USER_PROFILE_IMG"));
+			model.addAttribute("USER_PERMISSION", session.getAttribute("USER_PERMISSION"));
+		} else {
+			model.addAttribute("USER_PERMISSION", 1);
+		}
+		
+		
+		model.addAttribute("USER_ID", USER_ID);
 		model.addAttribute("animeCount", animeCount);
 		model.addAttribute("animeList", animeList);
-		if (flashAudio != null) {
-	        model.addAttribute("playAudio", true);
-	    }
 		
-		String USER_ID = (String)session.getAttribute("USER_ID");
-		model.addAttribute("USER_ID", USER_ID);
+		Object playAudio = session.getAttribute("playAudio");
+		if (playAudio != null && (boolean) playAudio) {
+			model.addAttribute("playAudio", true);
+	      	session.removeAttribute("playAudio"); // ✅ 재생 후 삭제
+		}
+		
+		// 애니 랭킹 TOP10 가져오기
+		List<MainMSDTO> animeListTop10 = service.selectTop10AnimeByScore();
+		
+		model.addAttribute("animeListTop10", animeListTop10);
+		
+		// 투표 불러오기
+		//if (USER_ID != null) {
+	    //    model.addAttribute("voteList", voteService.getAllVotes()); // 투표 리스트
+	    //} else {
+	    //    model.addAttribute("voteList", null); // 로그인 안된 경우 빈 값
+	    //}
+	
         return "Main/index";
     }
 	
