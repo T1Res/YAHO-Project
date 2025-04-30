@@ -102,28 +102,30 @@
 
 				<!-- 평점 게시판 -->
 				<div class="wrap">
-				  <div class="rating-container-row">
-				    <div class="rating-box">
-				      <h1>평점 게시판</h1>
-				
-				      <!-- 수정 영역: 유저가 이미 평가한 경우에만 표시 -->
-				      <div id="rateFormArea" style="display: none;">
+				  	<div class="rating-container-row">
+				  		<!-- 평점등록영역 -->
+				    	<div class="rating-box">
+					      	<h1>평점 게시판</h1>
+					
+					      	<!-- 수정 영역: 유저가 이미 평가한 경우에만 표시 -->
+					      	<div id="rateFormArea" style="display: none;">
 								<div id="rate-image-filter">
 									<img src="/IMG/kibon_image.jpg" class="profile-img" />
 									<!-- 기본 프로필 -->
 								</div>
-								<div class="user-id" th:text="${USER_ID}"></div><input type="hidden" id="rated_user_id" name="USER_ID" th:value="${USER_ID}" />
-				        <input type="hidden" id="rated_anime_id" name="ANIME_ID"/>
-						<br>
-						
-				        <!-- 별점 입력 -->
-				        <div class="rating" id="rated_stars_area"></div>
-				
-				        <!-- 댓글 입력 -->
-
+								<div class="user-id" th:text="${USER_ID}"></div>
+								<input type="hidden" id="rated_user_id" name="USER_ID" th:value="${USER_ID}" />
+					        	<input type="hidden" id="rated_anime_id" name="ANIME_ID"/>
+								<br>
+							
+					        	<!-- 별점 입력 -->
+					        	<div class="rating" id="rated_stars_area"></div>
+					
+					        	<!-- 댓글 입력 -->
+	
 								<div style="margin-top: 20px;">
 									<textarea id="rated_content" rows="4" cols="50" maxlength="100"></textarea>
-
+	
 									<!-- 버튼을 가로로 정렬 -->
 									<div class="button-container">
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -136,29 +138,25 @@
 										<!-- 글자수 카운트는 오른쪽 끝에 위치 -->
 									</div>
 								</div>
-
-
-
-
 							</div>
-				
-				      <!-- 등록 영역: 평가를 안 했을 때만 표시 -->
+					
+					      	<!-- 등록 영역: 평가를 안 했을 때만 표시 -->
 							<div id="registerFormArea" style="display: none;">
 								<input type="hidden" id="register_anime_id" name="ANIME_ID" />
+								
 								<div id="rate-image-filter">
 									<img src="/IMG/kibon_image.jpg" class="profile-img" />
 									<!-- 기본 프로필 -->
 								</div>
-
+	
 								<div class="user-id" th:text="${USER_ID}"></div>
 								<input type="hidden" id="register_user_id" name="USER_ID"th:value="${USER_ID}" /> <br>
 								<div class="rating" id="register_stars_area"></div>
-
+	
 								<div style="margin-top: 20px;">
-									<textarea id="register_content" rows="4" cols="50"
-										maxlength="100"></textarea>
-
+									<textarea id="register_content" rows="4" cols="50" maxlength="100"></textarea>
 								</div>
+								
 								<div class="button-container">
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -169,45 +167,47 @@
 									<div id="register_charCount" class="char-count">0/100</div>
 								</div>
 							</div>
-
 						</div>
+						<!-- 평점등록영역 끝 -->
 				
-				    <!-- 통계 -->
-				    <div class="rating-box2">
-				     <h1>통계</h1>
-				     <br>
-				     <br>
-				     <br>
+				    	<!-- 통계 -->
+				    	<div class="rating-box2">
+				     		<h1>통계</h1>
+				     		<br>
+				     		<br>
+				     		<br>
 				     
-				      <div class="stats-row">
-				        <div class="grade-section">
-				          <span id="grade-number" style="font-size: 50px;"></span><br>
-				          <span class="grade-badge" id="grade-mark"></span>
-				        </div>
+				      		<div class="stats-row">
+				        		<div class="grade-section">
+				          			<span id="grade-number" style="font-size: 50px;"></span><br>
+				          			<span class="grade-badge" id="grade-mark"></span>
+				        		</div>
 				
-				        <div class="chart-section">
-				          <canvas id="myChart"></canvas>
-				        </div>
+				        		<div class="chart-section">
+				          			<canvas id="myChart"></canvas>
+				        		</div>
 				
-				        <div class="chart-section donut-section">
-				          <canvas id="genderChart"></canvas>
-				        </div>
-				      </div>
-				    </div>
-				  </div>
+				        		<div class="chart-section donut-section">
+				          			<canvas id="genderChart"></canvas>
+				        		</div>
+							</div>
+						</div>
+						<!-- 통계영역 끝 -->
+					</div>
 				</div>
+				<!-- 평점 게시판 끝 -->
 				
 				<!-- 댓글 목록 영역 -->
 				<div class="wrap2" id="comment-list-area">
-				  <h1>게시판 목록</h1>
-				  <!-- JS에서 동적으로 삽입 -->
+				  	<h1>게시판 목록</h1>
+				  	<!-- JS에서 동적으로 삽입 -->
 				</div>
-
+				<!-- 댓글 목록 영역 끝 -->
 				
-
 			</div>
 		</div>
 	</div>
+	
 	<script src="/JS/chart.umd.js"></script>
 	<script src="/JS/Rating3.js"></script>
 	<!-- 도넛 -->
