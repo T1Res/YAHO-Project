@@ -27,12 +27,24 @@ public class MainServiceImpl implements MainService {
 	    
 		return mapperMS.getTodayAnimeList(today);
 	}
-
+	
+	// 특정 애니 요약 정보 가져오기
 	@Override
-	public MainOCDTO getAnimeInfo(int animeId) {
-		MainOCDTO dto = mapperOC.getAnimeInfo(animeId);
+	public MainMSDTO getAnimeBaseInfo(int animeId) {
+		MainMSDTO dto = mapperMS.getAnimeBaseInfo(animeId);
 		return dto;
 	}
 	
-	
+	// 특정 애니 상세 정보 가져오기
+	@Override
+	public MainOCDTO getAnimeDetailInfo(int animeId) {
+		MainOCDTO dto = mapperOC.getAnimeDetailInfo(animeId);
+		return dto;
+	}
+
+	// 애니 랭킹 TOP10 가져오기
+	@Override
+	public List<MainMSDTO> selectTop10AnimeByScore() {
+		return mapperMS.selectTop10AnimeByScore();
+	}
 }

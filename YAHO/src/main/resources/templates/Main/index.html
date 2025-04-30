@@ -8,34 +8,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YAHO</title>
-    <link rel="stylesheet" href="CSS/AnimeMain.css">
-    <link rel="stylesheet" href="CSS/info.css">
-	<link rel="stylesheet" href="CSS/footer.css">
+
+    <link rel="stylesheet" href="/CSS/AnimeMain.css">
+    <link rel="stylesheet" href="/CSS/info.css">
+	  <link rel="stylesheet" href="/CSS/footer.css">
+    <!-- 상세페이지 Css -->
+    <link rel="stylesheet" th:href="@{/CSS/test3.css}">
     
-<!-- 기본 favicon -->
+<!-- favicon -->
 <link rel="icon" href="IMG/favicon/favicon.ico" type="image/x-icon">
 
-<!-- 확장 favicon -->
-<link rel="shortcut icon" href="IMG/favicon/favicon.ico" type="image/x-icon">
-
-<!-- PNG favicon -->
-<link rel="icon" href="IMG/favicon/android-chrome-512x512.png" type="image/png">
- 
- <!-- 아이콘 -->
+<!-- 아이콘 -->
 <script src="https://kit.fontawesome.com/071aa8f784.js" crossorigin="anonymous"></script>
+<!-- 투표 차트 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
+<!-- 오디오 태그 -->
+<audio id="audioPlayer" hidden autoplay></audio>
+
+<!-- JS에서 참조할 전역변수 설정 -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    window.playAudioFlag = /*[[${playAudio}]]*/ false;
+    /*]]>*/
+</script>
+<!-- 오디오 재생 스크립트 외부 포함 -->
+<script src="/js/audio-play.js"></script>
 
 <body>
-	
-    <div class="nav">
-        <img src="/IMG/logo_test1.png">
-        <div class="navitem" onclick="location.href='/Main'">홈</div>
-        <div class="navitem" onclick="location.href='/List'">전체 애니</div>
-        <div class="navitem" onclick="location.href='/Schedule/animeSchedule'">방영중 애니</div>
-        <div class="navitem">자유게시판</div>
-        <div class="navitem" onclick="location.href='/Admin/insert'">관리자</div>
-    </div>
-    
+    <div th:replace="~{fragments/nav :: navbar}"></div>
+
     <br><br>
     
     <div class="title" style="background-color: black;">
@@ -44,32 +47,43 @@
 	
 	<hr class="custom-hr"><br>
 
+	<h2 style="color:#ffffff;"> &nbsp; - 개발자 엄선 추천 애니</h2>
+	<br>
+	
 	<!-- carousel 시작 -->
 	<div class="carousel_main">
 		<div class="carousel_wrapper">
 			<div class="carousel_slide">
-				<img src="IMG/TEST/test01.webp" />
+				<img src="IMG/Recommended/추천애니_마법사의 신부.png" />
+				<div class="slide-title">마법사의 신부</div>
 			</div>
 			<div class="carousel_slide">
-				<img src="IMG/TEST/test02.webp" />
+				<img src="IMG/Recommended/추천애니_꿈빛파티시엘.png" />
+				<div class="slide-title">꿈빛 파티시엘</div>
 			</div>
 			<div class="carousel_slide">
-				<img src="IMG/TEST/test03.webp" />
+				<img src="IMG/Recommended/추천애니_도라에몽.png" />
+				<div class="slide-title">도라에몽</div>
 			</div>
 			<div class="carousel_slide">
-				<img src="IMG/TEST/test04.webp" />
+				<img src="IMG/Recommended/추천애니_불꽃소방대.png" />
+				<div class="slide-title">불꽃 소방대</div>
 			</div>
 			<div class="carousel_slide">
-				<img src="IMG/TEST/test05.webp" />
+				<img src="IMG/Recommended/추천애니_오와리모노가타리.jpg" />
+				<div class="slide-title">오와리모노가타리</div>
 			</div>
 			<div class="carousel_slide">
-				<img src="IMG/TEST/test06.webp" />
+				<img src="IMG/Recommended/추천애니_일하는세포.png" />
+				<div class="slide-title">일하는 세포</div>
 			</div>
 			<div class="carousel_slide">
-				<img src="IMG/TEST/test07.webp" />
+				<img src="IMG/Recommended/추천애니_주술회전.png" />
+				<div class="slide-title">주술회전</div>
 			</div>
 			<div class="carousel_slide">
-				<img src="IMG/TEST/test08.webp" />
+				<img src="IMG/Recommended/추천애니_코노스바.png" />
+				<div class="slide-title">이 멋진 세계에 축복을 !</div>
 			</div>
 		</div>
 		
@@ -133,89 +147,96 @@
 	<!-- 유튜브 -->
 	<h2 style="color:#ffffff;"> &nbsp; - YouTube</h2>
 	<div class="swiper-container-youtube">
-		<div class="swiper-wrapper">
-			<div class="swiper-slide">
-				<iframe width="400" height="315"
-					src="https://www.youtube.com/embed/9FCX_7tCcrk?si=1ulvnLTJXmSAwlgW"
-					title="YouTube video player" frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</div>
-			
-			<div class="swiper-slide">
-				<iframe width="400" height="315"
-					src="https://www.youtube.com/embed/GjfSwJlq4rk?si=f9fk3v_gPepNK2ca"
-					title="YouTube video player" frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</div>
-			
-			<div class="swiper-slide">
-				<iframe width="400" height="315"
-					src="https://www.youtube.com/embed/BGlQakaaJDs?si=F9D4zQm0PJ-uHCa1"
-					title="YouTube video player" frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</div>
-			
-			<div class="swiper-slide">
-				<iframe width="400" height="315"
-					src="https://www.youtube.com/embed/w1J9aH9DhrY?si=cP41P8iSmbmiioR-"
-					title="YouTube video player" frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</div>
-			
-			<div class="swiper-slide">
-				<iframe width="400" height="315"
-					src="https://www.youtube.com/embed/ptc0YXw9ZOo?si=DhFn1kfVL9nlSlRr" 
-					title="YouTube video player" frameborder="0" 
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</div>
-			
-			<div class="swiper-slide">
-				<iframe width="400" height="315"
-					src="https://www.youtube.com/embed/VYFsjzOmJhk?si=5pkyNXQ0yBM61KjG" 
-					title="YouTube video player" frameborder="0" 
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</div>
-		</div>
-		
-		<!-- 좌우 화살표 -->
-		<div class="swiper-button-prev"></div>
-		<div class="swiper-button-next"></div>
+	    <div class="swiper-wrapper">
+	        <!-- 영상 1 -->
+	        <div class="swiper-slide">
+	            <div class="youtube-thumbnail" data-video-id="9FCX_7tCcrk">
+	                <img src="https://img.youtube.com/vi/9FCX_7tCcrk/0.jpg" alt="YouTube 썸네일">
+	                <div class="play-button">▶</div>
+	            </div>
+	        </div>
+	
+	        <!-- 영상 2 -->
+	        <div class="swiper-slide">
+	            <div class="youtube-thumbnail" data-video-id="GjfSwJlq4rk">
+	                <img src="https://img.youtube.com/vi/GjfSwJlq4rk/0.jpg" alt="YouTube 썸네일">
+	                <div class="play-button">▶</div>
+	            </div>
+	        </div>
+	
+	        <!-- 영상 3 -->
+	        <div class="swiper-slide">
+	            <div class="youtube-thumbnail" data-video-id="BGlQakaaJDs">
+	                <img src="https://img.youtube.com/vi/BGlQakaaJDs/0.jpg" alt="YouTube 썸네일">
+	                <div class="play-button">▶</div>
+	            </div>
+	        </div>
+	
+	        <!-- 영상 4 -->
+	        <div class="swiper-slide">
+	            <div class="youtube-thumbnail" data-video-id="w1J9aH9DhrY">
+	                <img src="https://img.youtube.com/vi/w1J9aH9DhrY/0.jpg" alt="YouTube 썸네일">
+	                <div class="play-button">▶</div>
+	            </div>
+	        </div>
+	
+	        <!-- 영상 5 -->
+	        <div class="swiper-slide">
+	            <div class="youtube-thumbnail" data-video-id="ptc0YXw9ZOo">
+	                <img src="https://img.youtube.com/vi/ptc0YXw9ZOo/0.jpg" alt="YouTube 썸네일">
+	                <div class="play-button">▶</div>
+	            </div>
+	        </div>
+	
+	        <!-- 영상 6 -->
+	        <div class="swiper-slide">
+	            <div class="youtube-thumbnail" data-video-id="VYFsjzOmJhk">
+	                <img src="https://img.youtube.com/vi/VYFsjzOmJhk/0.jpg" alt="YouTube 썸네일">
+	                <div class="play-button">▶</div>
+	            </div>
+	        </div>
+	
+	    </div>
+	
+	    <!-- 좌우 화살표 -->
+	    <div class="swiper-button-prev"></div>
+	    <div class="swiper-button-next"></div>
 	</div>
+
 	
 	<hr class="custom-hr"><br>
 
-	<div class="core">
-		<div class="core_title">추천 애니</div>
-		<div class="core_cont">
-			<img src="/static/img/java.png" alt=""> 
-			<img src="static/img/python.png" alt=""> 
-			<img src="static/img/c.png" alt=""> 
-			<img src="static/img/html.png" alt=""> 
-			<img src="static/img/css.png" alt=""> 
-			<img src="static/img/js.png" alt="">
-		</div>
-		
-		<div class="core_title">뭘넣을까</div>
-		<div class="core_cont" style="margin-bottom: 0; padding-bottom: 80px;">
-			<img id="umc" src="static/img/umc.png" alt="">
-			<div id="umc_activity" class="activity">
-				<li>UMC 3rd Spring 부원</li>
-				<li>UMC 아이디어톤 5개 중 3개 수상</li>
-				<li>UMC 4th 운영진 Server 파트장</li>
-			</div>
-			
-			<img id="demoday" src="static/img/demoday.png" alt="">
-			<div id="demoday_activity" class="activity">
-				<li>UMC DemoDay 최우수상</li>
-			</div>
+	<!-- 메인 하단 -->
+	<div class="main-bottom-wrapper">
+	    <!-- 왼쪽 : 인기 랭킹 -->
+	    <div class="ranking-section">
+	        <h2 style = "color: #fff;">🔥 인기 애니 랭킹 Top 10</h2>
+	        <div class="swiper-container-ranking">
+	            <div class="swiper-wrapper">
+	                <div class="swiper-slide" th:each="anime, iterStat : ${animeListTop10}">
+	                    <div class="rank-card"
+     						th:classappend="${iterStat.count == 1 ? 'rank-1' : (iterStat.count == 2 ? 'rank-2' : (iterStat.count == 3 ? 'rank-3' : 'rank-others'))}"
+     						th:data-anime-id="${anime.animeId}"
+     						onclick="openModalDetail(this)">
+							<div class="rank-number" th:text="${iterStat.count}"></div>
+	                        <img th:src="${anime.thumnailSeroUrl}" alt="썸네일" class="rank-thumbnail">
+	                        <div class="rank-info">
+	                            <div class="rank-title" th:text="${anime.title}">애니 제목</div>
+	                            <div class="rank-score" th:text="${anime.score} + '점'">9.5점</div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	
+	    <!-- 오른쪽 -->
+	    <div class="vote-section">
+	    	<!--  -->
 		</div>
 	</div>
+	
+	<hr class="custom-hr"><br>
 	
 	<!-- 모달 -->
 	<div id="animeModal" class="modal">
@@ -233,7 +254,7 @@
 						<section class="ani-section">
 							<div class="ani-row">
 								<h2>애니제목</h2>
-								<p id="anime_id"></p>
+								<p id="anime_title"></p>
 							</div>
 							
 							<div class="ani-row">
@@ -248,7 +269,7 @@
 							
 							<div class="ani-row">
 								<h2>제작사</h2>
-								<p id="studio"><a href="#" id="studio_link">제작사1</a></p>
+								<p id="studio">제작사1</p>
 							</div>
 							
 							<div class="ani-row">
@@ -264,35 +285,283 @@
 						</section>
 					</div>
 				</div>
+				<!-- 평점 등록 수정 부분 -->
+				<div class="wrap">
+				  <div class="rating-container-row">
+				    <div class="rating-box">
+				      <h1>평점 게시판</h1>
+				
+				      <!-- 수정 영역: 유저가 이미 평가한 경우에만 표시 -->
+				      <div id="rateFormArea" style="display: none;">
+				        <img src="/IMG/kibon_image.jpg" class="profile-img"/>
+				        <div class="user-id" th:text="${USER_ID}"></div><input type="hidden" id="rated_user_id" name="USER_ID" th:value="${USER_ID}" />
+				        <input type="hidden" id="rated_anime_id" name="ANIME_ID"/>
+						<br>
+						
+				        <!-- 별점 입력 -->
+				        <div class="rating" id="rated_stars_area"></div>
+				
+				        <!-- 댓글 입력 -->
+
+								<div style="margin-top: 20px;">
+									<textarea id="rated_content" rows="4" cols="50" maxlength="100"></textarea>
+
+									<!-- 버튼을 가로로 정렬 -->
+									<div class="button-container">
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<button type="button" onclick="updateRate()">수정</button>
+										<button type="button" onclick="deleteRate()">삭제</button>
+										<div id="rated_charCount" class="char-count">0/100</div>
+										<!-- 글자수 카운트는 오른쪽 끝에 위치 -->
+									</div>
+								</div>
+
+
+
+
+							</div>
+				
+				      <!-- 등록 영역: 평가를 안 했을 때만 표시 -->
+							<div id="registerFormArea" style="display: none;">
+								<input type="hidden" id="register_anime_id" name="ANIME_ID" /> <img
+									src="/IMG/kibon_image.jpg" class="profile-img" />
+								<div class="user-id" th:text="${USER_ID}"></div>
+								<input type="hidden" id="register_user_id" name="USER_ID"th:value="${USER_ID}" /> <br>
+								<div class="rating" id="register_stars_area"></div>
+
+								<div style="margin-top: 20px;">
+									<textarea id="register_content" rows="4" cols="50"
+										maxlength="100"></textarea>
+
+								</div>
+								<div class="button-container">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<button type="button" onclick="submitRate()">등록</button>
+									<div id="register_charCount" class="char-count">0/100</div>
+								</div>
+							</div>
+
+						</div>
+				
+				    <!-- 통계 -->
+				    <div class="rating-box2">
+				     <h1>통계</h1>
+				     <br>
+				     <br>
+				     <br>
+				     
+				      <div class="stats-row">
+				        <div class="grade-section">
+				          &nbsp;&nbsp;&nbsp;&nbsp;
+				          <span id="grade-number" style="font-size: 50px;"></span><br>
+				          <span class="grade-badge" id="grade-mark"></span>
+				        </div>
+				
+				        <div class="chart-section">
+				          <canvas id="myChart"></canvas>
+				        </div>
+				
+				        <div class="chart-section donut-section">
+				          <canvas id="genderChart"></canvas>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				
+				<!-- 댓글 목록 영역 -->
+				<div class="wrap2" id="comment-list-area">
+				  <h1>게시판 목록</h1>
+				  <!-- JS에서 동적으로 삽입 -->
+				</div>
+				
+				
 			</div>
 		</div>
 	</div>
 	
+	<footer class = footer-wrapper>
+		<div class="footer-content">
+			<div class="col left">
+				<ul class="footer-nav">
+					<li><a href="/Info/teamInfo">사이트소개</a></li>
+					<li><a href="/Info/useTerms">이용약관</a></li>
+					<li><a href="/Info/policy">개인정보 취급방침</a></li>
+					<li><a href="/Info/useInfo">이용안내</a></li>
+				</ul>
+				<hr>
+				<div class="footer-info">
+					<p>상호: NJM (대표 : 조혜림)</p>
+					<p>주소: 대전광역시 중구 계룡로 825 JSL인재개발원</p>
+					<p>전화: 010-9612-5768</p>
+					<p>사업자등록번호: 777-77-77777</p>
+				</div>
+			</div>
+			<div class="col center">
+				<h2>고객센터</h2>
+				<h3>042-242-4412</h3>
+				<p>월-금 10:00-18:00</p>
+				<ul class="socials">
+					<li><a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a></li>
+					<li><a href="https://www.facebook.com/"><i class="fa-brands fa-square-facebook"></i></a></li>
+					<li><a href="https://www.youtube.com/"><i class="fa-brands fa-youtube"></i></a></li>
+				</ul>
+			</div>
+			<div class="col right">
+				<h2>커뮤니티</h2>
+				<p><a href="#">공지사항</a></p>
+				<p><a href="#">게시판</a></p>
+				<p><a href="#">NEW</a></p>
+			</div>	
+		</div>
+		<div class="copyright">
+			<p>Copyright &copy; YAHO. All rights reserved.
+		</div>
+	</footer>
+	
+  	<script src="/JS/chart.umd.js"></script>
+	<script src="/JS/Rating3.js"></script>
+	<!-- 도넛 -->
+	<script src="/JS/genderChart.js"></script>
+	<!-- 별점 기능 -->
+	<script src="/JS/Rating.js"></script>
+	<!-- 통계 -->
+	<script th:inline="javascript">
+    /*<![CDATA[*/
+        let voteLabels = /*[[${scoreList}]]*/ [];
+        let voteCounts = /*[[${countList}]]*/ [];
+    /*]]>*/
+    </script>
+	<script>
+    const ctx2 = document.getElementById('myChart').getContext('2d');
+
+    // ✅ 전역에 등록
+    window.myChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: voteLabels,
+            datasets: [{
+                label: '평점 분포',
+                data: voteCounts,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',   // 0~1
+                    'rgba(54, 162, 235, 0.6)',   // 1~2
+                    'rgba(255, 206, 86, 0.6)',   // 2~3
+                    'rgba(75, 192, 192, 0.6)',   // 3~4
+                    'rgba(153, 102, 255, 0.6)'   // 4~5
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1,
+                barPercentage: 0.5,
+                categoryPercentage: 0.5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+<!-- 도넛 함수 -->
+	<script th:inline="javascript">
+/*<![CDATA[*/
+  const maleRatio = /*[[${maleRatio}]]*/ 50;
+  const femaleRatio = /*[[${femaleRatio}]]*/ 50;
+/*]]>*/
+</script>
+
 	<!-- Swiper JS -->
 	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>  
 </body>
-<script>
+<script th:inline="javascript">
 	function openModalDetail(el) {
 		const animeId = el.getAttribute("data-anime-id");
-		const userId = "aa1111"; // 로그인 중인 유저 ID, 현재 아직 기능이 없으므로 임시로 aa1111로 설정
+		const userId = /*[[${USER_ID}]]*/ '';  
+		// Thymeleaf가 `${USER_ID}`를 여기서 처리합니다.
+		 // 로그인 중인 유저 ID, 현재 아직 기능이 없으므로 임시로 aa1111로 설정
 		
-		console.log("애니 ID:", animeId);
-		
-		// 1. 상세 정보 로딩
-		fetch(`/anime/detail?animeId=${animeId}`)
-			.then(res => res.json())
-			.then(data => {
-				document.getElementById("anime_id").innerText = data.animeId;
-				document.getElementById("start_date").innerText = data.startDate;
-		      	document.getElementById("total_episode").innerText = data.totalEpisode;
-		      	document.getElementById("studio").innerText = data.studio;
-		      	document.getElementById("studio_link").href = data.studioLink;
-		      	document.getElementById("age_rating").innerText = data.ageRating;
-		      	document.getElementById("anime_desc").innerText = data.animeDesc;
-		});
 
-		// 모달 열기
-		document.getElementById("animeModal").style.display = "block";
+		<!-- console.log("애니 ID,유저 ID: ", animeId,userId); -->
+		
+		// 기본 정보 로딩
+		fetch(`Main/anime/baseInfo?animeId=${animeId}`)
+		    .then(res => res.json())
+		    .then(data => {
+	            console.log("기본 정보:", data);
+		        const titleEl = document.getElementById("anime_title");
+		        const animeGaroImgEl = document.getElementById("modal_img");
+		
+		        if (titleEl) titleEl.innerText = data.title || "제목 없음";
+		        if (animeGaroImgEl) animeGaroImgEl.setAttribute("src", data.thumnailGaroUrl || "IMG/default.png");
+		    });
+		
+		// 상세 정보 로딩
+		fetch(`Main/anime/detailInfo?animeId=${animeId}`)
+		    .then(res => res.json())
+		    .then(data => {
+		        const startDateEl = document.getElementById("start_date");
+		        const totalEpEl = document.getElementById("total_episode");
+		        const studioEl = document.getElementById("studio");
+		        const studioLinkEl = document.getElementById("studio_link");
+		        const ratingEl = document.getElementById("age_rating");
+		        const descEl = document.getElementById("anime_desc");
+		
+		        if (startDateEl) startDateEl.innerText = data.startDate.substring(0, 10) || "정보가 없습니다.";
+		        if (totalEpEl) totalEpEl.innerText = data.totalEpisode || "정보가 없습니다.";
+		        
+		        if (studioEl) {
+		        //	studioLinkEl.setAttribute("href", data.studioLink);
+		        //	studioLinkEl.setAttribute("target", "_blank"); // 새 창 열기
+		        	studioEl.innerText = data.studio || "제작사 정보 없음";
+		        }
+		        
+		        if (ratingEl) ratingEl.innerText = data.ageRating || "미정";
+		        if (descEl) descEl.innerHTML = (data.animeDesc || "설명이 없습니다.").replace(/\n/g, "<br>");
+		    });
+	    // 평가 정보 JSON으로 요청
+        fetch("/Schedule/rateInfoJson", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ANIME_ID: animeId }) 
+        })
+        .then(res => res.json())
+        .then(data => {
+            // 통계 및 차트
+            document.getElementById("grade-number").textContent = data.grade;
+            document.getElementById("grade-mark").textContent = data.gradeMark;
+            updateBarChart(data.scoreList, data.countList);
+            updateDonutChart(data.maleRatio, data.femaleRatio);
+
+            // 댓글 리스트
+            updateCommentList(data.list);
+
+            // 평가 등록/수정 폼 구분
+            applyUserRatingForm(data.Aldto, animeId, userId);
+
+            // 모달 열기
+            document.getElementById("animeModal").style.display = "block";
+            document.querySelector(".modal_content").scrollTop = 0;
+        });
+
 	}
 
     
@@ -336,8 +605,26 @@
   
  	// 모달 닫기 함수
     function modal_close() {
-        document.getElementById("animeModal").style.display = "none";
-    }
+	    // 모달 내부 스크롤 먼저 초기화
+	    const modalContent = document.querySelector('.modal_content');
+	    if (modalContent) {
+	        modalContent.scrollTop = 0;
+	    }
+	
+	    // 모달 숨기기
+	    document.getElementById("animeModal").style.display = "none";
+	
+	    // 줄거리 더보기 초기화
+	    const summaryText = document.querySelector('.ani-summary p');
+	    const summaryButton = document.getElementById('summaryButton');
+	    if (summaryText.classList.contains('expanded')) {
+	        summaryText.classList.remove('expanded');
+	        summaryButton.textContent = '더보기';
+	    }
+	}
+
+
+
 
     // 모달 바깥 영역 클릭 시 닫기 기능 추가
     window.onclick = function(event) {
@@ -362,27 +649,166 @@
 
     // 유튜브 캐러셀 자동 이동
     const swiper = new Swiper('.swiper-container-youtube', {
-        loop: true, // 무한 반복
-        autoplay: {
-            delay: 3000, // 3초마다 자동 이동
-            disableOnInteraction: false, // 사용자가 터치해도 자동 재생 유지
-        },
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        slidesPerView: 4, // 한 번에 4개의 슬라이드 보이게
-        spaceBetween: 10, // 슬라이드 간 간격
-        speed: 1000, // 애니메이션 속도 (1초)
-        loopedSlides: 4, // 루프 시 자연스럽게 연결되도록 설정
-        autoplay: {
-            delay: 3000, // 3초마다 자동 슬라이드
-            disableOnInteraction: false, // 사용자가 터치해도 자동 재생 유지
-        },
-        slidesPerGroup: 1, // 한 번에 하나의 슬라이드만 이동
-    });
-</script>
+	    loop: true,
+	    autoplay: {
+	        delay: 3000,
+	        disableOnInteraction: false, // 사용자가 넘겨도 autoplay 유지
+	        pauseOnMouseEnter: true,     // 마우스 올리면 멈추기
+	    },
+	    navigation: {
+	        nextEl: '.swiper-button-next',
+	        prevEl: '.swiper-button-prev',
+	    },
+	    slidesPerView: 4,
+	    spaceBetween: 10,
+	    speed: 1000,
+	    slidesPerGroup: 1,
+	});
 
+</script>
+<script>
+
+function applyUserRatingForm(dto, animeId, userId) {
+    const ratedContent = document.getElementById("rated_content");
+
+    if (dto) {
+        // 수정 폼 표시
+        document.getElementById("rateFormArea").style.display = "block";
+        document.getElementById("registerFormArea").style.display = "none";
+        document.getElementById("rated_user_id").value = dto.USER_ID || userId;
+        document.getElementById("rated_anime_id").value = dto.ANIME_ID || animeId;
+        document.getElementById("rated_content").value = dto.SCORE_CONTENT; // 기존 내용 표시
+        applyStars("rated_stars_area", dto.SCORE_SCORE, "SCORE_SCORE");
+    } else {
+        // 등록 폼 표시
+        document.getElementById("rateFormArea").style.display = "none";
+        document.getElementById("registerFormArea").style.display = "block";
+        document.getElementById("register_anime_id").value = animeId;
+        document.getElementById("register_user_id").value = userId;
+        document.getElementById("register_content").value = ""; // 초기화
+        // textarea 초기화
+        //ratedContent.value = "";  // 댓글 내용 초기화
+        applyStars("register_stars_area", 3.5, "SCORE_SCORE"); // 기본 별점
+    }
+}
+function applyStars(containerId, selectedValue, inputName) {
+    const area = document.getElementById(containerId);
+    area.innerHTML = "";
+    const scores = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
+    scores.forEach(score => {
+        const id = `${inputName}_${score}`;
+        const checked = score === selectedValue ? "checked" : "";
+        const type = (score * 10) % 10 === 5 ? "half" : "full";
+        area.innerHTML += `
+            <label class="rating__label rating__label--${type}" for="${id}">
+                <input type="radio" id="${id}" class="rating__input" name="${inputName}" value="${score}" ${checked}/>
+                <span class="star-icon"></span>
+            </label>`;
+    });
+}
+//평점게시판
+function updateCommentList(list) {
+    const area = document.getElementById("comment-list-area");
+    area.innerHTML = "<h1 style='color: white; text-align: center; margin-bottom: 30px;'>게시판 목록</h1>";
+    
+    list.forEach(dto => {
+        const div = document.createElement("div");
+        div.className = "comment-card";
+        div.innerHTML = `
+        	<div class="comment-left">
+            <img src="/IMG/kibon_image.jpg" class="profile-img"/>
+            	<div class="user-id">${dto.USER_ID}</div>
+            <div class="comment-stars">
+                ${generateStarsHTML(dto.SCORE_SCORE)}
+            </div>
+        </div>
+        <div class="comment-right">
+            <div class="comment-content-box">
+                <div class="comment-content">
+                    ${dto.SCORE_CONTENT}
+                </div>
+            </div>
+            <div class="comment-meta">
+                ${dto.SCORE_REGDATE.substring(0,10) || '작성일자 없음'}
+            </div>
+        </div>
+        `;
+        area.appendChild(div);
+    });
+}
+
+function generateStarsHTML(score) {
+    const full = Math.floor(score);
+    const half = score % 1 >= 0.5 ? 1 : 0;
+    let html = "";
+    for (let i = 0; i < full; i++) html += `<img src="/IMG/star_full.png" width="20" height="20"/>`;
+    if (half) html += `<img src="/IMG/star_half.png" width="20" height="20"/>`;
+    return html;
+}
+
+function updateDonutChart(maleRatio, femaleRatio) {	
+    const canvas = document.getElementById('genderChart');
+    if (!canvas) {
+        console.warn("genderChart 캔버스를 찾을 수 없습니다.");
+        return;
+    }
+
+    const ctx = canvas.getContext('2d');
+    const data = [maleRatio, femaleRatio];
+
+    // 이미 해당 canvas에 등록된 차트가 있으면 Chart.js 내부 등록도 제거
+    const existingChart = Chart.getChart(canvas); // Chart.js v3+
+    if (existingChart) {
+        existingChart.destroy(); // ✅ 안전하게 제거
+    }
+
+    window.genderChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['남성', '여성'],
+            datasets: [{
+                data: data,
+                backgroundColor: ['#36A2EB', '#FF6384']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+}
+
+</script>
+<!-- 글자수 확인 함수 -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+	  const maxChars = 100;
+
+	  // register 폼
+	  const regTA    = document.getElementById('register_content');
+	  const regCount = document.getElementById('register_charCount');
+	  // 수정 폼
+	  const ratTA    = document.getElementById('rated_content');
+	  const ratCount = document.getElementById('rated_charCount');
+
+	  function attachCounter(textarea, counter) {
+	    if (!textarea || !counter) return;
+	    // 초기 세팅
+	    counter.textContent = `0/${maxChars}`;
+	    textarea.addEventListener('input', () => {
+	      // 초과 자동 커트 (maxlength 써도 혹시 몰라서)
+	      if (textarea.value.length > maxChars) {
+	        textarea.value = textarea.value.substring(0, maxChars);
+	      }
+	      // 실시간 업데이트
+	      counter.textContent = `${textarea.value.length}/${maxChars}`;
+	    });
+	  }
+
+	  attachCounter(regTA, regCount);
+	  attachCounter(ratTA, ratCount);
+	});
+</script>
 <!-- 캐러셀 -->
 <script>
 const CSswiper = document.querySelector('.carousel_wrapper');
@@ -393,7 +819,7 @@ const totalSlides = 7;
 let currentSlide = 0;
 
 function showSlide(slideIndex) {
-	CSswiper.style.transform = `translateX(-${slideIndex * 1300}px)`;
+	CSswiper.style.transform = `translateX(-${slideIndex * 1100}px)`;
     currentSlide = slideIndex;
 
     bullets.forEach((bullet, index) => {
@@ -433,4 +859,72 @@ bullets.forEach((bullet, index) => {
 
 showSlide(0);
 </script>
+
+<script>
+//모달 내부 줄거리 확장 버튼
+  const summaryText = document.querySelector('.ani-summary p');
+  const summaryButton = document.getElementById('summaryButton');
+
+  summaryButton.addEventListener('click', () => {
+    summaryText.classList.toggle('expanded');
+    if (summaryText.classList.contains('expanded')) {
+      summaryButton.textContent = '접기';
+    } else {
+      summaryButton.textContent = '더보기';
+    }
+  });
+</script>
+
+<!-- 유튜브 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.youtube-thumbnail').forEach(thumbnail => {
+        thumbnail.addEventListener('click', function() {
+            const videoId = this.dataset.videoId;
+            this.innerHTML = `<iframe width="400" height="315"
+                                src="https://www.youtube.com/embed/${videoId}?autoplay=1"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>`;
+        });
+    });
+
+    // 유튜브 캐러셀 Swiper 활성화
+    const swiper = new Swiper('.swiper-container-youtube', {
+        loop: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        slidesPerView: 4,
+        spaceBetween: 10,
+        speed: 1000,
+        loopedSlides: 4,
+        slidesPerGroup: 1,
+    });
+});
+</script>
+
+<!-- 애니 랭킹 캐러셀 -->
+<script>
+const swiperRanking = new Swiper('.swiper-container-ranking', {
+    direction: 'vertical',
+    slidesPerView: 5,
+    spaceBetween: 10,
+    loop: true,
+    autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+    },
+});
+
+
+
+</script>
+
+<script src="/js/navbar.js"></script>
 </html>

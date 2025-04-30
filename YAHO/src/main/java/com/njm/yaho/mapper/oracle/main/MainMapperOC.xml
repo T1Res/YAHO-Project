@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.njm.yaho.mapper.oracle.main.MainMapperOC">
-	<select id="getAnimeInfo" resultType="com.njm.yaho.domain.oracle.main.MainOCDTO">
+	<select id="getAnimeDetailInfo" resultType="com.njm.yaho.domain.oracle.main.MainOCDTO">
 		SELECT 
 			ANIME_ID AS animeId,
 			ANIME_DESC AS animeDesc,
