@@ -52,7 +52,8 @@ public class AnimeScheduleController {
 		String USER_ID = (String)session.getAttribute("USER_ID");
 		model.addAttribute("USER_ID", USER_ID);
 		log.info("세션 유저아이디"+USER_ID);
-		
+		String testUrl = imageService.getUserProfileImgById(USER_ID);
+		log.info("테스트 해보기"+testUrl);
 		
 		
 		return "schedule/animeSchedule";
@@ -201,6 +202,9 @@ public class AnimeScheduleController {
 	    String USER_ID = (String) session.getAttribute("USER_ID");
 	    map.put("USER_ID", USER_ID);
 
+	    // 🔥 사용자 프로필 이미지 추가
+	    String profileImgUrl = imageService.getUserProfileImgById(USER_ID);
+	    map.put("userProfileImg", profileImgUrl); // <-- 이 한 줄만 추가해주면 끝!
 	    
 	    //double grade = Rateservice.getAverageScore(ANIME_ID);
 	    Double gradeObj = Rateservice.getAverageScore(ANIME_ID);
@@ -225,7 +229,7 @@ public class AnimeScheduleController {
 	        }
 	        if (matched != null) rateList.remove(matched);
 	    }
-	    //log.info("내평점 리스트 사진:"+matched.getUSER_PROFILE_IMG());
+	    
 	    map.put("Aldto", matched); // 내 평점
 
 	    //log.info("aldto:"+matched);

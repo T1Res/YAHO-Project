@@ -1,5 +1,5 @@
 // rating.js
-
+let userProfileImg = '/IMG/kibon_image.jpg';
 function submitRate() {
     const score = getSelectedScore();
     const content = getContent("#registerFormArea textarea");
@@ -108,7 +108,11 @@ function refreshRateUI(animeId, userId) {
         updateBarChart(data.scoreList, data.countList);
         updateDonutChart(data.maleRatio, data.femaleRatio);
         updateCommentList(data.list);
-        applyUserRatingForm(data.Aldto, animeId, userId); // 등록/수정폼 자동 선택
+
+        // userProfileImg 값 유지
+        userProfileImg = data.userProfileImg || userProfileImg;
+
+        applyUserRatingForm(data.Aldto, animeId, userId, userProfileImg); // ✅ 프로필 이미지 넘김
     });
 }
 
@@ -230,7 +234,10 @@ function refreshGradeStats(animeId) {
         updateBarChart(data.scoreList, data.countList);
         updateDonutChart(data.maleRatio, data.femaleRatio);
         updateCommentList(data.list);
-        applyUserRatingForm(data.Aldto, animeId, data.USER_ID); // USER_ID도 응답에 있다면 활용
+
+        userProfileImg = data.userProfileImg || userProfileImg;
+
+        applyUserRatingForm(data.Aldto, animeId, data.USER_ID, userProfileImg); // ✅ 수정된 부분
     });
 }
 // 전역 등록
