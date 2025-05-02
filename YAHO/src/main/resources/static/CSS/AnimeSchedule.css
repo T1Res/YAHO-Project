@@ -83,12 +83,12 @@ h1 {
 
 /* 애니메이션 카드 */
 .anime-card {
-    width: 90%;  /* 부모 영역 기준 */
-    max-width: 180px; /* 최대 크기 제한 */
+    width: 95%;  /* 부모 영역 기준 */
+    max-width: 240px; /* 최대 크기 제한 */
     aspect-ratio: 3 / 4; /* 3:4 비율 유지 */
     
-    margin: 10px auto;
-    padding: 10px;
+    margin: 12px auto;
+    padding: 12px;
     background: black;
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgb(22, 22, 22);
@@ -103,12 +103,14 @@ h1 {
     -moz-animation: fadein 2s; /* Firefox */
     -webkit-animation: fadein 2s; /* Safari and Chrome */
     -o-animation: fadein 2s; /* Opera */
+    
+    font-size: 15px; 
 }
 
 /* 이미지 비율 3:4 유지 */
 .anime-card img {
     width: 100%;
-    height: 160px; /* 원하는 고정값 */
+    height: 180px; /* 원하는 고정값 */
   	object-fit: cover; /* 비율 깨지지 않고 채움 */
     object-fit: cover;
     border-radius: 5px;

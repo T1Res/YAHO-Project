@@ -10,7 +10,7 @@ public class ImageService {
     @Autowired
     private ImageMapper imageMapper;
 
-    public String getUserProfileImgById(Long userId) {
+    public String getUserProfileImgById(String userId) {
         return imageMapper.selectUserProfileImgById(userId);
     }
 }

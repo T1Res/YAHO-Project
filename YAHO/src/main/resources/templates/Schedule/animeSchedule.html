@@ -108,10 +108,11 @@
 				
 				      <!-- 수정 영역: 유저가 이미 평가한 경우에만 표시 -->
 				      <div id="rateFormArea" style="display: none;">
-								<div id="image-filter">
-									<img th:src="@{${profileImagePath}}" class="profile-img" />
+								<div id="rate-image-filter">
+									<img src="/IMG/kibon_image.jpg" class="profile-img" />
+									<!-- 기본 프로필 -->
 								</div>
-								<div class="user-id" th:text="${USER_ID}"></div><input type="hidden" id="rated_user_id" name="USER_ID" th:value="${USER_ID}" />
+								<div class="user-id" th:text="${USER_NICKNAME}"></div><input type="hidden" id="rated_user_id" name="USER_ID" th:value="${USER_ID}" />
 				        <input type="hidden" id="rated_anime_id" name="ANIME_ID"/>
 						<br>
 						
@@ -128,7 +129,7 @@
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										<button type="button" onclick="updateRate()">수정</button>
 										<button type="button" onclick="deleteRate()">삭제</button>
 										<div id="rated_charCount" class="char-count">0/100</div>
@@ -143,9 +144,13 @@
 				
 				      <!-- 등록 영역: 평가를 안 했을 때만 표시 -->
 							<div id="registerFormArea" style="display: none;">
-								<input type="hidden" id="register_anime_id" name="ANIME_ID" /> <img
-									src="/IMG/kibon_image.jpg" class="profile-img" />
-								<div class="user-id" th:text="${USER_ID}"></div>
+								<input type="hidden" id="register_anime_id" name="ANIME_ID" />
+								<div id="rate-image-filter">
+									<img src="/IMG/kibon_image.jpg" class="profile-img" />
+									<!-- 기본 프로필 -->
+								</div>
+
+								<div class="user-id" th:text="${USER_NICKNAME}"></div>
 								<input type="hidden" id="register_user_id" name="USER_ID"th:value="${USER_ID}" /> <br>
 								<div class="rating" id="register_stars_area"></div>
 
@@ -159,7 +164,7 @@
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;
 									<button type="button" onclick="submitRate()">등록</button>
 									<div id="register_charCount" class="char-count">0/100</div>
 								</div>
@@ -204,7 +209,7 @@
 		</div>
 	</div>
 	<script src="/JS/chart.umd.js"></script>
-	<script src="/JS/Rating3.js"></script>로 HTML에 등록
+	<script src="/JS/Rating3.js"></script>
 	<!-- 도넛 -->
 	<script src="/JS/genderChart.js"></script>
 	<!-- 별점 기능 -->
@@ -278,91 +283,76 @@
 	
     // 애니메이션 제목 축약
 	document.addEventListener("DOMContentLoaded", function () {
-        const maxLength = 10; // 최대 글자 수 (원하는 값으로 변경)
+    const maxLength = 10;
 
-        document.querySelectorAll(".anime-title").forEach(titleElement => {
-            let fullTitle = titleElement.textContent.trim(); // 원래 제목 가져오기
-            
-            if (fullTitle.length > maxLength) {
-                titleElement.setAttribute("data-title", fullTitle); // data-title에 원제목 저장
-                titleElement.textContent = fullTitle.substring(0, maxLength) + "..."; // 축약 후 표시
-            }
-        });
+    document.querySelectorAll(".anime-title").forEach(titleElement => {
+        let fullTitle = titleElement.textContent.trim();
+        if (fullTitle.length > maxLength) {
+            titleElement.setAttribute("data-title", fullTitle);
+            titleElement.textContent = fullTitle.substring(0, maxLength) + "...";
+        }
     });
-    
-    
-    
-	// 클릭 이벤트 추가
-	document.querySelectorAll(".anime-card").forEach(card => {
-    card.addEventListener("click", function () {
-        const animeId = card.getAttribute("data-anime-id");
-        const userId = document.getElementById("register_user_id")?.value || "";
-        console.log(animeId,userId);
-        //애니메이션 정보 로딩
-     	// 기본 정보 로딩
-		fetch(`/Main/anime/baseInfo?animeId=${animeId}`)
-		    .then(res => res.json())
-		    .then(data => {
-	            console.log("기본 정보:", data);
-		        const titleEl = document.getElementById("anime_title");
-		        const animeGaroImgEl = document.getElementById("modal_img");
-		
-		        if (titleEl) titleEl.innerText = data.title || "제목 없음";
-		        if (animeGaroImgEl) animeGaroImgEl.setAttribute("src", data.thumnailGaroUrl || "IMG/default.png");
-		    });
-		
-		// 상세 정보 로딩
-		fetch(`/Main/anime/detailInfo?animeId=${animeId}`)
-		    .then(res => res.json())
-		    .then(data => {
-		        const startDateEl = document.getElementById("start_date");
-		        const totalEpEl = document.getElementById("total_episode");
-		        const studioEl = document.getElementById("studio");
-		        const studioLinkEl = document.getElementById("studio_link");
-		        const ratingEl = document.getElementById("age_rating");
-		        const descEl = document.getElementById("anime_desc");
-		
-		        if (startDateEl) startDateEl.innerText = data.startDate.substring(0, 10) || "정보가 없습니다.";
-		        if (totalEpEl) totalEpEl.innerText = data.totalEpisode || "정보가 없습니다.";
-		        
-		        if (studioLinkEl) {
-		        	studioLinkEl.setAttribute("href", data.studioLink);
-		        	studioLinkEl.setAttribute("target", "_blank"); // 새 창 열기
-		        	studioLinkEl.innerText = data.studio || "제작사 정보 없음";
-		        }
-		        
-		        if (ratingEl) ratingEl.innerText = data.ageRating || "미정";
-		        if (descEl) descEl.innerHTML = (data.animeDesc || "설명이 없습니다.").replace(/\n/g, "<br>");
-		    });
 
-        // 평가 정보 JSON으로 요청
-        fetch("/Schedule/rateInfoJson", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ANIME_ID: animeId }) 
-        })
-        .then(res => res.json())
-        .then(data => {
-            // 통계 및 차트
-            document.getElementById("grade-number").textContent = data.grade;
-            document.getElementById("grade-mark").textContent = data.gradeMark;
-            updateBarChart(data.scoreList, data.countList);
-            updateDonutChart(data.maleRatio, data.femaleRatio);
-	
-            // 댓글 리스트
-            updateCommentList(data.list);
+    document.querySelectorAll(".anime-card").forEach(card => {
+        card.addEventListener("click", function () {
+            const animeId = card.getAttribute("data-anime-id");
+            const userId = document.getElementById("register_user_id")?.value || "";
 
-            // 평가 등록/수정 폼 구분
-            applyUserRatingForm(data.Aldto, animeId, userId);
-            console.log("애니별 내용 확인"+data.Aldto);
+            // 기본 정보 로딩
+            fetch(`/Main/anime/baseInfo?animeId=${animeId}`)
+                .then(res => res.json())
+                .then(data => {
+                    const titleEl = document.getElementById("anime_title");
+                    const animeGaroImgEl = document.getElementById("modal_img");
 
-            // 모달 열기
-            document.getElementById("animeModal").style.display = "block";
-            document.querySelector(".modal_content").scrollTop = 0;
+                    if (titleEl) titleEl.innerText = data.title || "제목 없음";
+                    if (animeGaroImgEl) animeGaroImgEl.setAttribute("src", data.thumnailGaroUrl || "IMG/default.png");
+                });
+
+            // 상세 정보 로딩
+            fetch(`/Main/anime/detailInfo?animeId=${animeId}`)
+                .then(res => res.json())
+                .then(data => {
+                    const startDateEl = document.getElementById("start_date");
+                    const totalEpEl = document.getElementById("total_episode");
+                    const studioLinkEl = document.getElementById("studio_link");
+                    const ratingEl = document.getElementById("age_rating");
+                    const descEl = document.getElementById("anime_desc");
+
+                    if (startDateEl) startDateEl.innerText = data.startDate?.substring(0, 10) || "정보가 없습니다.";
+                    if (totalEpEl) totalEpEl.innerText = data.totalEpisode || "정보가 없습니다.";
+                    if (studioLinkEl) {
+                        studioLinkEl.setAttribute("href", data.studioLink);
+                        studioLinkEl.setAttribute("target", "_blank");
+                        studioLinkEl.innerText = data.studio || "제작사 정보 없음";
+                    }
+                    if (ratingEl) ratingEl.innerText = data.ageRating || "미정";
+                    if (descEl) descEl.innerHTML = (data.animeDesc || "설명이 없습니다.").replace(/\n/g, "<br>");
+                });
+
+            // 평가 정보 및 유저 이미지 로딩
+            fetch("/Schedule/rateInfoJson", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ANIME_ID: animeId })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("grade-number").textContent = data.grade;
+                    document.getElementById("grade-mark").textContent = data.gradeMark;
+                    updateBarChart(data.scoreList, data.countList);
+                    updateDonutChart(data.maleRatio, data.femaleRatio);
+                    updateCommentList(data.list);
+
+                    const userProfileImg = data.userProfileImg || '/IMG/kibon_image.jpg'; // 🔍 백엔드에서 별도로 내려줄 것
+                    applyUserRatingForm(data.Aldto, animeId, userId, data.userProfileImg);
+
+                    document.getElementById("animeModal").style.display = "block";
+                    document.querySelector(".modal_content").scrollTop = 0;
+                });
         });
     });
 });
-
   
  	// 모달 닫기 함수
     function modal_close() {
@@ -388,38 +378,58 @@
 
 <script>
 
-function applyUserRatingForm(dto, animeId, userId) {
+function applyUserRatingForm(dto, animeId, userId, profileImgUrl = '/IMG/kibon_image.jpg') {
     // 수정 폼과 등록 폼을 찾기
     const rateFormArea = document.getElementById("rateFormArea");
     const registerFormArea = document.getElementById("registerFormArea");
-    
-    // 수정 폼 내용 초기화
+
+    // 수정 폼의 요소들
     const ratedContent = document.getElementById("rated_content");
     const ratedStarsArea = document.getElementById("rated_stars_area");
+    const ratedProfileImg = document.querySelector("#rateFormArea img.profile-img");
 
-    // 새로운 애니메이션의 수정 폼을 불러올 때마다 폼을 초기화
+    // 등록 폼의 요소들
+    const registerContent = document.getElementById("register_content");
+    const registerStarsArea = document.getElementById("register_stars_area");
+    const registerProfileImg = document.querySelector("#registerFormArea img.profile-img");
+
+    // 폼 초기화
     if (rateFormArea && registerFormArea) {
-        // 폼 초기화
-        ratedContent.value = "";  // 댓글 내용 초기화
-        ratedStarsArea.innerHTML = "";  // 별점 초기화
+        ratedContent.value = "";
+        ratedStarsArea.innerHTML = "";
+        registerContent.value = "";
+        registerStarsArea.innerHTML = "";
     }
 
-    // 수정 폼이 있을 경우, 해당 애니메이션의 정보를 불러옴
     if (dto) {
+        // 수정폼 활성화
         rateFormArea.style.display = "block";
         registerFormArea.style.display = "none";
+
         document.getElementById("rated_user_id").value = dto.USER_ID || userId;
         document.getElementById("rated_anime_id").value = dto.ANIME_ID || animeId;
-        document.getElementById("rated_content").value = dto.SCORE_CONTENT; // 기존 내용 표시
+        document.getElementById("rated_content").value = dto.SCORE_CONTENT || "";
+
+        if (ratedProfileImg) {
+            ratedProfileImg.src = dto.USER_PROFILE_IMG || '/IMG/kibon_image.jpg';
+        }
+
         applyStars("rated_stars_area", dto.SCORE_SCORE, "SCORE_SCORE");
+
     } else {
-        // 등록 폼 표시
+        // 등록폼 활성화
         rateFormArea.style.display = "none";
         registerFormArea.style.display = "block";
+
         document.getElementById("register_anime_id").value = animeId;
         document.getElementById("register_user_id").value = userId;
-        document.getElementById("register_content").value = ""; // 초기화
-        applyStars("register_stars_area", 3.5, "SCORE_SCORE"); // 기본 별점
+        document.getElementById("register_content").value = "";
+
+        if (registerProfileImg) {
+            registerProfileImg.src = profileImgUrl || '/IMG/kibon_image.jpg';
+        }
+
+        applyStars("register_stars_area", 3.5, "SCORE_SCORE");
     }
 }
 
@@ -438,7 +448,7 @@ function applyStars(containerId, selectedValue, inputName) {
             </label>`;
     });
 }
-//평점게시판
+//평점게시판 업데이트
 function updateCommentList(list) {
     const area = document.getElementById("comment-list-area");
     area.innerHTML = "<h1 style='color: white; text-align: center; margin-bottom: 30px;'>게시판 목록</h1>";
@@ -448,8 +458,10 @@ function updateCommentList(list) {
         div.className = "comment-card";
         div.innerHTML = `
         	<div class="comment-left">
-            <img src="/IMG/kibon_image.jpg" class="profile-img"/>
-            	<div class="user-id">${dto.USER_ID}</div>
+        	<div id="image-filter">
+        	 <img src="${dto.USER_PROFILE_IMG || '/IMG/kibon_image.jpg'}" class="profile-img" />
+			</div>
+            	<div class="user-id">${dto.USER_NICKNAME}</div>
             <div class="comment-stars">
                 ${generateStarsHTML(dto.SCORE_SCORE)}
             </div>
@@ -555,4 +567,5 @@ document.addEventListener('DOMContentLoaded', () => {
 	  attachCounter(ratTA, ratCount);
 	});
 </script>
+<script src="/js/navbar.js"></script>
 </html>

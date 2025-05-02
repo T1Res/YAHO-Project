@@ -21,6 +21,7 @@ import com.njm.yaho.controller.info.RateControllerTest;
 import com.njm.yaho.domain.oracle.info.RatingChartDTO;
 import com.njm.yaho.domain.oracle.info.RatingDTO;
 import com.njm.yaho.service.info.RateService;
+import com.njm.yaho.service.schedule.ImageService;
 import com.njm.yaho.service.schedule.ScheduleService;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +36,9 @@ public class AnimeScheduleController {
 	
 	@Autowired
 	private RateService Rateservice;
+	
+	@Autowired
+	private ImageService imageService;
 
 	@GetMapping("animeSchedule")
 	public String showAnimeList(Model model,HttpSession session) {
@@ -48,6 +52,9 @@ public class AnimeScheduleController {
 		String USER_ID = (String)session.getAttribute("USER_ID");
 		model.addAttribute("USER_ID", USER_ID);
 		log.info("세션 유저아이디"+USER_ID);
+		String testUrl = imageService.getUserProfileImgById(USER_ID);
+		log.info("테스트 해보기"+testUrl);
+		
 		
 		return "schedule/animeSchedule";
 	}
@@ -169,6 +176,7 @@ public class AnimeScheduleController {
 					model.addAttribute("Aldto", dto);
 					log.info("특정 유저아이디 dto 확인: " + trimmedId + " / " + dto);
 					log.info("scorereg: "+ dto.getSCORE_REGDATE());
+					
 					break;
 				}
 			}
@@ -194,6 +202,10 @@ public class AnimeScheduleController {
 	    String USER_ID = (String) session.getAttribute("USER_ID");
 	    map.put("USER_ID", USER_ID);
 
+	    // 🔥 사용자 프로필 이미지 추가
+	    String profileImgUrl = imageService.getUserProfileImgById(USER_ID);
+	    map.put("userProfileImg", profileImgUrl); // <-- 이 한 줄만 추가해주면 끝!
+	    
 	    //double grade = Rateservice.getAverageScore(ANIME_ID);
 	    Double gradeObj = Rateservice.getAverageScore(ANIME_ID);
 	    double grade = (gradeObj != null) ? gradeObj : 0.0;
@@ -202,7 +214,7 @@ public class AnimeScheduleController {
 
 	    int Arow = Rateservice.updateAnimeRate(grade, ANIME_ID);
 		  log.info("평균 업뎃 확인: "+Arow);
-
+		  
 	    map.put("grade", grade);
 	    map.put("gradeMark", mark);
 
@@ -217,7 +229,7 @@ public class AnimeScheduleController {
 	        }
 	        if (matched != null) rateList.remove(matched);
 	    }
-
+	    
 	    map.put("Aldto", matched); // 내 평점
 
 	    //log.info("aldto:"+matched);
@@ -324,7 +336,7 @@ public class AnimeScheduleController {
 	    map.put("mark", mark);
 	    
 	    //평점 업데이트 TBL_ANIME 테이블
-	    int Arow = Rateservice.updateAnimeRate(grade, ANIME_ID);
+	    int Arow = Rateservice.updateAnimeRate(grade, animeId);
 		log.info("평균 업뎃 확인: "+Arow);
 		
 		

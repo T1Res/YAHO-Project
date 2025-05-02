@@ -52,7 +52,7 @@ public class UserController {
 			String savedPath = service.saveProfileImage(profile); // 따로 구현
 			dto.setUSER_PROFILE_IMG(savedPath);
 		}else {
-            dto.setUSER_PROFILE_IMG("/img/default_profile.png"); // 기본 이미지 설정
+            dto.setUSER_PROFILE_IMG("/IMG/kibon_image.jpg"); // 기본 이미지 설정
         }
 
 		// DB 저장
